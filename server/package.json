@@ -1,0 +1,31 @@
+{
+  "name": "aboitiz-scholars-central",
+  "version": "1.0.0",
+  "description": "The Aboitiz Scholar Central app is a scholarship dashboard that aims to be the central hub for everything related to scholarships. \r Its dashboard will provide information on the total number of supported scholars, their scholarship status, the number of graduates, their employment status, grades, and demographics like age, gender, and location. \r With its name, the app emphasizes that it will serve as the primary source of scholarship-related resources and information, including a comprehensive database of scholars' data.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "npx nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/team-project-aljo-niel/aboitiz-Scholars-Central.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/team-project-aljo-niel/aboitiz-Scholars-Central/issues"
+  },
+  "homepage": "https://github.com/team-project-aljo-niel/aboitiz-Scholars-Central#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "helmet": "^6.1.5",
+    "mongoose": "^7.1.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.22"
+  }
+}
