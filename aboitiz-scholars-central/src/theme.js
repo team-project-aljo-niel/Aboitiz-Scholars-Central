@@ -77,7 +77,7 @@ export const themeColors = (mode) => ({
           100: "#ffffff",
           200: "#ffffff",
           300: "#ffffff",
-          400: "#ffffff",
+          400: "#ff0000",
           500: "#ffffff",
           600: "#cccccc",
           700: "#999999",
