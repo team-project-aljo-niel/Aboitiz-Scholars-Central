@@ -6,7 +6,7 @@ import Users from "./components/pages/Users";
 import Admins from "./components/pages/Admins";
 import Officers from "./components/pages/Officers";
 import Scholars from "./components/pages/Scholars";
-import Signup from "./components/pages/Signup";
+import UserForm from "./components/pages/UserForm";
 import { UserProvider } from "./components/providers/UserProvider";
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
         { path: "admins", element: <Admins /> },
         { path: "officers", element: <Officers /> },
         { path: "scholars", element: <Scholars /> },
-        { path: "create-user", element: <Signup /> },
+        { path: "create-user", element: <UserForm /> },
       ],
     },
   ]);
