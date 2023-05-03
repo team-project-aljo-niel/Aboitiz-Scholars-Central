@@ -17,6 +17,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 const dbUri = process.env.DB_URI;
 
+// Middlewares
 app.use(helmet());
 app.use(cors());
 app.use(express.json());

@@ -1,6 +1,7 @@
 const User = require('../models/user');
 
 const userController = {
+  // Endpoint to get all Users
   getAllUsers: async (req, res) => {
     try {
       const allUsers = await User.find();
@@ -10,6 +11,7 @@ const userController = {
     }
   },
 
+  // Endpoint to change access of user based on Id
   changeAccess: async (req, res) => {
     try {
       const updateUser = await User.findByIdAndUpdate(req.params.id, {
