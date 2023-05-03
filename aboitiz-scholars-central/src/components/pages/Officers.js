@@ -1,12 +1,12 @@
 import { Box } from "@mui/material";
 import Header from "../Header";
 
-const Dashboard = () => {
+const Officers = () => {
   return (
     <Box m="20px">
-      <Header title="Dashboard" subtitle="Scholars Dashboard" />
+      <Header title="Officers" subtitle="Officer management" />
     </Box>
   );
 };
 
-export default Dashboard;
+export default Officers;
