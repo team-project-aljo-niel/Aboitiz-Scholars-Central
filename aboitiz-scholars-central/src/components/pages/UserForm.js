@@ -7,6 +7,8 @@ import Header from "../Header";
 const initialValues = {
   userName: "",
   password: "",
+  firstName: "",
+  lastName: "",
   email: "",
 };
 
@@ -25,10 +27,13 @@ const userSchema = yup.object().shape({
     )
     .matches(/\d/, "*Your password should contain at least one digit")
     .matches(
+      // eslint-disable-next-line
       /[!@#$%^&*()_+\-=\]\[{};':"\\|,.<>\/?]/,
       "*Your password should contain at least one special character."
     )
     .required("required"),
+  firstName: yup.string().required("required"),
+  lastName: yup.string().required("required"),
   email: yup.string().email("Invalid email").required("required"),
 });
 
@@ -89,6 +94,32 @@ const UserForm = () => {
                 name="password"
                 error={!!touched.password && !!errors.password}
                 helperText={touched.password && errors.password}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="First Name"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.firstName}
+                name="firstName"
+                error={!!touched.firstName && !!errors.firstName}
+                helperText={touched.firstName && errors.firstName}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Last Name"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.lastName}
+                name="lastName"
+                error={!!touched.lastName && !!errors.lastName}
+                helperText={touched.lastName && errors.lastName}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField

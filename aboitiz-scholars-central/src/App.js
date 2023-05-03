@@ -8,6 +8,7 @@ import Officers from "./components/pages/Officers";
 import Scholars from "./components/pages/Scholars";
 import UserForm from "./components/pages/UserForm";
 import { UserProvider } from "./components/providers/UserProvider";
+import Account from "./components/pages/Account";
 
 function App() {
   const router = createBrowserRouter([
@@ -25,6 +26,7 @@ function App() {
         { path: "officers", element: <Officers /> },
         { path: "scholars", element: <Scholars /> },
         { path: "create-user", element: <UserForm /> },
+        { path: "account", element: <Account /> },
       ],
     },
   ]);
