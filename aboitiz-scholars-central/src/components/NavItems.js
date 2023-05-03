@@ -5,13 +5,12 @@ import { MenuItem } from "react-pro-sidebar";
 
 const NavItems = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
-  const colors = themeColors(theme.palette.mode);
   return (
     <MenuItem
       active={selected === title}
       onClick={() => setSelected(title)}
       icon={icon}
-      style={{color: colors.primary[500]}}
+      style={{color: "#ffffff"}}
     >
       <Typography>{title}</Typography>
       <Link to={to} />

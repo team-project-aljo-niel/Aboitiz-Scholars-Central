@@ -66,7 +66,7 @@ export const themeColors = (mode) => ({
           100: "#fcfcfc",
           200: "#f9f9f9",
           300: "#f5f5f5",
-          400: "#f2f2f2",
+          400: "#660000",
           500: "#121212",
           600: "#bfbfbf",
           700: "#8f8f8f",
@@ -78,7 +78,7 @@ export const themeColors = (mode) => ({
           200: "#ffffff",
           300: "#ffffff",
           400: "#ff0000",
-          500: "#ffffff",
+          500: "#330000",
           600: "#cccccc",
           700: "#999999",
           800: "#666666",
@@ -130,7 +130,7 @@ export const themeSettings = (mode) => {
       ...(mode === "light"
         ? {
             primary: {
-              main: colors.primary[500],
+              main: colors.black[500],
             },
             secondary: {
               main: colors.redAccent[500],

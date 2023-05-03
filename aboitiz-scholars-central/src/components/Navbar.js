@@ -1,16 +1,14 @@
-import { useContext, useState } from "react";
+import {  useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
-import { ColorModeContext, themeColors } from "../theme";
+import { themeColors } from "../theme";
 import {
   HomeOutlined,
   PeopleOutline,
-  AdminPanelSettingsOutlined,
-  SupervisorAccountOutlined,
   SchoolOutlined,
   MenuOutlined,
   AccountCircleOutlined,
+  PersonAddOutlined,
 } from "@mui/icons-material";
 import "react-pro-sidebar/dist/css/styles.css";
 import NavItems from "./NavItems";
@@ -94,7 +92,7 @@ const Navbar = () => {
                 </Typography>
                 <Typography
                   variant="h4"
-                  color={colors.black[400]}
+                  color="#000000"
                   fontWeight="bold"
                 >
                   Admin
@@ -113,7 +111,7 @@ const Navbar = () => {
             {!isCollapsed && (
               <Typography
                 variant="h5"
-                color={colors.black[500]}
+                color="#000000"
                 m="15px 0 5px 20px"
                 fontWeight="bold"
               >
@@ -128,23 +126,16 @@ const Navbar = () => {
               setSelected={setSelected}
             />
             <NavItems
-              title="Manage Admins"
-              to="/ASC/admins"
-              icon={<AdminPanelSettingsOutlined />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <NavItems
-              title="Manage Officers"
-              to="/ASC/officers"
-              icon={<SupervisorAccountOutlined />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <NavItems
               title="Manage Scholars"
               to="/ASC/scholars"
               icon={<SchoolOutlined />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <NavItems
+              title="Create User"
+              to="/ASC/create-user"
+              icon={<PersonAddOutlined />}
               selected={selected}
               setSelected={setSelected}
             />
