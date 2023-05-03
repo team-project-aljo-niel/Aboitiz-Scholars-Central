@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { themeColors } from "../theme";
@@ -9,6 +9,7 @@ import {
   MenuOutlined,
   AccountCircleOutlined,
   PersonAddOutlined,
+  AccountBoxOutlined
 } from "@mui/icons-material";
 import "react-pro-sidebar/dist/css/styles.css";
 import NavItems from "./NavItems";
@@ -90,11 +91,7 @@ const Navbar = () => {
                 >
                   Niel
                 </Typography>
-                <Typography
-                  variant="h4"
-                  color="#000000"
-                  fontWeight="bold"
-                >
+                <Typography variant="h4" color="#000000" fontWeight="bold">
                   Admin
                 </Typography>
               </Box>
@@ -136,6 +133,23 @@ const Navbar = () => {
               title="Create User"
               to="/ASC/create-user"
               icon={<PersonAddOutlined />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            {!isCollapsed && (
+              <Typography
+                variant="h5"
+                color="#000000"
+                m="15px 0 5px 20px"
+                fontWeight="bold"
+              >
+                Account
+              </Typography>
+            )}
+            <NavItems
+              title="Account Settings"
+              to="/ASC/account"
+              icon={<AccountBoxOutlined />}
               selected={selected}
               setSelected={setSelected}
             />
