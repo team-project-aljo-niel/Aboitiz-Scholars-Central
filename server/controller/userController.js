@@ -11,13 +11,12 @@ const userController = {
   },
 
   changeAccess: async (req, res) => {
-    console.log(User);
     try {
       const updateUser = await User.findByIdAndUpdate(req.params.id, {
         access: req.body.access,
       });
 
-      res.status(200).send(updateUser);
+      res.status(200).send('User Access changed succesfully');
     } catch (error) {
       res.status(500).send('Error changing access');
     }
