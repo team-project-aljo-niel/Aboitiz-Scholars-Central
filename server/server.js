@@ -5,8 +5,9 @@ const helmet = require('helmet');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
-// const loginRouter = require('./routes/login');
+const loginRouter = require('./routes/login');
 const signupRouter = require('./routes/signup');
 const userRouter = require('./routes/user');
 
@@ -21,10 +22,11 @@ const dbUri = process.env.DB_URI;
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes for endpoints
-// // app.use('/login', loginRouter);
+app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/user', userRouter);
 
