@@ -6,7 +6,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const loginRouter = require('./routes/login');
+// const loginRouter = require('./routes/login');
 const signupRouter = require('./routes/signup');
 const userRouter = require('./routes/user');
 
@@ -23,8 +23,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Routes for endpoints
 // // app.use('/login', loginRouter);
-// // app.use('/signup', signupRouter);
+app.use('/signup', signupRouter);
 app.use('/user', userRouter);
 
 mongoose
