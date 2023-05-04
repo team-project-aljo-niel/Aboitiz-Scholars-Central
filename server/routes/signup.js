@@ -8,7 +8,10 @@ const HttpError = require('../models/httpError');
 // Function to check if user parameter already exists
 
 const userExists = async (field, value) => {
-  const user = await User.findOne({ [field]: value });
+  const user = await User.findOne({
+    [field]: { $regex: new RegExp(`^${value}$`, 'i') },
+  });
+
   return Boolean(user);
 };
 
@@ -30,6 +33,7 @@ router.post('/', async (req, res, next) => {
     user.password = hashedPassword;
 
     // pre-assign access role of account to scholar
+
     user.gender = "";
     user.phone = "";
     user.access = 'Scholar';
@@ -38,7 +42,7 @@ router.post('/', async (req, res, next) => {
     res.status(200).send('User Created');
   } catch (error) {
     console.log(error);
-    res.status(400).send('Failed to create User, Please fill up all fields');
+    return next(new HttpError('Failed to create user', 400));
   }
 });
 
