@@ -7,11 +7,20 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonModeOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchIcon from "@mui/icons-material/Search";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useNavigate } from "react-router";
 
 const Topbar = () => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token-auth");
+    navigate("/");
+  };
+
   return (
     <Box display="flex" justifyContent="space-between" p={2}>
       <Box
@@ -37,6 +46,9 @@ const Topbar = () => {
         </IconButton>
         <IconButton>
           <PersonModeOutlinedIcon />
+        </IconButton>
+        <IconButton onClick={handleLogout}>
+          <LogoutIcon/>
         </IconButton>
       </Box>
     </Box>

@@ -4,22 +4,23 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
+const HttpError = require('../models/httpError');
 
 // POST login ('/login')
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const { userName, password } = req.body;
 
     // check if user exists
     const user = await User.findOne({ userName });
     if (!user) {
-      return res.status(400).send('Invalid Username');
+      return next(new HttpError("Invalid username or password", 401));
     }
 
     // check if password is correct
     const checkPassword = await bcrypt.compare(password, user.password);
     if (!checkPassword) {
-      return res.status(400).send('Invalid Password');
+      return next(new HttpError("Invalid username or password", 401));
     }
 
     // create Access token
@@ -43,10 +44,10 @@ router.post('/', async (req, res) => {
       sameSite: true,
     });
 
-    res.status(200).json(accessToken);
+    res.status(200).json({accessToken});
   } catch (error) {
     console.log(error);
-    res.status(500).send('Error loggin in');
+    res.sendStatus(401);
   }
 });
 
