@@ -23,6 +23,7 @@ const initialValues = {
 const accountInitialValues = {
   userName: "",
   password: "",
+  confirm: "",
 };
 
 const userSchema = yup.object().shape({
@@ -55,6 +56,9 @@ const accountSchema = yup.object().shape({
       "*Your password should contain at least one special character."
     )
     .required("required"),
+  confirm: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 
 const Account = () => {
@@ -226,6 +230,19 @@ const Account = () => {
                 error={!!touched.password && !!errors.password}
                 helperText={touched.password && errors.password}
                 sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Confirm Password"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.confirm}
+                name="confirm"
+                error={!!touched.confirm && !!errors.confirm}
+                helperText={touched.confirm && errors.confirm}
+                sx={{ gridColumn: "span 4" }}
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
