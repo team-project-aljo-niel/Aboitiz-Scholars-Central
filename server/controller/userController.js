@@ -19,7 +19,7 @@ const userController = {
     }
   },
 
-  getCurrentUser: async (req, res) => {
+  getCurrentUser: async (req, res, next) => {
     try {
       const accessToken = req.headers.authorization.split(' ')[1];
       const decodedToken = jwt.verify(

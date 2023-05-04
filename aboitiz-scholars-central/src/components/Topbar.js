@@ -44,7 +44,7 @@ const Topbar = () => {
         <IconButton>
           <SettingsOutlinedIcon />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={() => navigate("/ASC/account")}>
           <PersonModeOutlinedIcon />
         </IconButton>
         <IconButton onClick={handleLogout}>

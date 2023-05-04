@@ -95,7 +95,7 @@ const Users = () => {
           "& .access-column--cell": {
             color: colors.redAccent[300],
             fontSize: "18px",
-            fontWeight: "bold"
+            fontWeight: "bold",
           },
           "& .MuiDataGrid-columnHeaders": {
             borderBottom: "none",
@@ -109,6 +109,7 @@ const Users = () => {
           "& .MuiDataGrid-virtualScroller": {
             backgroundColor: colors.primary[500],
           },
+          width: "100%",
         }}
       >
         <DataGrid
@@ -117,6 +118,8 @@ const Users = () => {
           getRowId={(row) => row._id}
           components={{ Toolbar: GridToolbar }}
           processRowUpdate={processRowUpdate}
+          checkboxSelection
+          disableRowSelectionOnClick
           // onProcessRowUpdateError={handleProcessRowUpdateError}
         />
         {!!snackbar && (
