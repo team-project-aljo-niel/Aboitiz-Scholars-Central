@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   access: String,
   userName: { type: String, required: true },
   password: { type: String, required: true },
-  scholarData: [{ type: mongoose.Schema.Types.ObjectId, ref: 'scholars' }],
+  scholarData: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Scholars' }],
 });
 
 module.exports = mongoose.model('Users', userSchema);

@@ -12,15 +12,18 @@ router.post('/', async (req, res, next) => {
     const { userName, password } = req.body;
 
     // check if user exists
-    const user = await User.findOne({ userName });
+    const user = await User.findOne({
+      userName: { $regex: new RegExp(`^${userName}$`) },
+    });
+
     if (!user) {
-      return next(new HttpError("Invalid username or password", 401));
+      return next(new HttpError('Invalid username or password', 401));
     }
 
     // check if password is correct
     const checkPassword = await bcrypt.compare(password, user.password);
     if (!checkPassword) {
-      return next(new HttpError("Invalid username or password", 401));
+      return next(new HttpError('Invalid username or password', 401));
     }
 
     // create Access token
@@ -44,10 +47,10 @@ router.post('/', async (req, res, next) => {
       sameSite: true,
     });
 
-    res.status(200).json({accessToken});
+    res.status(200).json({ accessToken });
   } catch (error) {
     console.log(error);
-    res.sendStatus(401);
+    return next(new HttpError('Invalid username or password', 401));
   }
 });
 
