@@ -32,7 +32,7 @@ router.post('/', async (req, res, next) => {
     // pre-assign access role of account to scholar
     user.gender = "";
     user.phone = "";
-    user.access = 'scholar';
+    user.access = 'Scholar';
 
     await user.save();
     res.status(200).send('User Created');

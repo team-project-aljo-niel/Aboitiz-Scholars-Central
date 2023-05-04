@@ -6,8 +6,7 @@ import {
   FormControl,
   IconButton,
   InputAdornment,
-  InputLabel,
-  OutlinedInput,
+  TextField,
   ThemeProvider,
   Typography,
 } from "@mui/material";
@@ -42,6 +41,9 @@ const Login = () => {
 
   const handleLogin = async (values) => {
     try {
+      if (values.password === "") {
+        setResponseMessage("Please input password");
+      }
       const user = {
         userName: values.userName,
         password: values.password,
@@ -113,10 +115,10 @@ const Login = () => {
                   <form onSubmit={handleSubmit} style={{ minWidth: "320px" }}>
                     <Box display="flex" flexDirection="column" gap="30px">
                       <FormControl variant="outlined" fullWidth>
-                        <InputLabel htmlFor="outlined-adornment-username">
+                        {/* <InputLabel htmlFor="outlined-adornment-username">
                           Username
-                        </InputLabel>
-                        <OutlinedInput
+                        </InputLabel> */}
+                        <TextField
                           id="outlined-adornment-username"
                           type="text"
                           onBlur={handleBlur}
@@ -130,10 +132,10 @@ const Login = () => {
                         />
                       </FormControl>
                       <FormControl variant="outlined" fullWidth>
-                        <InputLabel htmlFor="outlined-adornment-password">
+                        {/* <InputLabel htmlFor="outlined-adornment-password">
                           Password
-                        </InputLabel>
-                        <OutlinedInput
+                        </InputLabel> */}
+                        <TextField
                           id="outlined-adornment-password"
                           type={showPassword ? "text" : "password"}
                           onBlur={handleBlur}
@@ -142,27 +144,34 @@ const Login = () => {
                           name="password"
                           error={!!touched.password && !!errors.password}
                           helperText={touched.password && errors.password}
-                          endAdornment={
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                edge="end"
-                              >
-                                {showPassword ? (
-                                  <VisibilityOff />
-                                ) : (
-                                  <Visibility />
-                                )}
-                              </IconButton>
-                            </InputAdornment>
-                          }
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  edge="end"
+                                >
+                                  {showPassword ? (
+                                    <VisibilityOff />
+                                  ) : (
+                                    <Visibility />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
                           label="Password"
                         />
                       </FormControl>
                       <Typography
                         variant="h5"
-                        sx={{ gridColumn: "span 4", color: "#d96464", textAlign: "center", fontWeight: "bold" }}
+                        sx={{
+                          gridColumn: "span 4",
+                          color: "#d96464",
+                          textAlign: "center",
+                          fontWeight: "bold",
+                        }}
                       >
                         {responseMessage}
                       </Typography>

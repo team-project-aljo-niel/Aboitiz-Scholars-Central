@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Snackbar, TextField, Typography } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -43,6 +43,10 @@ const UserForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px");
   const [responseMessage, setResponseMessage] = useState("");
 
+  const [snackbar, setSnackbar] = useState();
+
+  const handleCloseSnackbar = () => setSnackbar(null);
+
   const handleFormSubmit = async (values) => {
     try {
       const user = {
@@ -55,14 +59,11 @@ const UserForm = () => {
 
       const response = await createUser(user);
       setResponseMessage(response.data.message);
-      alert(
-        `${values.firstName} ${values.lastName} is successfully registered to Aboitiz Scholars Central.`
-      );
-
-      
+      setSnackbar({ children: "User successfully created", severity: "success" });
     } catch (error) {
       console.log(error);
       setResponseMessage(error.response.data.message);
+      setSnackbar({ children: error.response.data.message, severity: "error" });
     }
   };
 
@@ -101,7 +102,10 @@ const UserForm = () => {
                 onChange={handleChange}
                 value={values.userName}
                 name="userName"
-                error={(!!touched.userName && !!errors.userName) || responseMessage === "Username already exists"}
+                error={
+                  (!!touched.userName && !!errors.userName) ||
+                  responseMessage === "Username already exists"
+                }
                 helperText={touched.userName && errors.userName}
                 sx={{ gridColumn: "span 2" }}
               />
@@ -119,7 +123,14 @@ const UserForm = () => {
                 sx={{ gridColumn: "span 2" }}
               />
               {responseMessage === "Username already exists" ? (
-                <Typography fontSize="12px" sx={{ gridColumn: "span 4", color: "#d96464", m:"-15px 0 0 14px" }}>
+                <Typography
+                  fontSize="12px"
+                  sx={{
+                    gridColumn: "span 4",
+                    color: "#d96464",
+                    m: "-15px 0 0 14px",
+                  }}
+                >
                   {responseMessage}
                 </Typography>
               ) : undefined}
@@ -158,12 +169,21 @@ const UserForm = () => {
                 onChange={handleChange}
                 value={values.email}
                 name="email"
-                error={(!!touched.email && !!errors.email) || responseMessage === "Email already exists"}
+                error={
+                  (!!touched.email && !!errors.email) ||
+                  responseMessage === "Email already exists"
+                }
                 helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 4" }}
               />
               {responseMessage === "Email already exists" ? (
-                <Typography sx={{ gridColumn: "span 4", color: "#d96464", m:"-15px 0 0 14px" }}>
+                <Typography
+                  sx={{
+                    gridColumn: "span 4",
+                    color: "#d96464",
+                    m: "-15px 0 0 14px",
+                  }}
+                >
                   {responseMessage}
                 </Typography>
               ) : undefined}
@@ -176,6 +196,16 @@ const UserForm = () => {
           </form>
         )}
       </Formik>
+      {!!snackbar && (
+        <Snackbar
+          open
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          onClose={handleCloseSnackbar}
+          autoHideDuration={6000}
+        >
+          <Alert {...snackbar} onClose={handleCloseSnackbar} />
+        </Snackbar>
+      )}
     </Box>
   );
 };
