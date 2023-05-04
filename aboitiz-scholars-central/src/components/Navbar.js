@@ -40,7 +40,7 @@ const Navbar = () => {
         },
       }}
     >
-      <ProSidebar collapsed={isCollapsed}>
+      <ProSidebar collapsed={isCollapsed} collapsedWidth="80px">
         <Menu iconShape="square">
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
