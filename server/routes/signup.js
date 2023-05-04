@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
+const HttpError = require('../models/httpError');
 
 // Function to check if user parameter already exists
 
@@ -12,15 +13,15 @@ const userExists = async (field, value) => {
 };
 
 // POST SignUp ('/signup')
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const user = new User(req.body);
 
     // check if user already exists
     if (await userExists('userName', user.userName)) {
-      return res.status(400).send('userName already exists');
+      return next(new HttpError('Username already exists', 400));
     } else if (await userExists('email', user.email)) {
-      return res.status(400).send('email already exists');
+      return next(new HttpError('Email already exists', 400));
     }
 
     // Hash the password with a salt value
@@ -29,6 +30,8 @@ router.post('/', async (req, res) => {
     user.password = hashedPassword;
 
     // pre-assign access role of account to scholar
+    user.gender = "";
+    user.phone = "";
     user.access = 'scholar';
 
     await user.save();
