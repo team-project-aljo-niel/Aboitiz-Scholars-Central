@@ -14,6 +14,7 @@ const userController = {
 
       res.json(allUsers);
     } catch (error) {
+
       return next(new httpError('Error getting users', 500));
     }
   },
@@ -41,12 +42,17 @@ const userController = {
   // Endpoint to change access of user based on Id
   changeAccess: async (req, res, next) => {
     try {
-      const updateUser = await User.findByIdAndUpdate(req.params.id, {
-        access: req.body.access,
-      });
+      if (req.body.access) {
+        const updateUser = await User.findByIdAndUpdate(req.params.id, {
+          access: req.body.access,
+        });
+      } else {
+        return next(HttpError("Please designate access level", 400))
+      }
 
-      res.status(200).send('User Access changed succesfully');
+      res.status(200).send("User Access changed succesfully");
     } catch (error) {
+
       return next(new httpError('Error changing user access', 500));
     }
   },
