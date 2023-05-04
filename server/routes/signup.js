@@ -9,7 +9,7 @@ const HttpError = require('../models/httpError');
 
 const userExists = async (field, value) => {
   const user = await User.findOne({
-    [field]: { $regex: new RegExp(`^${value}$`) },
+    [field]: { $regex: new RegExp(`^${value}$`, 'i') },
   });
 
   return Boolean(user);

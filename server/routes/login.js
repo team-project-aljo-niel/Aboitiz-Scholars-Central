@@ -13,7 +13,7 @@ router.post('/', async (req, res, next) => {
 
     // check if user exists
     const user = await User.findOne({
-      userName: { $regex: new RegExp(`^${userName}$`) },
+      userName: { $regex: new RegExp(`^${userName}$`, 'i') },
     });
 
     if (!user) {
