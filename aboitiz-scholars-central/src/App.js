@@ -10,6 +10,8 @@ import { CurrentUserProvider } from "./components/providers/CurrentUserProvider"
 import Account from "./components/pages/Account";
 import RouteGuard from "./components/pages/HOC/RouteGuard";
 import AdminGuard from "./components/pages/HOC/AdminGuard";
+import Profile from "./components/pages/Profile";
+import ScholarGuard from "./components/pages/HOC/ScholarGuard";
 
 function App() {
   const router = createBrowserRouter([
@@ -56,6 +58,14 @@ function App() {
           ),
         },
         { path: "account", element: <Account /> },
+        {
+          path: "profile",
+          element: (
+            <ScholarGuard>
+              <Profile />
+            </ScholarGuard>
+          ),
+        },
       ],
     },
   ]);

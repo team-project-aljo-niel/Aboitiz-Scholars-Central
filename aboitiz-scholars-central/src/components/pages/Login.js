@@ -59,7 +59,7 @@ const Login = () => {
       const userDetails = await getCurrentUser();
       setCurrentUser(userDetails.data);
       if (userDetails.data.access === "Scholar") {
-        navigate("/ASC/account");
+        navigate("/ASC/profile");
       } else {
         navigate("/ASC/dashboard");
       }
