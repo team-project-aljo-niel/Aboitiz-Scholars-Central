@@ -9,16 +9,23 @@ import {
   MenuOutlined,
   AccountCircleOutlined,
   PersonAddOutlined,
-  AccountBoxOutlined
+  AccountBoxOutlined,
 } from "@mui/icons-material";
 import "react-pro-sidebar/dist/css/styles.css";
 import NavItems from "./NavItems";
+import { useContext } from "react";
+import { CurrentUserContext } from "./providers/CurrentUserProvider";
 
 const Navbar = () => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const [currentUser, ] = useContext(CurrentUserContext);
+
+  if (!currentUser) {
+    return <div>...Loading</div>;
+  }
 
   return (
     <Box
@@ -89,53 +96,60 @@ const Navbar = () => {
                   variant="h2"
                   sx={{ mt: "10px", color: "#ffffff", fontWeight: "bold" }}
                 >
-                  Niel
+                  {`${currentUser.firstName}`}
                 </Typography>
                 <Typography variant="h4" color="#000000" fontWeight="bold">
-                  Admin
+                {`${currentUser.access}`}
                 </Typography>
               </Box>
             </Box>
           )}
           <Box pl={isCollapsed ? undefined : 1}>
-            <NavItems
-              title="Dashboard"
-              to="/ASC/dashboard"
-              icon={<HomeOutlined />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            {!isCollapsed && (
-              <Typography
-                variant="h5"
-                color="#000000"
-                m="15px 0 5px 20px"
-                fontWeight="bold"
-              >
-                Management
-              </Typography>
-            )}
-            <NavItems
-              title="Manage Users"
-              to="/ASC/users"
-              icon={<PeopleOutline />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <NavItems
-              title="Manage Scholars"
-              to="/ASC/scholars"
-              icon={<SchoolOutlined />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <NavItems
-              title="Create User"
-              to="/ASC/create-user"
-              icon={<PersonAddOutlined />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            {currentUser.access !== "Scholar" ? (
+              <>
+                <NavItems
+                  title="Dashboard"
+                  to="/ASC/dashboard"
+                  icon={<HomeOutlined />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+
+                {!isCollapsed && (
+                  <Typography
+                    variant="h5"
+                    color="#000000"
+                    m="15px 0 5px 20px"
+                    fontWeight="bold"
+                  >
+                    Management
+                  </Typography>
+                )}
+                {currentUser.access === "Admin" ? (
+                  <NavItems
+                    title="Manage Users"
+                    to="/ASC/users"
+                    icon={<PeopleOutline />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                ) : undefined}
+                <NavItems
+                  title="Manage Scholars"
+                  to="/ASC/scholars"
+                  icon={<SchoolOutlined />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <NavItems
+                  title="Create User"
+                  to="/ASC/create-user"
+                  icon={<PersonAddOutlined />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </>
+            ) : undefined}
             {!isCollapsed && (
               <Typography
                 variant="h5"

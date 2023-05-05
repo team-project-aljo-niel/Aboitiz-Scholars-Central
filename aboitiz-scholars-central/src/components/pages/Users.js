@@ -107,7 +107,7 @@ const Users = () => {
             backgroundColor: colors.grey[400],
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[500],
+            backgroundColor: colors.primary[900],
           },
           width: "100%",
         }}
