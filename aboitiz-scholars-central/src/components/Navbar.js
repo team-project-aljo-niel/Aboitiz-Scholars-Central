@@ -10,6 +10,7 @@ import {
   AccountCircleOutlined,
   PersonAddOutlined,
   AccountBoxOutlined,
+  ManageAccountsOutlined
 } from "@mui/icons-material";
 import "react-pro-sidebar/dist/css/styles.css";
 import NavItems from "./NavItems";
@@ -21,7 +22,7 @@ const Navbar = () => {
   const colors = themeColors(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-  const [currentUser, ] = useContext(CurrentUserContext);
+  const [currentUser] = useContext(CurrentUserContext);
 
   if (!currentUser) {
     return <div>...Loading</div>;
@@ -99,7 +100,7 @@ const Navbar = () => {
                   {`${currentUser.firstName}`}
                 </Typography>
                 <Typography variant="h4" color="#000000" fontWeight="bold">
-                {`${currentUser.access}`}
+                  {`${currentUser.access}`}
                 </Typography>
               </Box>
             </Box>
@@ -160,10 +161,19 @@ const Navbar = () => {
                 Account
               </Typography>
             )}
+            {currentUser.access === "Scholar" ? (
+              <NavItems
+                title="My Profile"
+                to="/ASC/profile"
+                icon={<AccountBoxOutlined />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            ) : undefined}
             <NavItems
               title="Account Settings"
               to="/ASC/account"
-              icon={<AccountBoxOutlined />}
+              icon={<ManageAccountsOutlined />}
               selected={selected}
               setSelected={setSelected}
             />
