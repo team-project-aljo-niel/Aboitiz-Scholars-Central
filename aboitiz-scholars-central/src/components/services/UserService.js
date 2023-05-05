@@ -14,6 +14,12 @@ export const loginUser = async (user) => {
   return response;
 };
 
+// Get current user data service 
+export const getCurrentUser = async () => {
+  const response = await axios.get(`${BASE_URL}/user/details`);
+  return response;
+}
+
 // Get all User Data service
 export const getUsers = async () => {
   const response = await axios.get(`${BASE_URL}/user`);

@@ -9,17 +9,24 @@ import PersonModeOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router";
+import { CurrentUserContext } from "./providers/CurrentUserProvider";
 
 const Topbar = () => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+  const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token-auth");
+    setCurrentUser();
     navigate("/");
   };
+
+  if (!currentUser) {
+    return <div>...Loading</div>;
+  }
 
   return (
     <Box display="flex" justifyContent="space-between" p={2}>
@@ -41,14 +48,17 @@ const Topbar = () => {
             <DarkModeOutlinedIcon />
           )}
         </IconButton>
-        <IconButton>
-          <SettingsOutlinedIcon />
-        </IconButton>
+        {currentUser.access === "Admin" ? (
+          <IconButton>
+            <SettingsOutlinedIcon />
+          </IconButton>
+        ) : undefined}
+
         <IconButton onClick={() => navigate("/ASC/account")}>
           <PersonModeOutlinedIcon />
         </IconButton>
         <IconButton onClick={handleLogout}>
-          <LogoutIcon/>
+          <LogoutIcon />
         </IconButton>
       </Box>
     </Box>

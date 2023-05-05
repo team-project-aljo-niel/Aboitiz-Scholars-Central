@@ -18,8 +18,10 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { loginUser } from "../services/UserService";
+import { getCurrentUser, loginUser } from "../services/UserService";
 import { useNavigate } from "react-router";
+import { useContext } from "react";
+import { CurrentUserContext } from "../providers/CurrentUserProvider";
 
 const initialValues = {
   userName: "",
@@ -34,6 +36,7 @@ const loginSchema = yup.object().shape({
 const Login = () => {
   const [theme, colorMode] = useMode();
   const colors = themeColors(theme.palette.mode);
+  const [, setCurrentUser] = useContext(CurrentUserContext);
   const [responseMessage, setResponseMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -53,7 +56,13 @@ const Login = () => {
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${response.data.accessToken}`;
-      navigate("/ASC");
+      const userDetails = await getCurrentUser();
+      setCurrentUser(userDetails.data);
+      if (userDetails.data.access === "Scholar") {
+        navigate("/ASC/account");
+      } else {
+        navigate("/ASC/dashboard");
+      }
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
@@ -115,11 +124,7 @@ const Login = () => {
                   <form onSubmit={handleSubmit} style={{ minWidth: "320px" }}>
                     <Box display="flex" flexDirection="column" gap="30px">
                       <FormControl variant="outlined" fullWidth>
-                        {/* <InputLabel htmlFor="outlined-adornment-username">
-                          Username
-                        </InputLabel> */}
                         <TextField
-                          id="outlined-adornment-username"
                           type="text"
                           onBlur={handleBlur}
                           onChange={handleChange}
@@ -128,15 +133,10 @@ const Login = () => {
                           error={!!touched.userName && !!errors.userName}
                           helperText={touched.userName && errors.userName}
                           label="Username"
-                          userName
                         />
                       </FormControl>
                       <FormControl variant="outlined" fullWidth>
-                        {/* <InputLabel htmlFor="outlined-adornment-password">
-                          Password
-                        </InputLabel> */}
                         <TextField
-                          id="outlined-adornment-password"
                           type={showPassword ? "text" : "password"}
                           onBlur={handleBlur}
                           onChange={handleChange}
