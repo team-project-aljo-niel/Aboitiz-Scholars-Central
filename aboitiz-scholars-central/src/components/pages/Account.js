@@ -1,75 +1,112 @@
 import {
+  Alert,
   Box,
   Button,
   FormControl,
+  IconButton,
+  InputAdornment,
   InputLabel,
   MenuItem,
   Select,
+  Snackbar,
   TextField,
 } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../Header";
-
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  sex: "",
-  email: "",
-  phone: "",
-};
-
-const accountInitialValues = {
-  userName: "",
-  password: "",
-  confirm: "",
-};
-
-const userSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  sex: yup.string(),
-  email: yup.string().email("Invalid email").required("required"),
-  phone: yup
-    .string()
-    .matches(/^(09|\+639)\d{9}$/, "Please input a valid PH number."),
-});
-
-const accountSchema = yup.object().shape({
-  userName: yup.string().required("required"),
-  password: yup
-    .string()
-    .min(8, "*Your password must be at least 8 characters")
-    .matches(
-      /[a-z]/,
-      "*Your password should contain at least one lowercase letter"
-    )
-    .matches(
-      /[A-Z]/,
-      "*Your password should contain at least one uppercase letter"
-    )
-    .matches(/\d/, "*Your password should contain at least one digit")
-    .matches(
-      // eslint-disable-next-line
-      /[!@#$%^&*()_+\-=\]\[{};':"\\|,.<>\/?]/,
-      "*Your password should contain at least one special character."
-    )
-    .required("required"),
-  confirm: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match"),
-});
+import { CurrentUserContext } from "../providers/CurrentUserProvider";
+import { useContext, useState } from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Account = () => {
   const isNonMobile = useMediaQuery("(min-width:600px");
+  const [currentUser] = useContext(CurrentUserContext);
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [snackbar, setSnackbar] = useState();
+  const handleCloseSnackbar = () => setSnackbar(null);
+
+  if (!currentUser) {
+    return <div>...Loading</div>;
+  }
+
+  const initialValues = {
+    firstName: currentUser.firstName,
+    lastName: currentUser.lastName,
+    gender: currentUser.gender,
+    email: currentUser.email,
+    phone: currentUser.phone,
+  };
+
+  const accountInitialValues = {
+    userName: currentUser.userName,
+    newPassword: "",
+    password: "",
+    confirm: "",
+  };
+
+  const userSchema = yup.object().shape({
+    firstName: yup.string().required("required"),
+    lastName: yup.string().required("required"),
+    gender: yup.string(),
+    email: yup.string().email("Invalid email").required("required"),
+    phone: yup
+      .string()
+      .matches(/^(09|\+639)\d{9}$/, "Please input a valid PH number."),
+  });
+
+  const accountSchema = yup.object().shape({
+    userName: yup.string().required("required"),
+    password: yup
+      .string()
+      .required("required")
+      .test("Password match", "Incorrect Password", function (password) {
+        return password === currentUser.password;
+      }),
+    newPassword: yup
+      .string()
+      .min(8, "*Your password must be at least 8 characters")
+      .matches(
+        /[a-z]/,
+        "*Your password should contain at least one lowercase letter"
+      )
+      .matches(
+        /[A-Z]/,
+        "*Your password should contain at least one uppercase letter"
+      )
+      .matches(/\d/, "*Your password should contain at least one digit")
+      .matches(
+        // eslint-disable-next-line
+        /[!@#$%^&*()_+\-=\]\[{};':"\\|,.<>\/?]/,
+        "*Your password should contain at least one special character."
+      )
+      .required("required"),
+    confirm: yup
+      .string()
+      .oneOf([yup.ref("newPassword"), null], "Passwords must match")
+      .required("required"),
+  });
 
   const handleFormSubmit = (values) => {
     console.log(values);
+    setSnackbar({
+      children: "Profile successfully updated",
+      severity: "success",
+    });
   };
 
   const handleAccountSubmit = (values) => {
-    console.log(values);
+    console.log(currentUser.password);
+    if (values.password === currentUser.password) {
+      console.log(values);
+      setSnackbar({
+        children: "Account successfully updated",
+        severity: "success",
+      });
+    } else {
+      setSnackbar({ children: "Incorrect password", severity: "error" });
+    }
   };
 
   return (
@@ -129,17 +166,16 @@ const Account = () => {
                 variant="filled"
                 sx={{ gridColumn: "span 2" }}
               >
-                <InputLabel id="demo-simple-select-label">Sex</InputLabel>
+                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  label="Sex"
+                  label="Gender"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.sex}
-                  name="sex"
-                  error={!!touched.sex && !!errors.sex}
-                  helperText={touched.sex && errors.sex}
+                  value={values.gender}
+                  name="gender"
+                  error={!!touched.gender && !!errors.gender}
                 >
                   <MenuItem value={"Male"}>Male</MenuItem>
                   <MenuItem value={"Female"}>Female</MenuItem>
@@ -218,41 +254,106 @@ const Account = () => {
                 helperText={touched.userName && errors.userName}
                 sx={{ gridColumn: "span 2" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Password"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.password}
-                name="password"
-                error={!!touched.password && !!errors.password}
-                helperText={touched.password && errors.password}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Confirm Password"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.confirm}
-                name="confirm"
-                error={!!touched.confirm && !!errors.confirm}
-                helperText={touched.confirm && errors.confirm}
-                sx={{ gridColumn: "span 4" }}
-              />
+              <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type={showPassword ? "text" : "password"}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.password}
+                  name="password"
+                  error={!!touched.password && !!errors.password}
+                  helperText={touched.password && errors.password}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  label="Password"
+                />
+              </FormControl>
+              <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type={showPassword ? "text" : "password"}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.passnewPasswordword}
+                  name="newPassword"
+                  error={!!touched.newPassword && !!errors.newPassword}
+                  helperText={touched.newPassword && errors.newPassword}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  label="New Password"
+                />
+              </FormControl>
+              <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type={showPassword ? "text" : "password"}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.confirm}
+                  name="confirm"
+                  error={!!touched.confirm && !!errors.confirm}
+                  helperText={touched.confirm && errors.confirm}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  label="Confirm Password"
+                />
+              </FormControl>
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                Update Account Settings
+                Update Account
               </Button>
             </Box>
           </form>
         )}
       </Formik>
+      {!!snackbar && (
+        <Snackbar
+          open
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          onClose={handleCloseSnackbar}
+          autoHideDuration={6000}
+        >
+          <Alert {...snackbar} onClose={handleCloseSnackbar} />
+        </Snackbar>
+      )}
     </Box>
   );
 };
