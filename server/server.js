@@ -10,7 +10,8 @@ const cookieParser = require('cookie-parser');
 const loginRouter = require('./routes/login');
 const signupRouter = require('./routes/signup');
 const userRouter = require('./routes/user');
-const HttpError = require("./models/httpError");
+const scholarRouter = require('./routes/scholar');
+const HttpError = require('./models/httpError');
 config();
 
 const app = express();
@@ -29,10 +30,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/user', userRouter);
+app.use('/scholar', scholarRouter);
 
 // Handling unknown routes
 app.use((req, res, next) => {
-  return next(new HttpError("Route not found", 404));
+  return next(new HttpError('Route not found', 404));
 });
 
 // Error handling
@@ -44,7 +46,7 @@ app.use((error, req, res, next) => {
   // If no header was sent, error exists
   res
     .status(error.code || 500)
-    .json({ message: error.message || "Unknown Error" });
+    .json({ message: error.message || 'Unknown Error' });
 });
 
 mongoose
