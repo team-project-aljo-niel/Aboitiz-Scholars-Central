@@ -126,7 +126,6 @@ const userController = {
       // Check if user is a scholar
 
       const currentUser = await User.findById(userId);
-      console.log(userId);
 
       if (currentUser.access === 'Scholar') {
         // Find scholarData for the user
@@ -136,20 +135,15 @@ const userController = {
 
         // If there is no scholarData for user, create one
 
-        if (!scholarData) {
-          scholarData = new Scholar({ user: userId });
+        if (scholarData) {
+          scholarData.firstName = capitalize(firstName);
+          scholarData.lastName = capitalize(lastName);
+          scholarData.gender = capitalize(gender);
+          scholarData.phone = phone;
+          scholarData.email = email;
+
+          await scholarData.save();
         }
-
-        scholarData.firstName = capitalize(firstName);
-        scholarData.lastName = capitalize(lastName);
-        scholarData.gender = capitalize(gender);
-        scholarData.phone = phone;
-        scholarData.email = email;
-
-        await scholarData.save();
-
-        // update User document with scholarData reference ID
-        await User.findByIdAndUpdate(userId, { scholarData: scholarData._id });
       }
 
       await res.status(200).send('User details change succesfully');
