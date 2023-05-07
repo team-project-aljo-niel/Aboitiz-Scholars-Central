@@ -6,7 +6,6 @@ const User = require('../models/user');
 const HttpError = require('../models/httpError');
 
 // Function to check if user parameter already exists
-
 const userExists = async (field, value) => {
   const user = await User.findOne({
     [field]: { $regex: new RegExp(`^${value}$`, 'i') },
