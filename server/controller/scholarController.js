@@ -43,6 +43,8 @@ const scholarController = {
           newScholar[key] = capitalize(value);
         }
         await newScholar.save();
+        userDetails.scholarData = newScholar._id;
+        userDetails.save();
         res.status(200).send('Created scholar details succesfully');
       } else {
         return next(new httpError('Scholar details already exists', 409));
