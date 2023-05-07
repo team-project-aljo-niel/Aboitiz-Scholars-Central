@@ -133,7 +133,7 @@ const userController = {
           user: userId,
         });
 
-        // If there is no scholarData for user, create one
+        // If scholarData is available for user, update it
 
         if (scholarData) {
           scholarData.firstName = capitalize(firstName);
