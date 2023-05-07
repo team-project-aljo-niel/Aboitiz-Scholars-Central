@@ -32,3 +32,15 @@ export const updateAccess = async (_id, access) => {
   const response = await axios.put(`${BASE_URL}/user/${_id}`, access);
   return response;
 };
+
+// Put User Basic Profile
+export const updateProfile = async (profile) => {
+  const response = await axios.put(`${BASE_URL}/user/details`, profile);
+  return response;
+};
+
+// Put User Account Details
+export const updateAccount = async (account) => {
+  const response = await axios.put(`${BASE_URL}/user/account`, account);
+  return response;
+};

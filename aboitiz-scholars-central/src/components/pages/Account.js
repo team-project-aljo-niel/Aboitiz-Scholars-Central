@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
@@ -18,11 +19,13 @@ import Header from "../Header";
 import { CurrentUserContext } from "../providers/CurrentUserProvider";
 import { useContext, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { updateAccount, updateProfile } from "../services/UserService";
 
 const Account = () => {
   const isNonMobile = useMediaQuery("(min-width:600px");
   const [currentUser] = useContext(CurrentUserContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [responseMessage, setResponseMessage] = useState("");
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const [snackbar, setSnackbar] = useState();
   const handleCloseSnackbar = () => setSnackbar(null);
@@ -49,7 +52,7 @@ const Account = () => {
   const userSchema = yup.object().shape({
     firstName: yup.string().required("required"),
     lastName: yup.string().required("required"),
-    gender: yup.string(),
+    gender: yup.string().required("required"),
     email: yup.string().email("Invalid email").required("required"),
     phone: yup
       .string()
@@ -58,12 +61,7 @@ const Account = () => {
 
   const accountSchema = yup.object().shape({
     userName: yup.string().required("required"),
-    password: yup
-      .string()
-      .required("required")
-      .test("Password match", "Incorrect Password", function (password) {
-        return password === currentUser.password;
-      }),
+    password: yup.string().required("required"),
     newPassword: yup
       .string()
       .min(8, "*Your password must be at least 8 characters")
@@ -88,24 +86,46 @@ const Account = () => {
       .required("required"),
   });
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
-    setSnackbar({
-      children: "Profile successfully updated",
-      severity: "success",
-    });
+  const handleFormSubmit = async (values) => {
+    try {
+      const profile = {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        gender: values.gender,
+        phone: values.phone,
+      };
+
+      const response = await updateProfile(profile);
+      setResponseMessage(response.data.message);
+      setSnackbar({
+        children: "Profile successfully updated",
+        severity: "success",
+      });
+    } catch (error) {
+      console.log(error);
+      setResponseMessage(error.response.data.message);
+      setSnackbar({ children: error.response.data.message, severity: "error" });
+    }
   };
 
-  const handleAccountSubmit = (values) => {
-    console.log(currentUser.password);
-    if (values.password === currentUser.password) {
-      console.log(values);
+  const handleAccountSubmit = async (values) => {
+    try {
+      const account = {
+        userName: values.userName,
+        password: values.password,
+        newPassword: values.newPassword,
+      };
+      const response = await updateAccount(account);
+      setResponseMessage(response.data.message);
       setSnackbar({
         children: "Account successfully updated",
         severity: "success",
       });
-    } else {
-      setSnackbar({ children: "Incorrect password", severity: "error" });
+    } catch (error) {
+      console.log(error);
+      setResponseMessage(error.response.data.message);
+      setSnackbar({ children: error.response.data.message, severity: "error" });
     }
   };
 
@@ -180,6 +200,9 @@ const Account = () => {
                   <MenuItem value={"Male"}>Male</MenuItem>
                   <MenuItem value={"Female"}>Female</MenuItem>
                 </Select>
+                <FormHelperText>
+                  {touched.gender && errors.gender}
+                </FormHelperText>
               </FormControl>
               <TextField
                 fullWidth
@@ -278,7 +301,7 @@ const Account = () => {
                       </InputAdornment>
                     ),
                   }}
-                  label="Password"
+                  label="Current Password"
                 />
               </FormControl>
               <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
