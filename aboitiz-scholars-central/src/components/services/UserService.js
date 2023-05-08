@@ -57,6 +57,12 @@ export const addScholarDetails = async (scholarDetails) => {
   return response;
 };
 
+// Put Current Scholar Details
+export const updateCurrentScholar = async (scholarDetails) => {
+  const response = await axios.put(`${BASE_URL}/scholar/details`, scholarDetails);
+  return response;
+};
+
 // Put Scholar Details
 export const updateScholarDetails = async (id, scholarDetails) => {
   const response = await axios.put(`${BASE_URL}/scholar/details/${id}`, scholarDetails);

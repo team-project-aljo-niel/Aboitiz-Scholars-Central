@@ -22,6 +22,7 @@ import { getCurrentUser, loginUser } from "../services/UserService";
 import { useNavigate } from "react-router";
 import { useContext } from "react";
 import { CurrentUserContext } from "../providers/CurrentUserProvider";
+import { TriggerContext } from "../providers/TriggerProvider";
 
 const initialValues = {
   userName: "",
@@ -37,6 +38,7 @@ const Login = () => {
   const [theme, colorMode] = useMode();
   const colors = themeColors(theme.palette.mode);
   const [, setCurrentUser] = useContext(CurrentUserContext);
+  const [trigger, setTrigger] = useContext(TriggerContext);
   const [responseMessage, setResponseMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -58,6 +60,7 @@ const Login = () => {
       ] = `Bearer ${response.data.accessToken}`;
       const userDetails = await getCurrentUser();
       setCurrentUser(userDetails.data);
+      setTrigger(!trigger);
       if (userDetails.data.access === "Scholar") {
         navigate("/ASC/profile");
       } else {
