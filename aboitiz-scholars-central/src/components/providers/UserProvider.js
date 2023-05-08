@@ -1,12 +1,16 @@
 import { useEffect } from "react";
 import { createContext, useState } from "react";
 import { getUsers } from "../services/UserService";
+import { useContext } from "react";
+import { TriggerContext } from "./TriggerProvider";
 
 export const UserContext = createContext();
 
 // Provider for users array
 export const UserProvider = (props) => {
   const [users, setUsers] = useState([]);
+  const [trigger] = useContext(TriggerContext);
+  const accessToken = localStorage.getItem("token-auth");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -18,7 +22,7 @@ export const UserProvider = (props) => {
       }
     };
     fetchUsers();
-  }, [users]);
+  }, [accessToken, trigger]);
 
   return (
     <UserContext.Provider value={[users, setUsers]}>
