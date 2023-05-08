@@ -6,9 +6,7 @@ const maxRetry = 3;
 
 const authChecker = async (req, res, next, retryCount = 0) => {
   try {
-    console.log(req.headers.authorization);
-    console.log('cookies', req.cookies);
-    const accessToken = req.headers.authorization.split(' ')[1];
+    const accessToken = req?.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(
       accessToken,
       process.env.ACCESS_TOKEN_SECRET
@@ -16,12 +14,10 @@ const authChecker = async (req, res, next, retryCount = 0) => {
     req.userId = decodedToken.userId;
     next();
   } catch (error) {
-    console.log(error.name);
     if (error.name === 'TokenExpiredError' && retryCount < maxRetry) {
-      console.log('aljo');
       try {
         const refreshToken = req.cookies.refreshToken;
-        console.log('refresh', refreshToken);
+
         const decodedToken = jwt.verify(
           refreshToken,
           process.env.REFRESH_TOKEN_SECRET

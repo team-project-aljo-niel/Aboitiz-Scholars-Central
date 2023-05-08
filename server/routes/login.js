@@ -47,8 +47,6 @@ router.post('/', async (req, res, next) => {
       sameSite: 'none',
     });
 
-    console.log('refreshtokenisset', refreshToken);
-
     res.status(200).json({ accessToken });
   } catch (error) {
     console.log(error);
