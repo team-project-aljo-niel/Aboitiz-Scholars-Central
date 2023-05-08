@@ -1,12 +1,16 @@
 import { useEffect } from "react";
 import { createContext, useState } from "react";
 import { getScholars } from "../services/UserService";
+import { useContext } from "react";
+import { TriggerContext } from "./TriggerProvider";
 
 export const ScholarContext = createContext();
 
 // Provider for scholars array
 export const ScholarProvider = (props) => {
   const [scholars, setScholars] = useState([]);
+  const [trigger] = useContext(TriggerContext);
+  const accessToken = localStorage.getItem("token-auth");
 
   useEffect(() => {
     const fetchScholars = async () => {
@@ -18,7 +22,7 @@ export const ScholarProvider = (props) => {
       }
     };
     fetchScholars();
-  }, [scholars]);
+  }, [accessToken, trigger]);
 
   return (
     <ScholarContext.Provider value={[scholars, setScholars]}>

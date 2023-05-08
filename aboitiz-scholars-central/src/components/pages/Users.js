@@ -6,11 +6,13 @@ import { useContext, useState } from "react";
 import { UserContext } from "../providers/UserProvider";
 import { updateAccess } from "../services/UserService";
 import { useCallback } from "react";
+import { TriggerContext } from "../providers/TriggerProvider";
 
 const Users = () => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);
   const [users] = useContext(UserContext);
+  const [trigger, setTrigger] = useContext(TriggerContext);
   const [snackbar, setSnackbar] = useState();
 
   const handleCloseSnackbar = () => setSnackbar(null);
@@ -23,9 +25,10 @@ const Users = () => {
       children: "User role successfully saved",
       severity: "success",
     });
+    setTrigger(!trigger);
     return response;
+    // eslint-disable-next-line
   }, []);
-
   // const handleProcessRowUpdateError = useCallback((error) => {
   //   setSnackbar({ children: error.message, severity: "error" });
   // }, []);
@@ -35,6 +38,7 @@ const Users = () => {
       field: "_id",
       headerName: "ID",
       headerAlign: "center",
+      flex: 1,
       align: "center",
     },
     {
@@ -81,7 +85,10 @@ const Users = () => {
 
   return (
     <Box m="20px">
-      <Header title="Users" subtitle="Double-click access level fields to edit" />
+      <Header
+        title="Users"
+        subtitle="Double-click access level fields to edit"
+      />
       <Box
         mt="40px"
         height="75vh"
@@ -91,16 +98,18 @@ const Users = () => {
           },
           "& .MuiDataGrid-cell": {
             border: "none",
+            fontSize: "20px",
           },
           "& .access-column--cell": {
             color: colors.redAccent[300],
-            fontSize: "18px",
             fontWeight: "bold",
           },
           "& .MuiDataGrid-columnHeaders": {
             borderBottom: "none",
             backgroundColor: colors.grey[400],
             color: colors.black[500],
+            fontWeight: "bold",
+            fontSize: "18px",
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",

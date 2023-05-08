@@ -44,7 +44,6 @@ const UserForm = () => {
   const [responseMessage, setResponseMessage] = useState("");
 
   const [snackbar, setSnackbar] = useState();
-
   const handleCloseSnackbar = () => setSnackbar(null);
 
   const handleFormSubmit = async (values) => {
