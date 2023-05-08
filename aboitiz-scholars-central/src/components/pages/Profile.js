@@ -25,13 +25,15 @@ import { useContext } from "react";
 import phGeo from "../data/phGeo";
 import {
   addScholarDetails,
-  updateScholarDetails,
+  updateCurrentScholar,
 } from "../services/UserService";
+import { TriggerContext } from "../providers/TriggerProvider";
 
 const Profile = () => {
   const isNonMobile = useMediaQuery("(min-width:600px");
   const [, setResponseMessage] = useState("");
   const [currentUser] = useContext(CurrentUserContext);
+  const [trigger, setTrigger] = useContext(TriggerContext);
   const [snackbar, setSnackbar] = useState();
   const scholarData = currentUser.scholarData[0];
   if (!currentUser) {
@@ -83,7 +85,6 @@ const Profile = () => {
   }
 
   const handleFormSubmit = async (values) => {
-    console.log(values);
     try {
       const scholarDetails = {
         age: values.age,
@@ -102,7 +103,7 @@ const Profile = () => {
         company: values.company,
       };
       if (scholarData) {
-        const response = await updateScholarDetails(scholarDetails);
+        const response = await updateCurrentScholar(scholarDetails);
         setResponseMessage(response.data);
         setSnackbar({
           children: "Details successfully updated",
@@ -116,6 +117,7 @@ const Profile = () => {
           severity: "success",
         });
       }
+      setTrigger(!trigger);
     } catch (error) {
       console.log(error);
       setResponseMessage(error.response.data.message);

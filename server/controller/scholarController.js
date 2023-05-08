@@ -46,7 +46,7 @@ const scholarController = {
     }
   },
 
-  updateScholarDetails: async (req, res, next) => {
+  updateCurrentScholar: async (req, res, next) => {
     try {
       const userId = req.userId;
 
@@ -86,37 +86,9 @@ const scholarController = {
         sponsoringBusinessUnit: req.body.sponsoringBusinessUnit,
       });
 
-      res.status(200).send('User Access changed succesfully');
-    } catch (error) {
-      return next(new httpError('Error changing user access', 500));
-    }
-  },
-
-  updateScholarDetails: async (req, res, next) => {
-    try {
-      const updateScholar = await Scholar.findByIdAndUpdate(req.params.id, {
-        status: req.body.status,
-        terminationRemarks: req.body.terminationRemarks,
-        age: req.body.age,
-        island: req.body.island,
-        province: req.body.province,
-        city: req.body.city,
-        address: req.body.address,
-        schoolAttended: req.body.schoolAttended,
-        degreeOrProgram: req.body.degreeOrProgram,
-        yearAdmitted: req.body.yearAdmitted,
-        yearEndedOrGraduated: req.body.yearEndedOrGraduated,
-        latinHonors: req.body.latinHonors,
-        employed: req.body.employed,
-        aboitizCompany: req.body.aboitizCompany,
-        designation: req.body.designation,
-        company: req.body.company,
-        sponsoringBusinessUnit: req.body.sponsoringBusinessUnit,
-      });
-
       res.status(200).send('Scholar details changed succesfully');
     } catch (error) {
-      return next(new httpError('Error changing user access', 500));
+      return next(new httpError('Error updating scholar details', 500));
     }
   },
 };

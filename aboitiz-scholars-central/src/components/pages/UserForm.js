@@ -5,6 +5,8 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../Header";
 import { createUser } from "../services/UserService";
 import { useState } from "react";
+import { TriggerContext } from "../providers/TriggerProvider";
+import { useContext } from "react";
 
 const initialValues = {
   userName: "",
@@ -42,7 +44,7 @@ const userSchema = yup.object().shape({
 const UserForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px");
   const [responseMessage, setResponseMessage] = useState("");
-
+  const [trigger, setTrigger] = useContext(TriggerContext);
   const [snackbar, setSnackbar] = useState();
   const handleCloseSnackbar = () => setSnackbar(null);
 
@@ -59,6 +61,7 @@ const UserForm = () => {
       const response = await createUser(user);
       setResponseMessage(response.data.message);
       setSnackbar({ children: "User successfully created", severity: "success" });
+      setTrigger(!trigger);
     } catch (error) {
       console.log(error);
       setResponseMessage(error.response.data.message);
