@@ -14,7 +14,6 @@ import {
   Select,
   Snackbar,
   TextField,
-  Typography,
   useMediaQuery,
 } from "@mui/material";
 import { Formik } from "formik";
@@ -31,10 +30,9 @@ import {
 
 const Profile = () => {
   const isNonMobile = useMediaQuery("(min-width:600px");
-  const [responseMessage, setResponseMessage] = useState("");
+  const [, setResponseMessage] = useState("");
   const [currentUser] = useContext(CurrentUserContext);
   const [snackbar, setSnackbar] = useState();
-  const [honors, setHonors] = useState("n/a");
   const scholarData = currentUser.scholarData[0];
   if (!currentUser) {
     return <div>...Loading</div>;
@@ -105,14 +103,14 @@ const Profile = () => {
       };
       if (scholarData) {
         const response = await updateScholarDetails(scholarDetails);
-        setResponseMessage(response.data.message);
+        setResponseMessage(response.data);
         setSnackbar({
           children: "Details successfully updated",
           severity: "success",
         });
       } else {
         const response = await addScholarDetails(scholarDetails);
-        setResponseMessage(response.data.message);
+        setResponseMessage(response.data);
         setSnackbar({
           children: "Details successfully added",
           severity: "success",

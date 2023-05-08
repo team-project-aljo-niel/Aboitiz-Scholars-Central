@@ -27,6 +27,12 @@ export const getUsers = async () => {
   return response;
 };
 
+// Get all Scholar Data service
+export const getScholars = async () => {
+  const response = await axios.get(`${BASE_URL}/scholar`);
+  return response;
+};
+
 // Put User Access Level
 export const updateAccess = async (_id, access) => {
   const response = await axios.put(`${BASE_URL}/user/${_id}`, access);
@@ -52,7 +58,7 @@ export const addScholarDetails = async (scholarDetails) => {
 };
 
 // Put Scholar Details
-export const updateScholarDetails = async (scholarDetails) => {
-  const response = await axios.put(`${BASE_URL}/scholar/details`, scholarDetails);
+export const updateScholarDetails = async (id, scholarDetails) => {
+  const response = await axios.put(`${BASE_URL}/scholar/details/${id}`, scholarDetails);
   return response;
 };
