@@ -81,7 +81,7 @@ const Users = () => {
 
   return (
     <Box m="20px">
-      <Header title="Users" subtitle="User Database" />
+      <Header title="Users" subtitle="Double-click access level fields to edit" />
       <Box
         mt="40px"
         height="75vh"

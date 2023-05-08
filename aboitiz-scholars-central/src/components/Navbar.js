@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
+import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { themeColors } from "../theme";
 import {
@@ -10,12 +10,16 @@ import {
   AccountCircleOutlined,
   PersonAddOutlined,
   AccountBoxOutlined,
-  ManageAccountsOutlined
+  ManageAccountsOutlined,
+  ContactsOutlined,
+  Groups3Outlined,
+  GradeOutlined,
 } from "@mui/icons-material";
 import "react-pro-sidebar/dist/css/styles.css";
 import NavItems from "./NavItems";
 import { useContext } from "react";
 import { CurrentUserContext } from "./providers/CurrentUserProvider";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const theme = useTheme();
@@ -38,6 +42,7 @@ const Navbar = () => {
           backgroundColor: "transparent !important",
         },
         "& .pro-inner-item": {
+          color: "#ffffff",
           padding: "5px 35px 5px 20px !important",
         },
         "$ .pro-inner-item:hover": {
@@ -135,13 +140,27 @@ const Navbar = () => {
                     setSelected={setSelected}
                   />
                 ) : undefined}
-                <NavItems
-                  title="Manage Scholars"
-                  to="/ASC/scholars"
-                  icon={<SchoolOutlined />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
+                <SubMenu title="Manage Scholars" icon={<SchoolOutlined />}>
+                  <MenuItem
+                    icon={<ContactsOutlined />}
+                    style={{ marginBottom: "10px" }}
+                  >
+                    Scholars Information
+                    <Link to="/ASC/scholars/information" />
+                  </MenuItem>
+                  <MenuItem
+                    icon={<Groups3Outlined />}
+                    style={{ marginBottom: "10px" }}
+                  >
+                    Scholars Status <Link to="/ASC/scholars/status" />
+                  </MenuItem>
+                  <MenuItem
+                    icon={<GradeOutlined />}
+                    style={{ marginBottom: "10px" }}
+                  >
+                    Scholars Grades <Link to="/ASC/scholars/grades" />
+                  </MenuItem>
+                </SubMenu>
                 <NavItems
                   title="Create User"
                   to="/ASC/create-user"
