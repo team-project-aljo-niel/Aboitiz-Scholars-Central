@@ -3,11 +3,14 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { createContext } from "react";
 import { getCurrentUser } from "../services/UserService";
+import { useContext } from "react";
+import { TriggerContext } from "./TriggerProvider";
 
 export const CurrentUserContext = createContext();
 
 export const CurrentUserProvider = (props) => {
   const [currentUser, setCurrentUser] = useState();
+  const [trigger] = useContext(TriggerContext);
   const accessToken = localStorage.getItem("token-auth");
 
   useEffect(() => {
@@ -25,7 +28,8 @@ export const CurrentUserProvider = (props) => {
       }
     };
     fetchUserDetails();
-  }, [accessToken, currentUser]);
+    // eslint-disable-next-line
+  }, [accessToken, trigger]);
 
   return (
     <CurrentUserContext.Provider value={[currentUser, setCurrentUser]}>

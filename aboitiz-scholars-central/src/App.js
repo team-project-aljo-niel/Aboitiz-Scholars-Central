@@ -15,6 +15,7 @@ import ScholarsGrades from "./components/pages/ScholarsGrades";
 import { UserProvider } from "./components/providers/UserProvider";
 import { ScholarProvider } from "./components/providers/ScholarProvider";
 import { CurrentUserProvider } from "./components/providers/CurrentUserProvider";
+import { TriggerProvider } from "./components/providers/TriggerProvider";
 
 function App() {
   const router = createBrowserRouter([
@@ -89,13 +90,15 @@ function App() {
     },
   ]);
   return (
-    <CurrentUserProvider>
-      <UserProvider>
-        <ScholarProvider>
-          <RouterProvider router={router} />
-        </ScholarProvider>
-      </UserProvider>
-    </CurrentUserProvider>
+    <TriggerProvider>
+      <CurrentUserProvider>
+        <UserProvider>
+          <ScholarProvider>
+            <RouterProvider router={router} />
+          </ScholarProvider>
+        </UserProvider>
+      </CurrentUserProvider>
+    </TriggerProvider>
   );
 }
 

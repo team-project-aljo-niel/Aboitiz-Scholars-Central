@@ -5,13 +5,14 @@ import { useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { updateScholarDetails } from "../services/UserService";
 import { ScholarContext } from "../providers/ScholarProvider";
+import { TriggerContext } from "../providers/TriggerProvider";
 
 const ScholarsStatus = () => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);
   const [scholars] = useContext(ScholarContext);
+  const [trigger, setTrigger] = useContext(TriggerContext);
   const [snackbar, setSnackbar] = useState();
-
   const handleCloseSnackbar = () => setSnackbar(null);
 
   const processRowUpdate = useCallback(async (newRow, oldRow) => {
@@ -30,10 +31,12 @@ const ScholarsStatus = () => {
         children: "Scholar status successfully updated",
         severity: "success",
       });
+      setTrigger(!trigger);
       return response;
     } catch (error) {
       console.log(error);
     }
+    // eslint-disable-next-line
   }, []);
 
   const handleProcessRowUpdateError = (error) => {
@@ -45,7 +48,7 @@ const ScholarsStatus = () => {
     {
       field: "_id",
       headerName: "ID",
-      width: 300,
+      flex: 1,
       headerAlign: "center",
       align: "center",
       cellClassName: "id-column--cell",
