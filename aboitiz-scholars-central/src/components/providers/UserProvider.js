@@ -10,9 +10,9 @@ export const UserProvider = (props) => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const response = await getUsers();
-      setUsers(response.data);
       try {
+        const response = await getUsers();
+        setUsers(response.data);
       } catch (error) {
         console.log(error);
       }
