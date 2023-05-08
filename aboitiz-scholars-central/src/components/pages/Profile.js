@@ -24,6 +24,10 @@ import { useState } from "react";
 import { CurrentUserContext } from "../providers/CurrentUserProvider";
 import { useContext } from "react";
 import phGeo from "../data/phGeo";
+import {
+  addScholarDetails,
+  updateScholarDetails,
+} from "../services/UserService";
 
 const Profile = () => {
   const isNonMobile = useMediaQuery("(min-width:600px");
@@ -50,22 +54,24 @@ const Profile = () => {
     aboitizCompany: scholarData?.aboitizCompany || "No",
     designation: scholarData?.designation || "",
     company: scholarData?.company || "",
+    age: scholarData?.age || "",
   };
 
   const userSchema = yup.object().shape({
-    address: yup.string(),
+    address: yup.string().required("required"),
     city: yup.string().required("required"),
-    province: yup.string(),
+    province: yup.string().required("required"),
     island: yup.string().required("required"),
-    schoolAttended: yup.string(),
-    degreeOrProgram: yup.string(),
-    yearAdmitted: yup.string(),
-    yearEndedOrGraduated: yup.string(),
-    latinHonors: yup.string(),
-    employed: yup.string(),
-    aboitizCompany: yup.string(),
+    schoolAttended: yup.string().required("required"),
+    degreeOrProgram: yup.string().required("required"),
+    yearAdmitted: yup.string().required("required"),
+    yearEndedOrGraduated: yup.string().required("required"),
+    latinHonors: yup.string().required("required"),
+    employed: yup.string().required("required"),
+    aboitizCompany: yup.string().required("required"),
     designation: yup.string(),
     company: yup.string(),
+    age: yup.number().required("required"),
   });
 
   const handleCloseSnackbar = () => setSnackbar(null);
@@ -78,8 +84,45 @@ const Profile = () => {
     years.push(i);
   }
 
-  const handleFormSubmit = (values) => {
+  const handleFormSubmit = async (values) => {
     console.log(values);
+    try {
+      const scholarDetails = {
+        age: values.age,
+        address: values.address,
+        city: values.city,
+        province: values.province,
+        island: values.island,
+        schoolAttended: values.schoolAttended,
+        degreeOrProgram: values.degreeOrProgram,
+        yearAdmitted: values.yearAdmitted,
+        yearEndedOrGraduated: values.yearEndedOrGraduated,
+        latinHonors: values.latinHonors,
+        employed: values.employed,
+        aboitizCompany: values.aboitizCompany,
+        designation: values.designation,
+        company: values.company,
+      };
+      if (scholarData) {
+        const response = await updateScholarDetails(scholarDetails);
+        setResponseMessage(response.data.message);
+        setSnackbar({
+          children: "Details successfully updated",
+          severity: "success",
+        });
+      } else {
+        const response = await addScholarDetails(scholarDetails);
+        setResponseMessage(response.data.message);
+        setSnackbar({
+          children: "Details successfully added",
+          severity: "success",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setResponseMessage(error.response.data.message);
+      setSnackbar({ children: error.response.data.message, severity: "error" });
+    }
   };
 
   return (
@@ -113,6 +156,19 @@ const Profile = () => {
                 fullWidth
                 variant="filled"
                 type="text"
+                label="Age"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.age}
+                name="age"
+                error={!!touched.age && !!errors.age}
+                helperText={touched.age && errors.age}
+                sx={{ gridColumn: "span 1" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
                 label="Address"
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -128,7 +184,9 @@ const Profile = () => {
                 name="city"
                 options={phGeo}
                 value={{ city: values.city }}
-                isOptionEqualToValue={(option, value) => option.city === value.city}
+                isOptionEqualToValue={(option, value) =>
+                  option.city === value.city
+                }
                 getOptionLabel={(option) => option.city}
                 renderOption={(props, option) => {
                   return (
@@ -176,7 +234,7 @@ const Profile = () => {
               <FormControl
                 fullWidth
                 variant="filled"
-                sx={{ gridColumn: "span 2" }}
+                sx={{ gridColumn: "span 1" }}
               >
                 <InputLabel id="demo-simple-select-label">
                   Island Group
@@ -274,7 +332,7 @@ const Profile = () => {
                     !!errors.yearEndedOrGraduated
                   }
                 >
-                  <MenuItem value={"n/a"}>N/A</MenuItem>
+                  <MenuItem value={"N/A"}>N/A</MenuItem>
                   {years.map((year) => (
                     <MenuItem key={year} value={year}>
                       {year}
@@ -288,6 +346,7 @@ const Profile = () => {
               <FormControl
                 fullWidth
                 variant="filled"
+                disabled={values.yearEndedOrGraduated !== "N/A" ? false : true}
                 sx={{ gridColumn: "span 4" }}
               >
                 <InputLabel id="demo-simple-select-label">
@@ -299,11 +358,13 @@ const Profile = () => {
                   label="Latin Honors"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.latinHonors}
+                  value={values.yearEndedOrGraduated !== "N/A"
+                  ? values.latinHonors
+                  : (values.latinHonors = "N/A")}
                   name="latinHonors"
                   error={!!touched.latinHonors && !!errors.latinHonors}
                 >
-                  <MenuItem value={"n/a"}>N/A</MenuItem>
+                  <MenuItem value={"N/A"}>N/A</MenuItem>
                   <MenuItem value={"Summa Cum Laude"}>Summa Cum Laude</MenuItem>
                   <MenuItem value={"Magna Cum Laude"}>Magna Cum Laude</MenuItem>
                   <MenuItem value={"Cum Laude"}>Cum Laude</MenuItem>
@@ -341,7 +402,11 @@ const Profile = () => {
                   aria-labelledby="aboitiz-row-radio-buttons-group-label"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.aboitizCompany}
+                  value={
+                    values.employed === "Yes"
+                      ? values.aboitizCompany
+                      : (values.aboitizCompany = "No")
+                  }
                   name="aboitizCompany"
                 >
                   <FormControlLabel
@@ -360,7 +425,11 @@ const Profile = () => {
                 label="Company"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.employed === "Yes" ? values.company : ""}
+                value={
+                  values.employed === "Yes"
+                    ? values.company
+                    : (values.company = "")
+                }
                 name="company"
                 error={!!touched.company && !!errors.company}
                 helperText={touched.company && errors.company}
@@ -374,7 +443,11 @@ const Profile = () => {
                 label="Designation"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.designation}
+                value={
+                  values.employed === "Yes"
+                    ? values.designation
+                    : (values.designation = "")
+                }
                 name="designation"
                 error={!!touched.designation && !!errors.designation}
                 helperText={touched.designation && errors.designation}

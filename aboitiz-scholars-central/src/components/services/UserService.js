@@ -44,3 +44,15 @@ export const updateAccount = async (account) => {
   const response = await axios.put(`${BASE_URL}/user/account`, account);
   return response;
 };
+
+// Post Scholar Details
+export const addScholarDetails = async (scholarDetails) => {
+  const response = await axios.post(`${BASE_URL}/scholar/details`, scholarDetails);
+  return response;
+};
+
+// Put Scholar Details
+export const updateScholarDetails = async (scholarDetails) => {
+  const response = await axios.put(`${BASE_URL}/scholar/details`, scholarDetails);
+  return response;
+};

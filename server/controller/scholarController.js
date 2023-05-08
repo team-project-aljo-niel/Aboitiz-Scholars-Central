@@ -5,7 +5,7 @@ const httpError = require('../models/httpError');
 const bcrypt = require('bcrypt');
 
 const capitalize = (value) => {
-  const result = value[0].toUpperCase() + value.slice(1);
+  const result = value[0]?.toUpperCase() + value?.slice(1);
   return `${result}`;
 };
 
@@ -40,7 +40,7 @@ const scholarController = {
         });
 
         for await (const [key, value] of Object.entries(req.body)) {
-          newScholar[key] = capitalize(value);
+          newScholar[key] = (value);
         }
         await newScholar.save();
         userDetails.scholarData = newScholar._id;
@@ -66,9 +66,8 @@ const scholarController = {
       const currentScholar = await Scholar.findOne({ user: userId });
 
       // loop through request body and update scholarData
-
       for await (const [key, value] of Object.entries(req.body)) {
-        currentScholar[key] = capitalize(value);
+        currentScholar[key] = (value);
       }
 
       await currentScholar.save();
