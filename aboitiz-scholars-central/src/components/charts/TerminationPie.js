@@ -41,7 +41,7 @@ const TerminationPie = ({ scholarsData, terminatedScholars }) => {
       padAngle={0.7}
       cornerRadius={3}
       activeOuterRadiusOffset={8}
-      colors={{ scheme: "spectral" }}
+      colors={{ scheme: "reds" }}
       theme={{
         // added
         axis: {
