@@ -1,10 +1,11 @@
-import { useTheme } from "@mui/material";
+import { useMediaQuery, useTheme } from "@mui/material";
 import { themeColors } from "../../theme";
 import { ResponsivePie } from "@nivo/pie";
 
 const TerminationPie = ({ scholarsData, terminatedScholars }) => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);
+  const isNonLaptop = useMediaQuery("(min-width:1025px");
   if (!scholarsData) {
     return <div>...Loading</div>;
   }
@@ -70,6 +71,12 @@ const TerminationPie = ({ scholarsData, terminatedScholars }) => {
             fill: colors.grey[100],
           },
         },
+        tooltip: {
+          container: {
+            background: colors.grey[500],
+            color: colors.black[500],
+          },
+        },
       }}
       borderWidth={1}
       borderColor={{
@@ -88,31 +95,35 @@ const TerminationPie = ({ scholarsData, terminatedScholars }) => {
         from: "color",
         modifiers: [["darker", 2]],
       }}
-      legends={[
-        {
-          anchor: "top-right",
-          direction: "column",
-          justify: false,
-          translateX: -40,
-          translateY: 0,
-          itemsSpacing: 15,
-          itemWidth: 104,
-          itemHeight: 20,
-          itemTextColor: colors.grey[100],
-          itemDirection: "left-to-right",
-          itemOpacity: 1,
-          symbolSize: 18,
-          symbolShape: "circle",
-          effects: [
-            {
-              on: "hover",
-              style: {
-                itemTextColor: "#000",
+      legends={
+        isNonLaptop
+          ? [
+              {
+                anchor: "top-right",
+                direction: "column",
+                justify: false,
+                translateX: -40,
+                translateY: 0,
+                itemsSpacing: 15,
+                itemWidth: 104,
+                itemHeight: 20,
+                itemTextColor: colors.grey[100],
+                itemDirection: "left-to-right",
+                itemOpacity: 1,
+                symbolSize: 18,
+                symbolShape: "circle",
+                effects: [
+                  {
+                    on: "hover",
+                    style: {
+                      itemTextColor: "#000",
+                    },
+                  },
+                ],
               },
-            },
-          ],
-        },
-      ]}
+            ]
+          : []
+      }
     />
   );
 };
