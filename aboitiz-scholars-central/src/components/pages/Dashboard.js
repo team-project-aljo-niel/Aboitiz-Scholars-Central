@@ -27,6 +27,8 @@ import {
 } from "@mui/icons-material";
 import ScholarsBar from "../charts/ScholarsBar";
 import TerminationPie from "../charts/TerminationPie";
+import AgePie from "../charts/AgePie";
+import GenderPie from "../charts/GenderPie";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -345,6 +347,76 @@ const Dashboard = () => {
           </Box>
         </Box>
         <Box
+          gridColumn="span 4"
+          gridRow="span 5"
+          backgroundColor={colors.primary[900]}
+        >
+          <Box
+            p="25px"
+            mt="0 25px"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box>
+              <Typography
+                variant="h5"
+                fontWeight="bold"
+                color={colors.black[500]}
+              >
+                Age Group
+              </Typography>
+            </Box>
+            <Box>
+              <IconButton>
+                <DownloadOutlined
+                  sx={{ fontSize: "26px", color: colors.redAccent[500] }}
+                />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box height="350px" mt="-60px">
+            <AgePie
+              scholarsData={scholarsCopy}
+            />
+          </Box>
+        </Box>
+        <Box
+          gridColumn="span 4"
+          gridRow="span 5"
+          backgroundColor={colors.primary[900]}
+        >
+          <Box
+            p="25px"
+            mt="0 25px"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box>
+              <Typography
+                variant="h5"
+                fontWeight="bold"
+                color={colors.black[500]}
+              >
+                Gender Group
+              </Typography>
+            </Box>
+            <Box>
+              <IconButton>
+                <DownloadOutlined
+                  sx={{ fontSize: "26px", color: colors.redAccent[500] }}
+                />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box height="350px" mt="-60px">
+            <GenderPie
+              scholarsData={scholarsCopy}
+            />
+          </Box>
+        </Box>
+        <Box
           gridColumn="span 8"
           gridRow="span 5"
           backgroundColor={colors.primary[900]}
@@ -381,7 +453,10 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box height="380px" mt="-60px">
-            <TerminationPie scholarsData={scholarsCopy} terminatedScholars={terminatedScholars}/>
+            <TerminationPie
+              scholarsData={scholarsCopy}
+              terminatedScholars={terminatedScholars}
+            />
           </Box>
         </Box>
       </Box>
