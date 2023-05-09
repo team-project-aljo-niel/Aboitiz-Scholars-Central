@@ -14,7 +14,7 @@ const AgePie = ({ scholarsData }) => {
     let age = scholarsData[i].age;
 
     if (age === undefined) {
-      age="Not Set"
+      age = "Not Set";
     }
 
     // Check if there is already an object for the current remarks
@@ -72,6 +72,12 @@ const AgePie = ({ scholarsData }) => {
             fill: colors.grey[100],
           },
         },
+        tooltip: {
+          container: {
+            background: colors.grey[500],
+            color: colors.black[500],
+          },
+        },
       }}
       borderWidth={1}
       borderColor={{
@@ -97,7 +103,7 @@ const AgePie = ({ scholarsData }) => {
           justify: false,
           translateX: 0,
           translateY: 56,
-          itemsSpacing: 0,
+          itemsSpacing: 8,
           itemWidth: 20,
           itemHeight: 18,
           itemTextColor: colors.grey[100],

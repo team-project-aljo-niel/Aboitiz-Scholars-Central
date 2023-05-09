@@ -80,6 +80,12 @@ const ScholarsBar = ({ scholarsData }) => {
             fill: colors.grey[100],
           },
         },
+        tooltip: {
+          container: {
+            background: colors.grey[500],
+            color: colors.black[500],
+          },
+        },
       }}
       borderColor={{
         from: "color",

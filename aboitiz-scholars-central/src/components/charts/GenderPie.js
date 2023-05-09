@@ -14,7 +14,7 @@ const GenderPie = ({ scholarsData }) => {
     let gender = scholarsData[i].gender;
 
     if (gender === undefined) {
-      gender="Not Set";
+      gender = "Not Set";
     }
 
     // Check if there is already an object for the current remarks
@@ -70,6 +70,12 @@ const GenderPie = ({ scholarsData }) => {
         legends: {
           text: {
             fill: colors.grey[100],
+          },
+        },
+        tooltip: {
+          container: {
+            background: colors.grey[500],
+            color: colors.black[500],
           },
         },
       }}

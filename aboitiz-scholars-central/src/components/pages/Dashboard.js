@@ -35,10 +35,19 @@ const Dashboard = () => {
   const colors = themeColors(theme.palette.mode);
   const [scholars, setScholars] = useContext(ScholarContext);
   const [trigger, setTrigger] = useContext(TriggerContext);
-  const isNonMobile = useMediaQuery("(min-width:600px");
+  const isNonTablet = useMediaQuery("(min-width:600px");
+  const isNonLaptop = useMediaQuery("(min-width:1200px");
   const [scholarsCopy, setScholarsCopy] = useState(scholars);
 
   useEffect(() => {}, [trigger]);
+
+  if (!scholars) {
+    return <div>...Loading</div>;
+  }
+
+  if (!scholarsCopy) {
+    return <div>...Loading</div>;
+  }
 
   // Scholar status arrays
   const activeScholars = scholarsCopy.filter(
@@ -101,10 +110,6 @@ const Dashboard = () => {
   provinces.shift();
   islandGroups.shift();
 
-  if (!scholars) {
-    return <div>...Loading</div>;
-  }
-
   return (
     <Box m="20px">
       <Header title="Dashboard" subtitle="Scholars Dashboard" />
@@ -114,44 +119,32 @@ const Dashboard = () => {
         gap="20px"
         mb="20px"
         gridTemplateColumns="repeat(12, minmax(0, 1fr))"
-        sx={{
-          "& > div": { gridColumn: isNonMobile ? undefined : "span 6" },
-        }}
+        // sx={{
+        //   "& > div": { gridColumn: isNonLaptop ? undefined : "span 6" },
+        // }}
       >
-        <Box sx={{ gridColumn: "span 2" }}>
+        <Box sx={{ gridColumn: isNonLaptop ? "span 2" : "span 4" }}>
           <Filter label="Business Unit" categories={businessUnits} />
         </Box>
-        <Box sx={{ gridColumn: "span 2" }}>
+        <Box sx={{ gridColumn: isNonLaptop ? "span 2" : "span 4" }}>
           {" "}
-          <Filter
-            label="City"
-            categories={cities}
-            sx={{ gridColumn: "span 2" }}
-          />
+          <Filter label="City" categories={cities} />
         </Box>
-        <Box sx={{ gridColumn: "span 2" }}>
+        <Box sx={{ gridColumn: isNonLaptop ? "span 2" : "span 4" }}>
           {" "}
-          <Filter
-            label="Province"
-            categories={provinces}
-            sx={{ gridColumn: "span 2" }}
-          />
+          <Filter label="Province" categories={provinces} />
         </Box>
-        <Box sx={{ gridColumn: "span 2" }}>
+        <Box sx={{ gridColumn: isNonLaptop ? "span 2" : "span 4" }}>
           {" "}
-          <Filter
-            label="Island Group"
-            categories={islandGroups}
-            sx={{ gridColumn: "span 2" }}
-          />
+          <Filter label="Island Group" categories={islandGroups} />
         </Box>
-        <Box sx={{ gridColumn: "span 2" }}>
+        <Box sx={{ gridColumn: isNonLaptop ? "span 2" : "span 4" }}>
           {" "}
-          <DateFilter label="From Year" sx={{ gridColumn: "span 2" }} />
+          <DateFilter label="From Year" />
         </Box>
-        <Box sx={{ gridColumn: "span 2" }}>
+        <Box sx={{ gridColumn: isNonLaptop ? "span 2" : "span 4" }}>
           {" "}
-          <DateFilter label="To Year" sx={{ gridColumn: "span 2" }} />
+          <DateFilter label="To Year" />
         </Box>
       </Box>
       {/* DATA WIDGETS */}
@@ -161,12 +154,12 @@ const Dashboard = () => {
         gap="10px"
         gridAutoRows="80px"
         gridTemplateColumns="repeat(12, minmax(0, 1fr))"
-        sx={{
-          "& > div": { gridColumn: isNonMobile ? undefined : "span 6" },
-        }}
+        // sx={{
+        //   "& > div": { gridColumn: isNonLaptop ? undefined : "span 6" },
+        // }}
       >
         <Box
-          gridColumn="span 3"
+          gridColumn={isNonLaptop ? "span 3" : "span 4"}
           backgroundColor={colors.primary[900]}
           display="flex"
           alignItems="center"
@@ -183,7 +176,7 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          gridColumn={isNonLaptop ? "span 3" : "span 4"}
           backgroundColor={colors.primary[900]}
           display="flex"
           alignItems="center"
@@ -202,7 +195,7 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          gridColumn={isNonLaptop ? "span 3" : "span 4"}
           backgroundColor={colors.primary[900]}
           display="flex"
           alignItems="center"
@@ -223,7 +216,7 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          gridColumn={isNonLaptop ? "span 3" : "span 5"}
           backgroundColor={colors.primary[900]}
           display="flex"
           alignItems="center"
@@ -245,7 +238,7 @@ const Dashboard = () => {
         </Box>
         {/* Graduated Info */}
         <Box
-          gridColumn="span 4"
+          gridColumn={isNonLaptop ? "span 4" : "span 7"}
           backgroundColor={colors.primary[900]}
           display="flex"
           alignItems="center"
@@ -266,7 +259,7 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 4"
+          gridColumn={isNonLaptop ? "span 4" : "span 6"}
           backgroundColor={colors.primary[900]}
           display="flex"
           alignItems="center"
@@ -285,7 +278,7 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 4"
+          gridColumn={isNonLaptop ? "span 4" : "span 6"}
           backgroundColor={colors.primary[900]}
           display="flex"
           alignItems="center"
@@ -307,7 +300,7 @@ const Dashboard = () => {
         </Box>
         {/* Charts */}
         <Box
-          gridColumn="span 8"
+          gridColumn={isNonLaptop ? "span 8" : "span 12"}
           gridRow="span 5"
           backgroundColor={colors.primary[900]}
         >
@@ -347,7 +340,7 @@ const Dashboard = () => {
           </Box>
         </Box>
         <Box
-          gridColumn="span 4"
+          gridColumn={isNonLaptop ? "span 4" : "span 6"}
           gridRow="span 5"
           backgroundColor={colors.primary[900]}
         >
@@ -376,13 +369,11 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box height="350px" mt="-60px">
-            <AgePie
-              scholarsData={scholarsCopy}
-            />
+            <AgePie scholarsData={scholarsCopy} />
           </Box>
         </Box>
         <Box
-          gridColumn="span 4"
+          gridColumn={isNonLaptop ? "span 4" : "span 6"}
           gridRow="span 5"
           backgroundColor={colors.primary[900]}
         >
@@ -411,13 +402,11 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box height="350px" mt="-60px">
-            <GenderPie
-              scholarsData={scholarsCopy}
-            />
+            <GenderPie scholarsData={scholarsCopy} />
           </Box>
         </Box>
         <Box
-          gridColumn="span 8"
+          gridColumn={isNonLaptop ? "span 8" : "span 12"}
           gridRow="span 5"
           backgroundColor={colors.primary[900]}
         >
