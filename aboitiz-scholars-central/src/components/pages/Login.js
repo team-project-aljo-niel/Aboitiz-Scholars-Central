@@ -18,11 +18,12 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { getCurrentUser, loginUser } from "../services/UserService";
+import { getCurrentUser, getScholars, loginUser } from "../services/UserService";
 import { useNavigate } from "react-router";
 import { useContext } from "react";
 import { CurrentUserContext } from "../providers/CurrentUserProvider";
 import { TriggerContext } from "../providers/TriggerProvider";
+import { ScholarContext } from "../providers/ScholarProvider";
 
 const initialValues = {
   userName: "",
@@ -38,6 +39,7 @@ const Login = () => {
   const [theme, colorMode] = useMode();
   const colors = themeColors(theme.palette.mode);
   const [, setCurrentUser] = useContext(CurrentUserContext);
+  const [, setScholars] = useContext(ScholarContext);
   const [trigger, setTrigger] = useContext(TriggerContext);
   const [responseMessage, setResponseMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -64,6 +66,8 @@ const Login = () => {
       if (userDetails.data.access === "Scholar") {
         navigate("/ASC/profile");
       } else {
+        const response = await getScholars();
+        setScholars(response.data);
         navigate("/ASC/dashboard");
       }
     } catch (error) {

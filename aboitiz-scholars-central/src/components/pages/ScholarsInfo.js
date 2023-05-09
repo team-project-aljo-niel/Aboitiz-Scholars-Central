@@ -86,6 +86,24 @@ const ScholarsInfo = () => {
       align: "center",
     },
     {
+      field: "gender",
+      headerName: "Gender",
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "phone",
+      headerName: "Phone",
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      headerAlign: "center",
+      align: "center",
+    },
+    {
       field: "age",
       headerName: "Age",
       headerAlign: "center",
@@ -244,6 +262,9 @@ const ScholarsInfo = () => {
                 // Hide columns status and traderName, the other columns will remain visible
                 _id: false,
                 age: false,
+                gender: false,
+                phone: false,
+                email: false,
                 address: false,
                 terminationRemarks: false,
               },

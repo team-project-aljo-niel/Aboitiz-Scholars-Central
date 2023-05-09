@@ -3,6 +3,7 @@ import { createContext, useState } from "react";
 import { getUsers } from "../services/UserService";
 import { useContext } from "react";
 import { TriggerContext } from "./TriggerProvider";
+import axios from "axios";
 
 export const UserContext = createContext();
 
@@ -15,6 +16,11 @@ export const UserProvider = (props) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        if (accessToken){
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${accessToken}`;
+        }
         const response = await getUsers();
         setUsers(response.data);
       } catch (error) {
