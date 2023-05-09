@@ -43,8 +43,6 @@ function App() {
             </AdminGuard>
           ),
         },
-        // { path: "admins", element: <Admins /> },
-        // { path: "officers", element: <Officers /> },
         {
           path: "scholars/information",
           element: (

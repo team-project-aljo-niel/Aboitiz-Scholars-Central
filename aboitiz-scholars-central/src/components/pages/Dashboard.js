@@ -1,4 +1,10 @@
-import { Box, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Header from "../Header";
 import { useContext } from "react";
 import { ScholarContext } from "../providers/ScholarProvider";
@@ -7,18 +13,54 @@ import Filter from "../Filter";
 import { TriggerContext } from "../providers/TriggerProvider";
 import DateFilter from "../DateFilter";
 import { useEffect } from "react";
+import { themeColors } from "../../theme";
+import DataBox from "../DataBox";
+import {
+  Business,
+  DownloadOutlined,
+  Person,
+  PersonAdd,
+  PersonOff,
+  School,
+  Work,
+  WorkspacePremium,
+} from "@mui/icons-material";
+import ScholarsBar from "../charts/ScholarsBar";
+import TerminationPie from "../charts/TerminationPie";
 
 const Dashboard = () => {
+  const theme = useTheme();
+  const colors = themeColors(theme.palette.mode);
   const [scholars, setScholars] = useContext(ScholarContext);
   const [trigger, setTrigger] = useContext(TriggerContext);
   const isNonMobile = useMediaQuery("(min-width:600px");
   const [scholarsCopy, setScholarsCopy] = useState(scholars);
-  // const [businessUnit, setBusinessUnit] =  useState([])
+
   useEffect(() => {}, [trigger]);
 
-  if (!scholars) {
-    return <div>...Loading</div>;
-  }
+  // Scholar status arrays
+  const activeScholars = scholarsCopy.filter(
+    (scholar) => scholar.status === "Active"
+  );
+  const graduatedScholars = scholarsCopy.filter(
+    (scholar) => scholar.status === "Graduated"
+  );
+  const terminatedScholars = scholarsCopy.filter(
+    (scholar) => scholar.status === "Terminated"
+  );
+
+  // Graduated and Employed Scholars Array
+  const graduatedWithHonors = graduatedScholars.filter(
+    (graduate) => graduate.latinHonors !== "N/A"
+  );
+
+  const employedGraduates = graduatedScholars.filter(
+    (graduate) => graduate.employed === "Yes"
+  );
+
+  const employedInAboitiz = employedGraduates.filter(
+    (graduate) => graduate.aboitizCompany === "Yes"
+  );
 
   // Push each business unit intro an array
   const businessUnits = scholars.reduce((businessUnits, scholar) => {
@@ -57,12 +99,18 @@ const Dashboard = () => {
   provinces.shift();
   islandGroups.shift();
 
+  if (!scholars) {
+    return <div>...Loading</div>;
+  }
+
   return (
     <Box m="20px">
       <Header title="Dashboard" subtitle="Scholars Dashboard" />
+      {/* DATA FILTERS */}
       <Box
         display="grid"
-        gap="30px"
+        gap="20px"
+        mb="20px"
         gridTemplateColumns="repeat(12, minmax(0, 1fr))"
         sx={{
           "& > div": { gridColumn: isNonMobile ? undefined : "span 6" },
@@ -102,6 +150,239 @@ const Dashboard = () => {
         <Box sx={{ gridColumn: "span 2" }}>
           {" "}
           <DateFilter label="To Year" sx={{ gridColumn: "span 2" }} />
+        </Box>
+      </Box>
+      {/* DATA WIDGETS */}
+      {/* General Info */}
+      <Box
+        display="grid"
+        gap="10px"
+        gridAutoRows="80px"
+        gridTemplateColumns="repeat(12, minmax(0, 1fr))"
+        sx={{
+          "& > div": { gridColumn: isNonMobile ? undefined : "span 6" },
+        }}
+      >
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[900]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <DataBox
+            title={scholars.length}
+            subtitle="Total Scholars"
+            progress={scholarsCopy.length / scholarsCopy.length}
+            percentage={`${(scholarsCopy.length / scholarsCopy.length) * 100}%`}
+            icon={
+              <School sx={{ color: colors.redAccent[500], fontSize: "26px" }} />
+            }
+          />
+        </Box>
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[900]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <DataBox
+            title={activeScholars.length}
+            subtitle="Active Scholars"
+            progress={activeScholars.length / scholarsCopy.length}
+            percentage={`${Math.round(
+              (activeScholars.length / scholarsCopy.length) * 100
+            )}%`}
+            icon={
+              <Person sx={{ color: colors.redAccent[500], fontSize: "26px" }} />
+            }
+          />
+        </Box>
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[900]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <DataBox
+            title={graduatedScholars.length}
+            subtitle="Graduated Scholars"
+            progress={graduatedScholars.length / scholarsCopy.length}
+            percentage={`${Math.round(
+              (graduatedScholars.length / scholarsCopy.length) * 100
+            )}%`}
+            icon={
+              <PersonAdd
+                sx={{ color: colors.redAccent[500], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[900]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <DataBox
+            title={terminatedScholars.length}
+            subtitle="Terminated Scholars"
+            progress={terminatedScholars.length / scholarsCopy.length}
+            percentage={`${Math.round(
+              (terminatedScholars.length / scholarsCopy.length) * 100
+            )}%`}
+            icon={
+              <PersonOff
+                sx={{ color: colors.redAccent[500], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+        {/* Graduated Info */}
+        <Box
+          gridColumn="span 4"
+          backgroundColor={colors.primary[900]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <DataBox
+            title={graduatedWithHonors.length}
+            subtitle="Graduated w/ Latin Honors"
+            progress={graduatedWithHonors.length / graduatedScholars.length}
+            percentage={`${Math.round(
+              (graduatedWithHonors.length / graduatedScholars.length) * 100
+            )}%(Graduates)`}
+            icon={
+              <WorkspacePremium
+                sx={{ color: colors.redAccent[500], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+        <Box
+          gridColumn="span 4"
+          backgroundColor={colors.primary[900]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <DataBox
+            title={employedGraduates.length}
+            subtitle="Employed Graduates"
+            progress={employedGraduates.length / graduatedScholars.length}
+            percentage={`${Math.round(
+              (employedGraduates.length / graduatedScholars.length) * 100
+            )}%(Graduates)`}
+            icon={
+              <Work sx={{ color: colors.redAccent[500], fontSize: "26px" }} />
+            }
+          />
+        </Box>
+        <Box
+          gridColumn="span 4"
+          backgroundColor={colors.primary[900]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <DataBox
+            title={employedInAboitiz.length}
+            subtitle="Employed in Aboitiz Companies"
+            progress={employedInAboitiz.length / graduatedScholars.length}
+            percentage={`${Math.round(
+              (employedInAboitiz.length / graduatedScholars.length) * 100
+            )}%(Graduates)`}
+            icon={
+              <Business
+                sx={{ color: colors.redAccent[500], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+        {/* Charts */}
+        <Box
+          gridColumn="span 8"
+          gridRow="span 5"
+          backgroundColor={colors.primary[900]}
+        >
+          <Box
+            p="25px"
+            mt="0 25px"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box>
+              <Typography
+                variant="h5"
+                fontWeight="bold"
+                color={colors.black[500]}
+              >
+                Scholars
+              </Typography>
+              <Typography
+                variant="h5"
+                fontWeight="bold"
+                color={colors.redAccent[500]}
+              >
+                {scholarsCopy.length}
+              </Typography>
+            </Box>
+            <Box>
+              <IconButton>
+                <DownloadOutlined
+                  sx={{ fontSize: "26px", color: colors.redAccent[500] }}
+                />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box height="380px" mt="-40px">
+            <ScholarsBar scholarsData={scholarsCopy} />
+          </Box>
+        </Box>
+        <Box
+          gridColumn="span 8"
+          gridRow="span 5"
+          backgroundColor={colors.primary[900]}
+        >
+          <Box
+            p="25px"
+            mt="0 25px"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box>
+              <Typography
+                variant="h5"
+                fontWeight="bold"
+                color={colors.black[500]}
+              >
+                Terminated Scholars
+              </Typography>
+              <Typography
+                variant="h5"
+                fontWeight="bold"
+                color={colors.redAccent[500]}
+              >
+                {terminatedScholars.length}
+              </Typography>
+            </Box>
+            <Box>
+              <IconButton>
+                <DownloadOutlined
+                  sx={{ fontSize: "26px", color: colors.redAccent[500] }}
+                />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box height="380px" mt="-60px">
+            <TerminationPie scholarsData={scholarsCopy} terminatedScholars={terminatedScholars}/>
+          </Box>
         </Box>
       </Box>
     </Box>
