@@ -29,6 +29,7 @@ import ScholarsBar from "../charts/ScholarsBar";
 import TerminationPie from "../charts/TerminationPie";
 import AgePie from "../charts/AgePie";
 import GenderPie from "../charts/GenderPie";
+import GeoChoropleth from "../charts/GeoChoropleth";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -445,6 +446,41 @@ const Dashboard = () => {
             <TerminationPie
               scholarsData={scholarsCopy}
               terminatedScholars={terminatedScholars}
+            />
+          </Box>
+        </Box>
+        <Box
+          gridColumn={isNonLaptop ? "span 12" : "span 12"}
+          gridRow="span 10"
+          backgroundColor={colors.primary[900]}
+        >
+          <Box
+            p="25px"
+            mt="0 25px"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box>
+              <Typography
+                variant="h5"
+                fontWeight="bold"
+                color={colors.black[500]}
+              >
+                Scholars Provincial Map
+              </Typography>
+            </Box>
+            <Box>
+              <IconButton>
+                <DownloadOutlined
+                  sx={{ fontSize: "26px", color: colors.redAccent[500] }}
+                />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box height="850px" mt="-60px">
+            <GeoChoropleth
+              scholarsData={scholarsCopy}
             />
           </Box>
         </Box>

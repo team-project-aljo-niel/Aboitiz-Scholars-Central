@@ -17,19 +17,19 @@ const TerminationPie = ({ scholarsData, terminatedScholars }) => {
       continue;
     }
     // Check if there is already an object for the current remarks
-    let yearObj = data.find((obj) => obj.id === remarks);
+    let remarksObj = data.find((obj) => obj.id === remarks);
 
     // If there is no object for the current remarks, create a new one
-    if (!yearObj) {
-      yearObj = {
+    if (!remarksObj) {
+      remarksObj = {
         id: remarks,
         label: remarks,
         value: 0,
       };
-      data.push(yearObj);
+      data.push(remarksObj);
     }
     // Increment the count for the corresponding status
-    yearObj.value++;
+    remarksObj.value++;
   }
 
   data.sort((a, b) => a.label.length - b.label.length);
