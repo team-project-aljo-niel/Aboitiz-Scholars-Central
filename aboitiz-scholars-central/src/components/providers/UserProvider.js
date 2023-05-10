@@ -16,18 +16,19 @@ export const UserProvider = (props) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        if (accessToken){
+        if (accessToken) {
           axios.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${accessToken}`;
+          const response = await getUsers();
+          setUsers(response.data);
         }
-        const response = await getUsers();
-        setUsers(response.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchUsers();
+
   }, [accessToken, trigger]);
 
   return (

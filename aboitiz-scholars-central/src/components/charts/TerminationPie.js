@@ -13,7 +13,7 @@ const TerminationPie = ({ scholarsData, terminatedScholars }) => {
 
   for (let i = 0; i < scholarsData.length; i++) {
     let remarks = scholarsData[i].terminationRemarks;
-    if (remarks === "N/A") {
+    if (remarks === "N/A" || remarks === undefined) {
       continue;
     }
     // Check if there is already an object for the current remarks
