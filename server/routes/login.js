@@ -31,7 +31,7 @@ router.post('/', async (req, res, next) => {
     const accessToken = jwt.sign(
       { userId: user._id },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '30m' }
+      { expiresIn: '16m' }
     );
 
     // create Refresh token
@@ -43,7 +43,7 @@ router.post('/', async (req, res, next) => {
     // set refreshToken as a httpOnly cookie
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'none',
     });
 

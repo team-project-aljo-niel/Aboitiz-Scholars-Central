@@ -12,6 +12,7 @@ const signupRouter = require('./routes/signup');
 const userRouter = require('./routes/user');
 const scholarRouter = require('./routes/scholar');
 const HttpError = require('./models/httpError');
+const getAccessToken = require('./routes/getAccessToken');
 config();
 
 const app = express();
@@ -36,6 +37,7 @@ app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/user', userRouter);
 app.use('/scholar', scholarRouter);
+app.use('/getAccessToken', getAccessToken);
 
 // Handling unknown routes
 app.use((req, res, next) => {

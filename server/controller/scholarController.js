@@ -33,6 +33,20 @@ const scholarController = {
         for await (const [key, value] of Object.entries(req.body)) {
           newScholar[key] = value;
         }
+
+        if (newScholar.yearEndedOrGraduated === 'N/A') {
+          newScholar.latinHonors = '';
+          newScholar.company = '';
+          newScholar.designation = '';
+
+          if (
+            newScholar.employed === 'Yes' ||
+            newScholar.aboitizCompany === 'Yes'
+          ) {
+            return next(new httpError('Invalid Scholar Details', 400));
+          }
+        }
+
         await newScholar.save();
         userDetails.scholarData = newScholar._id;
         userDetails.save();
@@ -55,6 +69,18 @@ const scholarController = {
       // loop through request body and update scholarData
       for await (const [key, value] of Object.entries(req.body)) {
         currentScholar[key] = value;
+      }
+      if (currentScholar.yearEndedOrGraduated === 'N/A') {
+        currentScholar.latinHonors = '';
+        currentScholar.company = '';
+        currentScholar.designation = '';
+
+        if (
+          currentScholar.employed === 'Yes' ||
+          currentScholar.aboitizCompany === 'Yes'
+        ) {
+          return next(new httpError('Invalid Scholar Details', 400));
+        }
       }
 
       await currentScholar.save();
@@ -85,6 +111,20 @@ const scholarController = {
         company: req.body.company,
         sponsoringBusinessUnit: req.body.sponsoringBusinessUnit,
       });
+
+      if (currentScholar.yearEndedOrGraduated === 'N/A') {
+        currentScholar.latinHonors = '';
+        currentScholar.company = '';
+        currentScholar.designation = '';
+
+        if (
+          currentScholar.employed === 'Yes' ||
+          currentScholar.aboitizCompany === 'Yes' ||
+          currentScholar.latinHonors !== ''
+        ) {
+          return next(new httpError('Invalid Scholar Details', 400));
+        }
+      }
 
       res.status(200).send('Scholar details changed succesfully');
     } catch (error) {

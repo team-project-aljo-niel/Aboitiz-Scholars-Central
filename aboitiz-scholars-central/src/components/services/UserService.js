@@ -1,7 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
+
+// For client to recognize cookies being sent by the backend
+axios.defaults.withCredentials = true;
 
 // const BASE_URL = "https://aboitizscholarscentral-api.onrender.com";
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = 'http://localhost:8080';
 
 // Signup service
 export const createUser = async (user) => {
@@ -15,11 +18,11 @@ export const loginUser = async (user) => {
   return response;
 };
 
-// Get current user data service 
+// Get current user data service
 export const getCurrentUser = async () => {
   const response = await axios.get(`${BASE_URL}/user/details`);
   return response;
-}
+};
 
 // Get all User Data service
 export const getUsers = async () => {
@@ -53,18 +56,50 @@ export const updateAccount = async (account) => {
 
 // Post Scholar Details
 export const addScholarDetails = async (scholarDetails) => {
-  const response = await axios.post(`${BASE_URL}/scholar/details`, scholarDetails);
+  const response = await axios.post(
+    `${BASE_URL}/scholar/details`,
+    scholarDetails
+  );
   return response;
 };
 
 // Put Current Scholar Details
 export const updateCurrentScholar = async (scholarDetails) => {
-  const response = await axios.put(`${BASE_URL}/scholar/details`, scholarDetails);
+  const response = await axios.put(
+    `${BASE_URL}/scholar/details`,
+    scholarDetails
+  );
   return response;
 };
 
 // Put Scholar Details
 export const updateScholarDetails = async (id, scholarDetails) => {
-  const response = await axios.put(`${BASE_URL}/scholar/details/${id}`, scholarDetails);
+  const response = await axios.put(
+    `${BASE_URL}/scholar/details/${id}`,
+    scholarDetails
+  );
   return response;
 };
+
+function replaceAccessToken() {
+  try {
+    // Send a request to the server to get a new access token
+    axios
+      .get(`${BASE_URL}/getAccessToken`)
+      .then((response) => {
+        // Get the new access token from the response
+        const newAccessToken = response.data.accessToken;
+
+        // Set the new access token in local storage
+        localStorage.setItem('token-auth', newAccessToken);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// Call the replaceAccessToken function every 15 minutes
+setInterval(replaceAccessToken, 900000); // 15 minutes in milliseconds
