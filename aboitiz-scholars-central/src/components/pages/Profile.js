@@ -112,7 +112,8 @@ const Profile = () => {
         designation: values.designation,
         company: values.company,
         status: "Active",
-        terminationRemarks: "N/A"
+        terminationRemarks: "N/A",
+        sponsoringBusinessUnit: ""
       };
       if (scholarData) {
         const response = await updateCurrentScholar(scholarDetails);

@@ -25,6 +25,11 @@ export const CurrentUserProvider = (props) => {
         }
       } catch (error) {
         console.log("userDetails", error);
+        if (error.response.status === 401) {
+          localStorage.removeItem("token-auth");
+          setCurrentUser();
+          window.location.reload(true);
+        }
       }
     };
     fetchUserDetails();
