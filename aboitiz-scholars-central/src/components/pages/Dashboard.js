@@ -40,14 +40,16 @@ const Dashboard = () => {
   const isNonLaptop = useMediaQuery("(min-width:1200px");
   const [scholarsCopy, setScholarsCopy] = useState(scholars);
 
-  useEffect(() => {}, [trigger]);
+  useEffect(() => {
+    setScholarsCopy(scholars);
+  }, [trigger, scholars]);
 
   if (!scholars) {
     return <div>...Loading</div>;
   }
 
   if (!scholarsCopy) {
-    return <div>...Loading</div>;
+    return null;
   }
 
   // Scholar status arrays
@@ -467,7 +469,7 @@ const Dashboard = () => {
                 fontWeight="bold"
                 color={colors.black[500]}
               >
-                Scholars Provincial Map
+                Scholars City Map
               </Typography>
             </Box>
             <Box>
@@ -479,9 +481,7 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box height="850px" mt="-60px">
-            <GeoChoropleth
-              scholarsData={scholarsCopy}
-            />
+            <GeoChoropleth scholarsData={scholarsCopy} />
           </Box>
         </Box>
       </Box>

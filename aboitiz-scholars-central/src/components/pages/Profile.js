@@ -22,12 +22,12 @@ import Header from "../Header";
 import { useState } from "react";
 import { CurrentUserContext } from "../providers/CurrentUserProvider";
 import { useContext } from "react";
-import phGeo from "../data/phGeo";
 import {
   addScholarDetails,
   updateCurrentScholar,
 } from "../services/UserService";
 import { TriggerContext } from "../providers/TriggerProvider";
+import { phGeoFeatures } from "../data/phGeoFeatures";
 
 const Profile = () => {
   const isNonMobile = useMediaQuery("(min-width:600px");
@@ -83,6 +83,16 @@ const Profile = () => {
   for (let i = currentYear; i >= currentYear - 20; i--) {
     years.push(i);
   }
+  let properties = [];
+  phGeoFeatures.features.forEach((obj) =>
+    properties.push({
+      city: obj.properties.NAME_2,
+      province: obj.properties.NAME_1,
+      id: obj.properties.ID_2
+    })
+  );
+
+  properties.sort((a, b) => a.city.localeCompare(b.city) );
 
   const handleFormSubmit = async (values) => {
     try {
@@ -101,6 +111,8 @@ const Profile = () => {
         aboitizCompany: values.aboitizCompany,
         designation: values.designation,
         company: values.company,
+        status: "Active",
+        terminationRemarks: "N/A"
       };
       if (scholarData) {
         const response = await updateCurrentScholar(scholarDetails);
@@ -182,16 +194,16 @@ const Profile = () => {
                 autoHighlight
                 fullWidth
                 name="city"
-                options={phGeo}
+                options={properties}
                 value={{ city: values.city }}
+                getOptionLabel={(option) => option.city}
                 isOptionEqualToValue={(option, value) =>
                   option.city === value.city
                 }
-                getOptionLabel={(option) => option.city}
                 renderOption={(props, option) => {
                   return (
-                    <li {...props} key={`${option.city}${option.lat}`}>
-                      {option.city}
+                    <li {...props} key={`${option.city}${option.id}`}>
+                      {`${option.city}, ${option.province}`}
                     </li>
                   );
                 }}
@@ -202,7 +214,7 @@ const Profile = () => {
                   );
                   setFieldValue(
                     "province",
-                    value !== null ? value.admin_name : initialValues.province
+                    value !== null ? value.province : initialValues.province
                   );
                 }}
                 onBlur={handleBlur}
@@ -358,9 +370,11 @@ const Profile = () => {
                   label="Latin Honors"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.yearEndedOrGraduated !== "N/A"
-                  ? values.latinHonors
-                  : (values.latinHonors = "N/A")}
+                  value={
+                    values.yearEndedOrGraduated !== "N/A"
+                      ? values.latinHonors
+                      : (values.latinHonors = "N/A")
+                  }
                   name="latinHonors"
                   error={!!touched.latinHonors && !!errors.latinHonors}
                 >
