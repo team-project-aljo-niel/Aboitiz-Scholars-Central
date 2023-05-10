@@ -3,6 +3,7 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const httpError = require('../models/httpError');
 const bcrypt = require('bcrypt');
+const Grades = require('../models/grades');
 
 const scholarController = {
   getAllScholars: async (req, res, next) => {
@@ -45,6 +46,33 @@ const scholarController = {
           ) {
             return next(new httpError('Invalid Scholar Details', 400));
           }
+        }
+
+        const isScholarGradesAvailable = await Grades.findOne({ user: userId });
+
+        if (!isScholarDetailsAvailable) {
+          let newScholarGrades = new Grades({
+            user: userId,
+            firstName: userDetails.firstName,
+            lastName: userDetails.lastName,
+            firstYear: {
+              firstTerm: '',
+              secondTerm: '',
+            },
+            secondYear: {
+              firstTerm: '',
+              secondTerm: '',
+            },
+            thirdYear: {
+              firstTerm: '',
+              secondTerm: '',
+            },
+            fourthYear: {
+              firstTerm: '',
+              secondTerm: '',
+            },
+          });
+          await newScholarGrades.save();
         }
 
         await newScholar.save();

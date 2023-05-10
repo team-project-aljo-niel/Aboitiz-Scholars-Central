@@ -81,6 +81,24 @@ export const updateScholarDetails = async (id, scholarDetails) => {
   return response;
 };
 
+// Get all User Grades Service
+export const getGrades = async () => {
+  const response = await axios.get(`${BASE_URL}/grades`);
+  return response;
+};
+
+// Post scholar grades service
+export const createGrades = async (id, gradeDetails) => {
+  const response = await axios.post(`${BASE_URL}/grades/${id}`, gradeDetails);
+  return response;
+};
+
+// Post scholar grades service
+export const updateGrades = async (id, gradeDetails) => {
+  const response = await axios.put(`${BASE_URL}/grades/${id}`, gradeDetails);
+  return response;
+};
+
 function replaceAccessToken() {
   try {
     // Send a request to the server to get a new access token
@@ -102,4 +120,4 @@ function replaceAccessToken() {
 }
 
 // Call the replaceAccessToken function every 15 minutes
-setInterval(replaceAccessToken, 900000); // 15 minutes in milliseconds
+setInterval(replaceAccessToken, 800000); // 15 minutes in milliseconds

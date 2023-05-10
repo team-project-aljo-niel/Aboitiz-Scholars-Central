@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Scholar = require('../models/scholar');
+const Grade = require('../models/grades');
 const jwt = require('jsonwebtoken');
 const httpError = require('../models/httpError');
 const bcrypt = require('bcrypt');
@@ -16,10 +17,15 @@ const userController = {
   // Endpoint to get all Users
   getAllUsers: async (req, res, next) => {
     try {
-      const allUsers = await User.find().populate({
-        path: 'scholarData',
-        model: 'Scholars',
-      });
+      const allUsers = await User.find()
+        .populate({
+          path: 'scholarData',
+          model: 'Scholars',
+        })
+        .populate({
+          path: 'gradesData',
+          model: 'Grades',
+        });
 
       res.json(allUsers);
     } catch (error) {
