@@ -18,19 +18,19 @@ const GenderPie = ({ scholarsData }) => {
     }
 
     // Check if there is already an object for the current remarks
-    let yearObj = data.find((obj) => obj.id === gender);
+    let genderObj = data.find((obj) => obj.id === gender);
 
     // If there is no object for the current remarks, create a new one
-    if (!yearObj) {
-      yearObj = {
+    if (!genderObj) {
+      genderObj = {
         id: gender,
         label: gender,
         value: 0,
       };
-      data.push(yearObj);
+      data.push(genderObj);
     }
     // Increment the count for the corresponding status
-    yearObj.value++;
+    genderObj.value++;
   }
 
   data.sort((a, b) => parseInt(a.id) - parseInt(b.id));
