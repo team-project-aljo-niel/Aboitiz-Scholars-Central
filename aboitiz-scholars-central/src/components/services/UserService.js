@@ -1,7 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
-const BASE_URL = "https://aboitizscholarscentral-api.onrender.com";
-// const BASE_URL = "http://localhost:8080";
+// For client to recognize cookies being sent by the backend
+axios.defaults.withCredentials = true;
+
+const BASE_URL = 'https://aboitizscholarscentral-api.onrender.com';
+// const BASE_URL = 'http://localhost:8080';
 
 // Signup service
 export const createUser = async (user) => {
@@ -77,3 +80,44 @@ export const updateCurrentScholar = async (scholarDetails) => {
   );
   return response;
 };
+
+// Get all User Grades Service
+export const getGrades = async () => {
+  const response = await axios.get(`${BASE_URL}/grades`);
+  return response;
+};
+
+// Post scholar grades service
+export const createGrades = async (id, gradeDetails) => {
+  const response = await axios.post(`${BASE_URL}/grades/${id}`, gradeDetails);
+  return response;
+};
+
+// Post scholar grades service
+export const updateGrades = async (id, gradeDetails) => {
+  const response = await axios.put(`${BASE_URL}/grades/${id}`, gradeDetails);
+  return response;
+};
+
+function replaceAccessToken() {
+  try {
+    // Send a request to the server to get a new access token
+    axios
+      .get(`${BASE_URL}/getAccessToken`)
+      .then((response) => {
+        // Get the new access token from the response
+        const newAccessToken = response.data.accessToken;
+
+        // Set the new access token in local storage
+        localStorage.setItem('token-auth', newAccessToken);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// Call the replaceAccessToken function every 15 minutes
+setInterval(replaceAccessToken, 300000); // 15 minutes in milliseconds
