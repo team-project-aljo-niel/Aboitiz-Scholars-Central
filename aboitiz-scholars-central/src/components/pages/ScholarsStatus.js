@@ -18,25 +18,21 @@ const ScholarsStatus = () => {
 
   const processRowUpdate = useCallback(async (newRow, oldRow) => {
     // Make the HTTP request to save in the backend
-    try {
-      if (newRow.status !== "Terminated") {
-        newRow.terminationRemarks = "N/A";
-      }
-
-      const updatedDetails = {
-        status: newRow.status,
-        terminationRemarks: newRow.terminationRemarks,
-      };
-      const response = await updateScholarDetails(newRow._id, updatedDetails);
-      setSnackbar({
-        children: "Scholar status successfully updated",
-        severity: "success",
-      });
-      setTrigger(!trigger);
-      return response;
-    } catch (error) {
-      console.log(error);
+    if (newRow.status !== "Terminated") {
+      newRow.terminationRemarks = "N/A";
     }
+
+    const updatedDetails = {
+      status: newRow.status,
+      terminationRemarks: newRow.terminationRemarks,
+    };
+    const response = await updateScholarDetails(newRow._id, updatedDetails);
+    setSnackbar({
+      children: "Scholar status successfully saved",
+      severity: "success",
+    });
+    setTrigger(!trigger);
+    return response;
     // eslint-disable-next-line
   }, []);
 

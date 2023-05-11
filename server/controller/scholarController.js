@@ -99,16 +99,7 @@ const scholarController = {
         currentScholar[key] = value;
       }
       if (currentScholar.yearEndedOrGraduated === 'N/A') {
-        currentScholar.latinHonors = '';
-        currentScholar.company = '';
-        currentScholar.designation = '';
-
-        if (
-          currentScholar.employed === 'Yes' ||
-          currentScholar.aboitizCompany === 'Yes'
-        ) {
-          return next(new httpError('Invalid Scholar Details', 400));
-        }
+        currentScholar.latinHonors = 'N/A';
       }
 
       await currentScholar.save();
@@ -120,7 +111,7 @@ const scholarController = {
   },
   updateScholarDetails: async (req, res, next) => {
     try {
-      const updateScholar = await Scholar.findByIdAndUpdate(req.params.id, {
+      const currentScholar = await Scholar.findByIdAndUpdate(req.params.id, {
         status: req.body.status,
         terminationRemarks: req.body.terminationRemarks,
         age: req.body.age,
@@ -141,17 +132,7 @@ const scholarController = {
       });
 
       if (currentScholar.yearEndedOrGraduated === 'N/A') {
-        currentScholar.latinHonors = '';
-        currentScholar.company = '';
-        currentScholar.designation = '';
-
-        if (
-          currentScholar.employed === 'Yes' ||
-          currentScholar.aboitizCompany === 'Yes' ||
-          currentScholar.latinHonors !== ''
-        ) {
-          return next(new httpError('Invalid Scholar Details', 400));
-        }
+        currentScholar.latinHonors = 'N/A';
       }
 
       res.status(200).send('Scholar details changed succesfully');
