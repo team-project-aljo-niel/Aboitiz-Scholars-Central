@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { themeColors } from "../theme";
 import {
   HomeOutlined,
@@ -28,7 +28,15 @@ const Navbar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const [currentUser] = useContext(CurrentUserContext);
+  const isNonMobile = useMediaQuery("(min-width:900px");
 
+  useEffect(() => {
+    if (!isNonMobile){
+      setIsCollapsed(true);
+    } else {
+      setIsCollapsed(false);
+    }
+  }, [isNonMobile])
   if (!currentUser) {
     return <div>...Loading</div>;
   }

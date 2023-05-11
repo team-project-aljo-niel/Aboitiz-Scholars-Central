@@ -7,6 +7,7 @@ import {
   FormControlLabel,
   FormHelperText,
   FormLabel,
+  Grid,
   InputLabel,
   MenuItem,
   Radio,
@@ -14,7 +15,6 @@ import {
   Select,
   Snackbar,
   TextField,
-  useMediaQuery,
 } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -31,7 +31,6 @@ import { phGeoFeatures } from "../data/phGeoFeatures";
 
 // Profile Page for Scholars
 const Profile = () => {
-  const isNonMobile = useMediaQuery("(min-width:600px");
   const [, setResponseMessage] = useState("");
   const [currentUser] = useContext(CurrentUserContext);
   const [trigger, setTrigger] = useContext(TriggerContext);
@@ -92,10 +91,10 @@ const Profile = () => {
     properties.push({
       city: obj.properties.NAME_2,
       province: obj.properties.NAME_1,
-      id: obj.properties.ID_2
+      id: obj.properties.ID_2,
     })
   );
-  properties.sort((a, b) => a.city.localeCompare(b.city) );
+  properties.sort((a, b) => a.city.localeCompare(b.city));
 
   const handleFormSubmit = async (values) => {
     try {
@@ -116,7 +115,7 @@ const Profile = () => {
         company: values.company,
         status: "Active",
         terminationRemarks: "N/A",
-        sponsoringBusinessUnit: ""
+        sponsoringBusinessUnit: "",
       };
       if (scholarData) {
         const response = await updateCurrentScholar(scholarDetails);
@@ -160,318 +159,336 @@ const Profile = () => {
           setFieldValue,
         }) => (
           <form onSubmit={handleSubmit}>
-            <Box
-              display="grid"
-              gap="30px"
-              gridTemplateColumns="repeat(8, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 8" },
-              }}
-            >
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Age"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.age}
-                name="age"
-                error={!!touched.age && !!errors.age}
-                helperText={touched.age && errors.age}
-                sx={{ gridColumn: "span 1" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address}
-                name="address"
-                error={!!touched.address && !!errors.address}
-                helperText={touched.address && errors.address}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <Autocomplete
-                autoHighlight
-                fullWidth
-                name="city"
-                options={properties}
-                value={{ city: values.city }}
-                getOptionLabel={(option) => option.city}
-                isOptionEqualToValue={(option, value) =>
-                  option.city === value.city
-                }
-                renderOption={(props, option) => {
-                  return (
-                    <li {...props} key={`${option.city}${option.id}`}>
-                      {`${option.city}, ${option.province}`}
-                    </li>
-                  );
-                }}
-                onChange={(e, value) => {
-                  setFieldValue(
-                    "city",
-                    value !== null ? value.city : initialValues.city
-                  );
-                  setFieldValue(
-                    "province",
-                    value !== null ? value.province : initialValues.province
-                  );
-                }}
-                onBlur={handleBlur}
-                sx={{ gridColumn: "span 2" }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="filled"
-                    label="Choose a City"
-                    error={!!touched.city && !!errors.city}
-                    helperText={touched.city && errors.city}
-                  />
-                )}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                InputProps={{ readOnly: true }}
-                type="text"
-                label="Province"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.province}
-                name="province"
-                error={!!touched.province && !!errors.province}
-                helperText={touched.province && errors.province}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <FormControl
-                fullWidth
-                variant="filled"
-                sx={{ gridColumn: "span 1" }}
-              >
-                <InputLabel id="demo-simple-select-label">
-                  Island Group
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Island Group"
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6} md={1}>
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="Age"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.island}
-                  name="island"
-                  error={!!touched.island && !!errors.island}
-                >
-                  <MenuItem value={"Luzon"}>Luzon</MenuItem>
-                  <MenuItem value={"Visayas"}>Visayas</MenuItem>
-                  <MenuItem value={"Mindanao"}>Mindanao</MenuItem>
-                </Select>
-                <FormHelperText>
-                  {touched.island && errors.island}
-                </FormHelperText>
-              </FormControl>
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="School Attended"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.schoolAttended}
-                name="schoolAttended"
-                error={!!touched.schoolAttended && !!errors.schoolAttended}
-                helperText={touched.schoolAttended && errors.schoolAttended}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Degree/Program"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.degreeOrProgram}
-                name="degreeOrProgram"
-                error={!!touched.degreeOrProgram && !!errors.degreeOrProgram}
-                helperText={touched.degreeOrProgram && errors.degreeOrProgram}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <FormControl
-                fullWidth
-                variant="filled"
-                sx={{ gridColumn: "span 2" }}
-              >
-                <InputLabel id="demo-simple-select-label">
-                  Year Admitted
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Year Admitted"
+                  value={values.age}
+                  name="age"
+                  error={!!touched.age && !!errors.age}
+                  helperText={touched.age && errors.age}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="Address"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.yearAdmitted}
-                  name="yearAdmitted"
-                  error={!!touched.yearAdmitted && !!errors.yearAdmitted}
-                >
-                  {years.map((year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
-                    </MenuItem>
-                  ))}
-                </Select>
-                <FormHelperText>
-                  {touched.yearAdmitted && errors.yearAdmitted}
-                </FormHelperText>
-              </FormControl>
-              <FormControl
-                fullWidth
-                variant="filled"
-                sx={{ gridColumn: "span 2" }}
-              >
-                <InputLabel id="demo-simple-select-label">
-                  Year Graduated
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Year Graduated"
+                  value={values.address}
+                  name="address"
+                  error={!!touched.address && !!errors.address}
+                  helperText={touched.address && errors.address}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Autocomplete
+                  autoHighlight
+                  fullWidth
+                  name="city"
+                  options={properties}
+                  value={{ city: values.city }}
+                  getOptionLabel={(option) => option.city}
+                  isOptionEqualToValue={(option, value) =>
+                    option.city === value.city
+                  }
+                  renderOption={(props, option) => {
+                    return (
+                      <li {...props} key={`${option.city}${option.id}`}>
+                        {`${option.city}, ${option.province}`}
+                      </li>
+                    );
+                  }}
+                  onChange={(e, value) => {
+                    setFieldValue(
+                      "city",
+                      value !== null ? value.city : initialValues.city
+                    );
+                    setFieldValue(
+                      "province",
+                      value !== null ? value.province : initialValues.province
+                    );
+                  }}
+                  onBlur={handleBlur}
+                  sx={{ gridColumn: "span 2" }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="filled"
+                      label="Choose a City"
+                      error={!!touched.city && !!errors.city}
+                      helperText={touched.city && errors.city}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={3}>
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  InputProps={{ readOnly: true }}
+                  type="text"
+                  label="Province"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.yearEndedOrGraduated}
-                  name="yearEndedOrGraduated"
-                  error={
-                    !!touched.yearEndedOrGraduated &&
-                    !!errors.yearEndedOrGraduated
+                  value={values.province}
+                  name="province"
+                  error={!!touched.province && !!errors.province}
+                  helperText={touched.province && errors.province}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={2}>
+                <FormControl fullWidth variant="filled">
+                  <InputLabel id="demo-simple-select-label">
+                    Island Group
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Island Group"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.island}
+                    name="island"
+                    error={!!touched.island && !!errors.island}
+                  >
+                    <MenuItem value={"Luzon"}>Luzon</MenuItem>
+                    <MenuItem value={"Visayas"}>Visayas</MenuItem>
+                    <MenuItem value={"Mindanao"}>Mindanao</MenuItem>
+                  </Select>
+                  <FormHelperText>
+                    {touched.island && errors.island}
+                  </FormHelperText>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="School Attended"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.schoolAttended}
+                  name="schoolAttended"
+                  error={!!touched.schoolAttended && !!errors.schoolAttended}
+                  helperText={touched.schoolAttended && errors.schoolAttended}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="Degree/Program"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.degreeOrProgram}
+                  name="degreeOrProgram"
+                  error={!!touched.degreeOrProgram && !!errors.degreeOrProgram}
+                  helperText={touched.degreeOrProgram && errors.degreeOrProgram}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={3}>
+                <FormControl fullWidth variant="filled">
+                  <InputLabel id="demo-simple-select-label">
+                    Year Admitted
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Year Admitted"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.yearAdmitted}
+                    name="yearAdmitted"
+                    error={!!touched.yearAdmitted && !!errors.yearAdmitted}
+                  >
+                    {years.map((year) => (
+                      <MenuItem key={year} value={year}>
+                        {year}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <FormHelperText>
+                    {touched.yearAdmitted && errors.yearAdmitted}
+                  </FormHelperText>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6} sm={6} md={3}>
+                <FormControl fullWidth variant="filled">
+                  <InputLabel id="demo-simple-select-label">
+                    Year Graduated
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Year Graduated"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.yearEndedOrGraduated}
+                    name="yearEndedOrGraduated"
+                    error={
+                      !!touched.yearEndedOrGraduated &&
+                      !!errors.yearEndedOrGraduated
+                    }
+                  >
+                    <MenuItem value={"N/A"}>N/A</MenuItem>
+                    {years.map((year) => (
+                      <MenuItem key={year} value={year}>
+                        {year}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <FormHelperText>
+                    {touched.yearEndedOrGraduated &&
+                      errors.yearEndedOrGraduated}
+                  </FormHelperText>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <FormControl
+                  fullWidth
+                  variant="filled"
+                  disabled={
+                    values.yearEndedOrGraduated !== "N/A" ? false : true
                   }
                 >
-                  <MenuItem value={"N/A"}>N/A</MenuItem>
-                  {years.map((year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
+                  <InputLabel id="demo-simple-select-label">
+                    Latin Honors
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Latin Honors"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={
+                      values.yearEndedOrGraduated !== "N/A"
+                        ? values.latinHonors
+                        : (values.latinHonors = "N/A")
+                    }
+                    name="latinHonors"
+                    error={!!touched.latinHonors && !!errors.latinHonors}
+                  >
+                    <MenuItem value={"N/A"}>N/A</MenuItem>
+                    <MenuItem value={"Summa Cum Laude"}>
+                      Summa Cum Laude
                     </MenuItem>
-                  ))}
-                </Select>
-                <FormHelperText>
-                  {touched.yearEndedOrGraduated && errors.yearEndedOrGraduated}
-                </FormHelperText>
-              </FormControl>
-              <FormControl
-                fullWidth
-                variant="filled"
-                disabled={values.yearEndedOrGraduated !== "N/A" ? false : true}
-                sx={{ gridColumn: "span 4" }}
-              >
-                <InputLabel id="demo-simple-select-label">
-                  Latin Honors
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Latin Honors"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={
-                    values.yearEndedOrGraduated !== "N/A"
-                      ? values.latinHonors
-                      : (values.latinHonors = "N/A")
-                  }
-                  name="latinHonors"
-                  error={!!touched.latinHonors && !!errors.latinHonors}
-                >
-                  <MenuItem value={"N/A"}>N/A</MenuItem>
-                  <MenuItem value={"Summa Cum Laude"}>Summa Cum Laude</MenuItem>
-                  <MenuItem value={"Magna Cum Laude"}>Magna Cum Laude</MenuItem>
-                  <MenuItem value={"Cum Laude"}>Cum Laude</MenuItem>
-                </Select>
-                <FormHelperText>
-                  {touched.latinHonors && errors.latinHonors}
-                </FormHelperText>
-              </FormControl>
-              <FormControl sx={{ gridColumn: "span 1" }}>
-                <FormLabel id="employed-row-radio-buttons-group-label">
-                  Employed?
-                </FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="employed-row-radio-buttons-group-label"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.employed}
-                  name="employed"
-                >
-                  <FormControlLabel
-                    value="Yes"
-                    control={<Radio />}
-                    label="Yes"
-                  />
-                  <FormControlLabel value="No" control={<Radio />} label="No" />
-                </RadioGroup>
-              </FormControl>
-              <FormControl sx={{ gridColumn: "span 1" }}>
-                <FormLabel id="aboitiz-row-radio-buttons-group-label">
-                  Aboitiz Company?
-                </FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="aboitiz-row-radio-buttons-group-label"
+                    <MenuItem value={"Magna Cum Laude"}>
+                      Magna Cum Laude
+                    </MenuItem>
+                    <MenuItem value={"Cum Laude"}>Cum Laude</MenuItem>
+                  </Select>
+                  <FormHelperText>
+                    {touched.latinHonors && errors.latinHonors}
+                  </FormHelperText>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6} sm={6} md={2}>
+                <FormControl>
+                  <FormLabel id="employed-row-radio-buttons-group-label">
+                    Employed?
+                  </FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="employed-row-radio-buttons-group-label"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.employed}
+                    name="employed"
+                  >
+                    <FormControlLabel
+                      value="Yes"
+                      control={<Radio />}
+                      label="Yes"
+                    />
+                    <FormControlLabel
+                      value="No"
+                      control={<Radio />}
+                      label="No"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6} sm={6} md={2}>
+                <FormControl>
+                  <FormLabel id="aboitiz-row-radio-buttons-group-label">
+                    Aboitiz Company?
+                  </FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="aboitiz-row-radio-buttons-group-label"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={
+                      values.employed === "Yes"
+                        ? values.aboitizCompany
+                        : (values.aboitizCompany = "No")
+                    }
+                    name="aboitizCompany"
+                  >
+                    <FormControlLabel
+                      value="Yes"
+                      control={<Radio />}
+                      label="Yes"
+                    />
+                    <FormControlLabel
+                      value="No"
+                      control={<Radio />}
+                      label="No"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                {" "}
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  disabled={values.employed === "Yes" ? false : true}
+                  type="text"
+                  label="Company"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={
                     values.employed === "Yes"
-                      ? values.aboitizCompany
-                      : (values.aboitizCompany = "No")
+                      ? values.company
+                      : (values.company = "")
                   }
-                  name="aboitizCompany"
-                >
-                  <FormControlLabel
-                    value="Yes"
-                    control={<Radio />}
-                    label="Yes"
-                  />
-                  <FormControlLabel value="No" control={<Radio />} label="No" />
-                </RadioGroup>
-              </FormControl>
-              <TextField
-                fullWidth
-                variant="filled"
-                disabled={values.employed === "Yes" ? false : true}
-                type="text"
-                label="Company"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={
-                  values.employed === "Yes"
-                    ? values.company
-                    : (values.company = "")
-                }
-                name="company"
-                error={!!touched.company && !!errors.company}
-                helperText={touched.company && errors.company}
-                sx={{ gridColumn: "span 3" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                disabled={values.employed === "Yes" ? false : true}
-                type="text"
-                label="Designation"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={
-                  values.employed === "Yes"
-                    ? values.designation
-                    : (values.designation = "")
-                }
-                name="designation"
-                error={!!touched.designation && !!errors.designation}
-                helperText={touched.designation && errors.designation}
-                sx={{ gridColumn: "span 3" }}
-              />
-            </Box>
+                  name="company"
+                  error={!!touched.company && !!errors.company}
+                  helperText={touched.company && errors.company}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                {" "}
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  disabled={values.employed === "Yes" ? false : true}
+                  type="text"
+                  label="Designation"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={
+                    values.employed === "Yes"
+                      ? values.designation
+                      : (values.designation = "")
+                  }
+                  name="designation"
+                  error={!!touched.designation && !!errors.designation}
+                  helperText={touched.designation && errors.designation}
+                />
+              </Grid>
+            </Grid>
             <Box display="flex" justifyContent="center" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
                 Request Update Approval

@@ -48,25 +48,28 @@ const ScholarsStatus = () => {
   const columns = [
     {
       field: "_id",
-      headerName: "ID",
       flex: 1,
+      minWidth: 300,
+      headerName: "ID",
       headerAlign: "center",
       align: "center",
       cellClassName: "id-column--cell",
     },
     {
       field: "fullName",
-      headerName: "Name",
       flex: 1,
+      minWidth: 250,
+      headerName: "Name",
       valueGetter: (params) =>
         `${params.row.firstName || ""} ${params.row.lastName || ""}`,
     },
     {
       field: "status",
+      flex: 0.7,
+      minWidth: 200,
       headerName: "Status",
       headerAlign: "center",
       align: "center",
-      flex: 1,
       type: "singleSelect",
       valueOptions: ["Active", "Graduated", "Terminated"],
       editable: true,
@@ -74,10 +77,11 @@ const ScholarsStatus = () => {
     },
     {
       field: "terminationRemarks",
+      flex: 1,
+      minWidth: 300,
       headerName: "Termination Remarks",
       headerAlign: "center",
       align: "center",
-      flex: 1,
       type: "singleSelect",
       valueOptions: [
         "N/A",
@@ -158,6 +162,7 @@ const ScholarsStatus = () => {
           checkboxSelection
           disableRowSelectionOnClick
           onProcessRowUpdateError={handleProcessRowUpdateError}
+          // sx={{flex: "1"}}
         />
         {!!snackbar && (
           <Snackbar
