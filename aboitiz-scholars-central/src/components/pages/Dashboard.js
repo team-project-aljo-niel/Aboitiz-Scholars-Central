@@ -571,7 +571,7 @@ const Dashboard = () => {
           </Box>
         </Grid>
         <Grid item xs={12} sm={12} lg={12}>
-          <Box height="900px" backgroundColor={colors.primary[900]}>
+          <Box height="990px" backgroundColor={colors.primary[900]}>
             <Box
               p="25px"
               mt="0 25px"
@@ -596,9 +596,9 @@ const Dashboard = () => {
                 </IconButton>
               </Box>
             </Box>
-            <Box sx={{ overflowY:"hidden" }} mt="-60px">
-              <Box height="850px" width={isNonLaptop ? undefined : "1000px"}>
-                <GeoChoropleth scholarsData={scholarsCopy} />
+            <Box sx={{ overflowY: "hidden" }} mt="0px">
+              <Box height="900px" width={isNonLaptop ? undefined : "1000px"}>
+                <GeoChoropleth scholarsData={scholarsCopy}/>
               </Box>
             </Box>
           </Box>

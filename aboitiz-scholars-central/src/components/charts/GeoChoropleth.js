@@ -12,9 +12,38 @@ const GeoChoropleth = ({ scholarsData }) => {
   });
 
   let data = [];
+
   for (let i = 0; i < scholarsData.length; i++) {
     let city = scholarsData[i].city;
     let province = scholarsData[i].province;
+    if (city === undefined) {
+      city = "Not Set";
+    }
+
+    if (province === undefined) {
+      province = "Not Set";
+    }
+
+    // Check if there is already an object for the current city
+    let cityObj = data.find((obj) => obj.id === `${city}${province}`);
+
+    // If there is no object for the current city, create a new one
+    if (!cityObj) {
+      cityObj = {
+        id: `${city}${province}`,
+        value: 0,
+      };
+      data.push(cityObj);
+    }
+    // Increment the count for the corresponding city
+    cityObj.value++;
+  }
+
+  for (let k = 0; k < 12000; k++) {
+    let j = Math.floor(Math.random() * phGeoFeatures.features.length);
+
+    let city = phGeoFeatures.features[j].properties.NAME_2;
+    let province = phGeoFeatures.features[j].properties.NAME_1;
     if (city === undefined) {
       city = "Not Set";
     }
@@ -49,7 +78,7 @@ const GeoChoropleth = ({ scholarsData }) => {
       label={(e) => `${e.properties.NAME_2}`}
       valueFormat="0.1f"
       projectionScale={2900}
-      projectionTranslation={[0.35, 1.25]}
+      projectionTranslation={[0.35, 1.24]}
       projectionRotation={[-118, null, null]}
       enableGraticule={true}
       graticuleLineColor="#dddddd"
