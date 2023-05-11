@@ -18,11 +18,13 @@ With its name, the app emphasizes that it will serve as the primary source of sc
 |  4  |  Read  |        /user         |    GET    |  Read  |           Gets the list of all users            |
 |  5  |  Read  |    /user/details     |    GET    |  Read  |   Gets the user details of the logged in user   |
 |  6  |  Read  |       /scholar       |    GET    |  Read  |          Gets the list of all scholars          |
-|  7  | Update |    /user/details     |    PUT    | Update |      Updates the basic profile of the user      |
-|  8  | Update |    /user/account     |    PUT    | Update |     Updates the account details of the user     |
-|  9  | Update |      /user/:id       |    PUT    | Update |      Updates the access level of the user       |
-| 10  | Update |   /scholar/details   |    PUT    | Update |  Updates the profile of the logged in scholar   |
-| 11  | Update | /scholar/details/:id |    PUT    | Update |       Updates the profile of any scholar        |
+|  7  |  Read  |       /grades        |    GET    |  Read  |       Gets the list of all scholar grades       |
+|  8  | Update |    /user/details     |    PUT    | Update |      Updates the basic profile of the user      |
+|  9  | Update |    /user/account     |    PUT    | Update |     Updates the account details of the user     |
+| 10  | Update |      /user/:id       |    PUT    | Update |      Updates the access level of the user       |
+| 11  | Update |   /scholar/details   |    PUT    | Update |  Updates the profile of the logged in scholar   |
+| 12  | Update | /scholar/details/:id |    PUT    | Update |       Updates the profile of any scholar        |
+| 13  | Update |     /grades/:id      |    PUT    | Update |        Updates the grades of any scholar        |
 
 ## User Stories
 
