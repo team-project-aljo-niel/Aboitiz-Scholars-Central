@@ -62,6 +62,7 @@ const ScholarsInfo = () => {
     {
       field: "_id",
       headerName: "ID",
+      minWidth: 200,
       flex: 1,
       headerAlign: "center",
       align: "center",
@@ -70,6 +71,7 @@ const ScholarsInfo = () => {
     {
       field: "fullName",
       headerName: "Name",
+      minWidth: 150,
       flex: 1,
       valueGetter: (params) =>
         `${params.row.firstName || ""} ${params.row.lastName || ""}`,
@@ -77,30 +79,36 @@ const ScholarsInfo = () => {
     {
       field: "status",
       headerName: "Status",
+      minWidth: 30,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "terminationRemarks",
       headerName: "Termination Remarks",
+      minWidth: 250,
+      flex: 1,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "gender",
       headerName: "Gender",
+      minWidth: 20,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "phone",
       headerName: "Phone",
+      minWidth: 150,
       headerAlign: "center",
       align: "center",
     },
     {
       field: "email",
       headerName: "Email",
+      minWidth: 250,
       headerAlign: "center",
       align: "center",
     },
@@ -113,6 +121,7 @@ const ScholarsInfo = () => {
     {
       field: "address",
       headerName: "Address",
+      minWidth: 300,
       headerAlign: "center",
       align: "center",
       flex: 1,
@@ -126,6 +135,7 @@ const ScholarsInfo = () => {
     {
       field: "sponsoringBusinessUnit",
       headerName: "Business Unit",
+      minWidth: 150,
       headerAlign: "center",
       align: "center",
       flex: 1,
@@ -134,18 +144,20 @@ const ScholarsInfo = () => {
     {
       field: "schoolAttended",
       headerName: "School Attended",
+      minWidth: 200,
       flex: 1,
       editable: true,
     },
     {
       field: "degreeOrProgram",
       headerName: "Degree",
+      minWidth: 200,
       flex: 1,
       editable: true,
     },
     {
       field: "yearAdmitted",
-      headerName: "Year Admitted",
+      headerName: "Admitted",
       headerAlign: "center",
       align: "center",
       type: "singleSelect",
@@ -154,7 +166,7 @@ const ScholarsInfo = () => {
     },
     {
       field: "yearEndedOrGraduated",
-      headerName: "Year Ended/Graduated",
+      headerName: "Ended",
       headerAlign: "center",
       align: "center",
       type: "singleSelect",
@@ -165,6 +177,7 @@ const ScholarsInfo = () => {
       field: "latinHonors",
       headerName: "Latin Honors",
       flex: 1,
+      minWidth: 120,
       type: "singleSelect",
       valueOptions: ["N/A", "Summa Cum Laude", "Magna Cum Laude", "Cum Laude"],
       editable: true,
@@ -190,13 +203,16 @@ const ScholarsInfo = () => {
     {
       field: "company",
       headerName: "Company",
+      minWidth: 120,
       flex: 1,
       editable: true,
     },
     {
       field: "designation",
       headerName: "Designation",
+      minWidth: 120,
       editable: true,
+      flex: 1,
     },
   ];
 
@@ -227,7 +243,7 @@ const ScholarsInfo = () => {
           },
           "& .MuiDataGrid-cell": {
             border: "none",
-            fontSize: "14px",
+            fontSize: "13px",
           },
           "& .address-column--cell": {
             fontSize: "12px",
