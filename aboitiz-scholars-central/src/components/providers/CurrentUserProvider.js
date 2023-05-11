@@ -8,6 +8,7 @@ import { TriggerContext } from "./TriggerProvider";
 
 export const CurrentUserContext = createContext();
 
+// Provider for logged in user details
 export const CurrentUserProvider = (props) => {
   const [currentUser, setCurrentUser] = useState();
   const [trigger] = useContext(TriggerContext);
@@ -25,6 +26,11 @@ export const CurrentUserProvider = (props) => {
         }
       } catch (error) {
         console.log("userDetails", error);
+        if (error.response.status === 401) {
+          localStorage.removeItem("token-auth");
+          setCurrentUser();
+          window.location.reload(true);
+        }
       }
     };
     fetchUserDetails();

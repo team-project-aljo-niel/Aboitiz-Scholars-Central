@@ -21,6 +21,7 @@ import { useContext } from "react";
 import { CurrentUserContext } from "./providers/CurrentUserProvider";
 import { Link } from "react-router-dom";
 
+// Navbar Component
 const Navbar = () => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);

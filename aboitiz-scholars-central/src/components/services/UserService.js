@@ -3,8 +3,13 @@ import axios from 'axios';
 // For client to recognize cookies being sent by the backend
 axios.defaults.withCredentials = true;
 
+<<<<<<< HEAD
 // const BASE_URL = "https://aboitizscholarscentral-api.onrender.com";
 const BASE_URL = 'http://localhost:8080';
+=======
+const BASE_URL = "https://aboitizscholarscentral-api.onrender.com";
+// const BASE_URL = "http://localhost:8080";
+>>>>>>> 51bf8732fc9da6c136ad9dd5e3baccf2d819e2f4
 
 // Signup service
 export const createUser = async (user) => {
@@ -60,6 +65,7 @@ export const addScholarDetails = async (scholarDetails) => {
     `${BASE_URL}/scholar/details`,
     scholarDetails
   );
+<<<<<<< HEAD
   return response;
 };
 
@@ -69,6 +75,8 @@ export const updateCurrentScholar = async (scholarDetails) => {
     `${BASE_URL}/scholar/details`,
     scholarDetails
   );
+=======
+>>>>>>> 51bf8732fc9da6c136ad9dd5e3baccf2d819e2f4
   return response;
 };
 
@@ -78,6 +86,18 @@ export const updateScholarDetails = async (id, scholarDetails) => {
     `${BASE_URL}/scholar/details/${id}`,
     scholarDetails
   );
+<<<<<<< HEAD
+=======
+  return response;
+};
+
+// Put Current Scholar Details
+export const updateCurrentScholar = async (scholarDetails) => {
+  const response = await axios.put(
+    `${BASE_URL}/scholar/details`,
+    scholarDetails
+  );
+>>>>>>> 51bf8732fc9da6c136ad9dd5e3baccf2d819e2f4
   return response;
 };
 

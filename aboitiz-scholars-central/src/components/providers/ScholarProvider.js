@@ -20,9 +20,9 @@ export const ScholarProvider = (props) => {
           axios.defaults.headers.common[
             'Authorization'
           ] = `Bearer ${accessToken}`;
+          const response = await getScholars();
+          setScholars(response.data);
         }
-        const response = await getScholars();
-        setScholars(response.data);
       } catch (error) {
         console.log(error);
       }

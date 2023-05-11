@@ -2,12 +2,10 @@ import { useTheme } from "@mui/material";
 import { themeColors } from "../../theme";
 import { ResponsivePie } from "@nivo/pie";
 
+// Pie Chart for Gender
 const GenderPie = ({ scholarsData }) => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);
-  if (!scholarsData) {
-    return <div>...Loading</div>;
-  }
   let data = [];
 
   for (let i = 0; i < scholarsData.length; i++) {
@@ -17,10 +15,10 @@ const GenderPie = ({ scholarsData }) => {
       gender = "Not Set";
     }
 
-    // Check if there is already an object for the current remarks
+    // Check if there is already an object for the current gender
     let genderObj = data.find((obj) => obj.id === gender);
 
-    // If there is no object for the current remarks, create a new one
+    // If there is no object for the current gender, create a new one
     if (!genderObj) {
       genderObj = {
         id: gender,
@@ -29,7 +27,7 @@ const GenderPie = ({ scholarsData }) => {
       };
       data.push(genderObj);
     }
-    // Increment the count for the corresponding status
+    // Increment the count for the corresponding gender
     genderObj.value++;
   }
 

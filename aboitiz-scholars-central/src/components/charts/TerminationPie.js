@@ -2,18 +2,17 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import { themeColors } from "../../theme";
 import { ResponsivePie } from "@nivo/pie";
 
+// Pie Chart for Termination Reasons
 const TerminationPie = ({ scholarsData, terminatedScholars }) => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);
   const isNonLaptop = useMediaQuery("(min-width:1025px");
-  if (!scholarsData) {
-    return <div>...Loading</div>;
-  }
+
   let data = [];
 
   for (let i = 0; i < scholarsData.length; i++) {
     let remarks = scholarsData[i].terminationRemarks;
-    if (remarks === "N/A") {
+    if (remarks === "N/A" || remarks === undefined) {
       continue;
     }
     // Check if there is already an object for the current remarks
@@ -28,7 +27,7 @@ const TerminationPie = ({ scholarsData, terminatedScholars }) => {
       };
       data.push(remarksObj);
     }
-    // Increment the count for the corresponding status
+    // Increment the count for the corresponding remarks
     remarksObj.value++;
   }
 

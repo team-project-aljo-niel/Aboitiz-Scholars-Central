@@ -6,7 +6,7 @@ import {
   useTheme,
 } from "@mui/material";
 import Header from "../Header";
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { ScholarContext } from "../providers/ScholarProvider";
 import { useState } from "react";
 import Filter from "../Filter";
@@ -34,20 +34,113 @@ import GeoChoropleth from "../charts/GeoChoropleth";
 const Dashboard = () => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);
-  const [scholars, setScholars] = useContext(ScholarContext);
-  const [trigger, setTrigger] = useContext(TriggerContext);
-  const isNonTablet = useMediaQuery("(min-width:600px");
+  const [scholars, ] = useContext(ScholarContext);
+  const [trigger, ] = useContext(TriggerContext);
   const isNonLaptop = useMediaQuery("(min-width:1200px");
   const [scholarsCopy, setScholarsCopy] = useState(scholars);
 
-  useEffect(() => {}, [trigger]);
+  const [filters, setFilters] = useState({
+    bu: "",
+    city: "",
+    province: "",
+    island: "",
+    fromDate: 0,
+    toDate: 0,
+  });
+
+  useEffect(() => {
+    let filteredScholars = scholars;
+
+    // Apply business unit filter
+    if (filters.bu) {
+      filteredScholars = filteredScholars.filter(
+        (scholar) => scholar.sponsoringBusinessUnit === filters.bu
+      );
+    }
+
+    // Apply city filter
+    if (filters.city) {
+      filteredScholars = filteredScholars.filter(
+        (scholar) => scholar.city === filters.city
+      );
+    }
+
+    // Apply province filter
+    if (filters.province) {
+      filteredScholars = filteredScholars.filter(
+        (scholar) => scholar.province === filters.province
+      );
+    }
+
+    // Apply island filter
+    if (filters.island) {
+      filteredScholars = filteredScholars.filter(
+        (scholar) => scholar.island === filters.island
+      );
+    }
+
+    // Apply date filter
+    if (filters.fromDate && filters.toDate) {
+      filteredScholars = filteredScholars.filter((scholar) => {
+        return (
+          scholar.yearAdmitted >= filters.fromDate &&
+          scholar.yearAdmitted <= filters.toDate
+        );
+      });
+    }
+
+    setScholarsCopy(filteredScholars);
+  }, [trigger, scholars, filters]);
+
+  // Filter Category Functions
+  const filterBu = useCallback((bu) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      bu: bu,
+    }));
+  }, []);
+
+  const filterCity = useCallback((city) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      city: city,
+    }));
+  }, []);
+
+  const filterProvince = useCallback((province) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      province: province,
+    }));
+  }, []);
+
+  const filterIsland = useCallback((island) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      island: island,
+    }));
+  }, []);
+
+  const filterFromDate = useCallback((date) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      fromDate: date,
+    }));
+  }, []);
+
+  const filterToDate = useCallback((date) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      toDate: date,
+    }));
+  }, []);
 
   if (!scholars) {
     return <div>...Loading</div>;
   }
 
   if (!scholarsCopy) {
-    return <div>...Loading</div>;
+    return null;
   }
 
   // Scholar status arrays
@@ -76,7 +169,10 @@ const Dashboard = () => {
 
   // Push each business unit intro an array
   const businessUnits = scholars.reduce((businessUnits, scholar) => {
-    if (!businessUnits.includes(scholar.sponsoringBusinessUnit)) {
+    if (
+      !businessUnits.includes(scholar.sponsoringBusinessUnit) &&
+      scholar.sponsoringBusinessUnit !== ""
+    ) {
       businessUnits.push(scholar.sponsoringBusinessUnit);
     }
     return businessUnits;
@@ -106,11 +202,6 @@ const Dashboard = () => {
     return islandGroups;
   }, []);
 
-  businessUnits.shift();
-  cities.shift();
-  provinces.shift();
-  islandGroups.shift();
-
   return (
     <Box m="20px">
       <Header title="Dashboard" subtitle="Scholars Dashboard" />
@@ -120,32 +211,45 @@ const Dashboard = () => {
         gap="20px"
         mb="20px"
         gridTemplateColumns="repeat(12, minmax(0, 1fr))"
-        // sx={{
-        //   "& > div": { gridColumn: isNonLaptop ? undefined : "span 6" },
-        // }}
       >
         <Box sx={{ gridColumn: isNonLaptop ? "span 2" : "span 4" }}>
-          <Filter label="Business Unit" categories={businessUnits} />
+          <Filter
+            label="Business Unit"
+            categories={businessUnits}
+            filterCategory={filterBu}
+          />
         </Box>
         <Box sx={{ gridColumn: isNonLaptop ? "span 2" : "span 4" }}>
           {" "}
-          <Filter label="City" categories={cities} />
+          <Filter
+            label="City"
+            categories={cities}
+            filterCategory={filterCity}
+          />
         </Box>
         <Box sx={{ gridColumn: isNonLaptop ? "span 2" : "span 4" }}>
           {" "}
-          <Filter label="Province" categories={provinces} />
+          <Filter
+            label="Province"
+            categories={provinces}
+            filterCategory={filterProvince}
+          />
         </Box>
         <Box sx={{ gridColumn: isNonLaptop ? "span 2" : "span 4" }}>
           {" "}
-          <Filter label="Island Group" categories={islandGroups} />
+          <Filter
+            label="Island Group"
+            categories={islandGroups}
+            filterCategory={filterIsland}
+          />
         </Box>
         <Box sx={{ gridColumn: isNonLaptop ? "span 2" : "span 4" }}>
           {" "}
-          <DateFilter label="From Year" />
+          <DateFilter label="From Year" filterCategory={filterFromDate} />
         </Box>
         <Box sx={{ gridColumn: isNonLaptop ? "span 2" : "span 4" }}>
           {" "}
-          <DateFilter label="To Year" />
+          <DateFilter label="To Year" filterCategory={filterToDate} />
         </Box>
       </Box>
       {/* DATA WIDGETS */}
@@ -167,7 +271,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <DataBox
-            title={scholars.length}
+            title={scholarsCopy.length}
             subtitle="Total Scholars"
             progress={scholarsCopy.length / scholarsCopy.length}
             percentage={`${(scholarsCopy.length / scholarsCopy.length) * 100}%`}
@@ -467,7 +571,7 @@ const Dashboard = () => {
                 fontWeight="bold"
                 color={colors.black[500]}
               >
-                Scholars Provincial Map
+                Scholars City Map
               </Typography>
             </Box>
             <Box>
@@ -479,9 +583,7 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box height="850px" mt="-60px">
-            <GeoChoropleth
-              scholarsData={scholarsCopy}
-            />
+            <GeoChoropleth scholarsData={scholarsCopy} />
           </Box>
         </Box>
       </Box>

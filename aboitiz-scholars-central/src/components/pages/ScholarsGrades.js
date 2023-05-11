@@ -32,7 +32,7 @@ const ScholarsGrades = () => {
           secondTerm: newRow.year2Term2 || oldRow.secondYear.secondTerm,
           thirdTerm: newRow.year2Term3 || oldRow.secondYear.thirdTerm,
         },
-        ThirdYear: {
+        thirdYear: {
           firstTerm: newRow.year3Term1 || oldRow.thirdYear.firstTerm,
           secondTerm: newRow.year3Term2 || oldRow.thirdYear.secondTerm,
           thirdTerm: newRow.year3Term3 || oldRow.thirdYear.thirdTerm,
@@ -46,7 +46,7 @@ const ScholarsGrades = () => {
 
       const response = await updateGrades(newRow.user, updatedDetails);
 
-      console.log(newRow);
+      console.log(updatedDetails);
       setSnackbar({
         children: 'Scholar status successfully updated',
         severity: 'success',
@@ -82,7 +82,7 @@ const ScholarsGrades = () => {
     },
     {
       field: 'year1Term1',
-      headerName: 'year1-Term1',
+      headerName: 'Year1-Term1',
       headerAlign: 'center',
       align: 'center',
       editable: true,

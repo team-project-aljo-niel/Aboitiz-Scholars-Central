@@ -16,6 +16,7 @@ const initialValues = {
   email: "",
 };
 
+// Form Validation for creating new user
 const userSchema = yup.object().shape({
   userName: yup.string().required("required"),
   password: yup
@@ -41,6 +42,7 @@ const userSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("required"),
 });
 
+// Create User Page
 const UserForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px");
   const [responseMessage, setResponseMessage] = useState("");

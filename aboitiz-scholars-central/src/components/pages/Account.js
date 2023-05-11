@@ -21,11 +21,12 @@ import { useContext, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { updateAccount, updateProfile } from "../services/UserService";
 
+// Account page for users
 const Account = () => {
   const isNonMobile = useMediaQuery("(min-width:600px");
   const [currentUser] = useContext(CurrentUserContext);
   const [showPassword, setShowPassword] = useState(false);
-  const [responseMessage, setResponseMessage] = useState("");
+  const [, setResponseMessage] = useState("");
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const [snackbar, setSnackbar] = useState();
   const handleCloseSnackbar = () => setSnackbar(null);
@@ -49,6 +50,7 @@ const Account = () => {
     confirm: "",
   };
 
+  // Form validation for users' basic profile
   const userSchema = yup.object().shape({
     firstName: yup.string().required("required"),
     lastName: yup.string().required("required"),
@@ -56,9 +58,11 @@ const Account = () => {
     email: yup.string().email("Invalid email").required("required"),
     phone: yup
       .string()
-      .matches(/^(09|\+639)\d{9}$/, "Please input a valid PH number."),
+      .matches(/^(09|\+639)\d{9}$/, "Please input a valid PH number.")
+      .required("required"),
   });
 
+  // Form validation for account settings
   const accountSchema = yup.object().shape({
     userName: yup.string().required("required"),
     password: yup.string().required("required"),

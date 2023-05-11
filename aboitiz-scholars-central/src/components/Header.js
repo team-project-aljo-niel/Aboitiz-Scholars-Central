@@ -1,6 +1,7 @@
 import { Typography, Box, useTheme } from "@mui/material";
 import { themeColors } from "../theme";
 
+// Header Component for pages
 const Header = ({ title, subtitle }) => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);
