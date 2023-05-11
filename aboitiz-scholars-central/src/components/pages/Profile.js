@@ -29,6 +29,7 @@ import {
 import { TriggerContext } from "../providers/TriggerProvider";
 import { phGeoFeatures } from "../data/phGeoFeatures";
 
+// Profile Page for Scholars
 const Profile = () => {
   const isNonMobile = useMediaQuery("(min-width:600px");
   const [, setResponseMessage] = useState("");
@@ -57,6 +58,7 @@ const Profile = () => {
     age: scholarData?.age || "",
   };
 
+  // Form Validation for scholars' profile
   const userSchema = yup.object().shape({
     address: yup.string().required("required"),
     city: yup.string().required("required"),
@@ -76,13 +78,15 @@ const Profile = () => {
 
   const handleCloseSnackbar = () => setSnackbar(null);
 
+  // Year Options for scholars' date admission/graduation/termination
   const date = new Date();
   const currentYear = date.getFullYear();
   let years = [];
-
   for (let i = currentYear; i >= currentYear - 20; i--) {
     years.push(i);
   }
+
+  // GeoFeatures Array needed for the Autocomplete component
   let properties = [];
   phGeoFeatures.features.forEach((obj) =>
     properties.push({
@@ -91,7 +95,6 @@ const Profile = () => {
       id: obj.properties.ID_2
     })
   );
-
   properties.sort((a, b) => a.city.localeCompare(b.city) );
 
   const handleFormSubmit = async (values) => {

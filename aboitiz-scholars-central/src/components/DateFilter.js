@@ -1,6 +1,7 @@
-import { Autocomplete, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 import { useState } from "react";
 
+// Filter component for dates
 const DateFilter = ({ label, filterCategory }) => {
   const [filter, setFilter] = useState("");
   const date = new Date();
@@ -22,8 +23,8 @@ const DateFilter = ({ label, filterCategory }) => {
       fullWidth
       value={filter}
       onChange={(e, value) => {
-        setFilter(value)
-        filterCategory(value)
+        setFilter(value);
+        filterCategory(value);
       }}
       renderInput={(params) => (
         <TextField {...params} variant="filled" label={label} />

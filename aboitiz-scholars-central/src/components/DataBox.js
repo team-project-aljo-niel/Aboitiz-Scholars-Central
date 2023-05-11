@@ -3,6 +3,7 @@ import React from "react";
 import { themeColors } from "../theme";
 import DataPercentage from "./DataPercentage";
 
+// Data box of scholar stats
 const DataBox = ({ title, subtitle, icon, progress, percentage }) => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);

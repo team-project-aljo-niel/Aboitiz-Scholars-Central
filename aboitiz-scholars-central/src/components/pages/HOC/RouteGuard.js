@@ -4,6 +4,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { themeColors } from "../../../theme";
 import LockIcon from "@mui/icons-material/Lock";
 
+// Route guard for admin and officer users
 const RouteGuard = ({ children }) => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);

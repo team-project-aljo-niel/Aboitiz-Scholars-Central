@@ -8,6 +8,7 @@ import { TriggerContext } from "./TriggerProvider";
 
 export const CurrentUserContext = createContext();
 
+// Provider for logged in user details
 export const CurrentUserProvider = (props) => {
   const [currentUser, setCurrentUser] = useState();
   const [trigger] = useContext(TriggerContext);

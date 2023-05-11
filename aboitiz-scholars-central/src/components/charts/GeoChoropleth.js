@@ -3,6 +3,7 @@ import { useTheme } from "@emotion/react";
 import { ResponsiveChoropleth } from "@nivo/geo";
 import { phGeoFeatures } from "../data/phGeoFeatures";
 
+// Choropleth for scholars' city location
 const GeoChoropleth = ({ scholarsData }) => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);
@@ -22,10 +23,10 @@ const GeoChoropleth = ({ scholarsData }) => {
       province = "Not Set";
     }
 
-    // Check if there is already an object for the current remarks
+    // Check if there is already an object for the current city
     let cityObj = data.find((obj) => obj.id === `${city}${province}`);
 
-    // If there is no object for the current remarks, create a new one
+    // If there is no object for the current city, create a new one
     if (!cityObj) {
       cityObj = {
         id: `${city}${province}`,
@@ -33,7 +34,7 @@ const GeoChoropleth = ({ scholarsData }) => {
       };
       data.push(cityObj);
     }
-    // Increment the count for the corresponding status
+    // Increment the count for the corresponding city
     cityObj.value++;
   }
 

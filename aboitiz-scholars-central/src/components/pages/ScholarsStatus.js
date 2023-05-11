@@ -7,6 +7,7 @@ import { updateScholarDetails } from "../services/UserService";
 import { ScholarContext } from "../providers/ScholarProvider";
 import { TriggerContext } from "../providers/TriggerProvider";
 
+// Manage Scholar Status Page
 const ScholarsStatus = () => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);

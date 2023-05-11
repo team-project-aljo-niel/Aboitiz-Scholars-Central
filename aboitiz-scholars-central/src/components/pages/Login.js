@@ -35,6 +35,7 @@ const loginSchema = yup.object().shape({
   password: yup.string().required("required"),
 });
 
+// Login Page
 const Login = () => {
   const [theme, colorMode] = useMode();
   const colors = themeColors(theme.palette.mode);

@@ -15,11 +15,11 @@ export const loginUser = async (user) => {
   return response;
 };
 
-// Get current user data service 
+// Get current user data service
 export const getCurrentUser = async () => {
   const response = await axios.get(`${BASE_URL}/user/details`);
   return response;
-}
+};
 
 // Get all User Data service
 export const getUsers = async () => {
@@ -53,18 +53,27 @@ export const updateAccount = async (account) => {
 
 // Post Scholar Details
 export const addScholarDetails = async (scholarDetails) => {
-  const response = await axios.post(`${BASE_URL}/scholar/details`, scholarDetails);
-  return response;
-};
-
-// Put Current Scholar Details
-export const updateCurrentScholar = async (scholarDetails) => {
-  const response = await axios.put(`${BASE_URL}/scholar/details`, scholarDetails);
+  const response = await axios.post(
+    `${BASE_URL}/scholar/details`,
+    scholarDetails
+  );
   return response;
 };
 
 // Put Scholar Details
 export const updateScholarDetails = async (id, scholarDetails) => {
-  const response = await axios.put(`${BASE_URL}/scholar/details/${id}`, scholarDetails);
+  const response = await axios.put(
+    `${BASE_URL}/scholar/details/${id}`,
+    scholarDetails
+  );
+  return response;
+};
+
+// Put Current Scholar Details
+export const updateCurrentScholar = async (scholarDetails) => {
+  const response = await axios.put(
+    `${BASE_URL}/scholar/details`,
+    scholarDetails
+  );
   return response;
 };

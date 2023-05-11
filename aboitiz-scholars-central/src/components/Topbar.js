@@ -11,6 +11,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router";
 import { CurrentUserContext } from "./providers/CurrentUserProvider";
 
+// Topbar Component
 const Topbar = () => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);

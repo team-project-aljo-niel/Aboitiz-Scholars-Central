@@ -1,7 +1,7 @@
 import { Autocomplete, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { useEffect } from "react";
 
+// Filter Component for BU, City, Province, Island
 const Filter = ({ label, categories, filterCategory }) => {
   const [filter, setFilter] = useState("");
 
