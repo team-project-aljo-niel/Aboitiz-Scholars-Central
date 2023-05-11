@@ -1,41 +1,42 @@
 import { useEffect } from 'react';
 import { createContext, useState } from 'react';
-import { getScholars } from '../services/UserService';
+import { getGrades } from '../services/UserService';
 import { useContext } from 'react';
 import { TriggerContext } from './TriggerProvider';
 import axios from 'axios';
 
-export const ScholarContext = createContext();
+export const GradesContext = createContext();
 
 // Provider for scholars array
-export const ScholarProvider = (props) => {
-  const [scholars, setScholars] = useState([]);
+export const GradeProvider = (props) => {
+  const [grades, setGrades] = useState([]);
   const [trigger] = useContext(TriggerContext);
   const accessToken = localStorage.getItem('token-auth');
 
   useEffect(() => {
-    const fetchScholars = async () => {
+    const fetchGrades = async () => {
       try {
         if (accessToken) {
           axios.defaults.headers.common[
             'Authorization'
           ] = `Bearer ${accessToken}`;
-          const response = await getScholars();
-          setScholars(response.data);
         }
+        const response = await getGrades();
+
+        setGrades(response.data);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchScholars();
+    fetchGrades();
   }, [accessToken, trigger]);
 
   return (
-    <ScholarContext.Provider value={[scholars, setScholars]}>
+    <GradesContext.Provider value={[grades, setGrades]}>
       {props.children}
-    </ScholarContext.Provider>
+    </GradesContext.Provider>
   );
 };
 
-const userExport = { ScholarContext, ScholarProvider };
+const userExport = { GradesContext, GradeProvider };
 export default userExport;
