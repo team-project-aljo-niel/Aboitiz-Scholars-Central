@@ -22,7 +22,7 @@ export const GradeProvider = (props) => {
           ] = `Bearer ${accessToken}`;
         }
         const response = await getGrades();
-        console.log(response.data);
+
         setGrades(response.data);
       } catch (error) {
         console.log(error);

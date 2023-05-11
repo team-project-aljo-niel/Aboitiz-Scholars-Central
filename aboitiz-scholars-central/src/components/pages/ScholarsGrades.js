@@ -13,7 +13,7 @@ const ScholarsGrades = () => {
   const colors = themeColors(theme.palette.mode);
 
   const [grades] = useContext(GradesContext);
-  console.log(grades);
+
   const [trigger, setTrigger] = useContext(TriggerContext);
   const [snackbar, setSnackbar] = useState();
   const handleCloseSnackbar = () => setSnackbar(null);
@@ -46,7 +46,6 @@ const ScholarsGrades = () => {
 
       const response = await updateGrades(newRow.user, updatedDetails);
 
-      console.log(updatedDetails);
       setSnackbar({
         children: 'Scholar status successfully updated',
         severity: 'success',
