@@ -8,6 +8,7 @@ import { updateAccess } from "../services/UserService";
 import { useCallback } from "react";
 import { TriggerContext } from "../providers/TriggerProvider";
 
+// Manage Users Page
 const Users = () => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);
@@ -29,9 +30,8 @@ const Users = () => {
     return response;
     // eslint-disable-next-line
   }, []);
-  // const handleProcessRowUpdateError = useCallback((error) => {
-  //   setSnackbar({ children: error.message, severity: "error" });
-  // }, []);
+
+  const handleProcessRowUpdateError = useCallback((error) => {}, []);
 
   const columns = [
     {
@@ -129,7 +129,7 @@ const Users = () => {
           processRowUpdate={processRowUpdate}
           checkboxSelection
           disableRowSelectionOnClick
-          // onProcessRowUpdateError={handleProcessRowUpdateError}
+          onProcessRowUpdateError={handleProcessRowUpdateError}
         />
         {!!snackbar && (
           <Snackbar

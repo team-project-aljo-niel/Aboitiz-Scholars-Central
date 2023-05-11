@@ -21,6 +21,7 @@ import { useContext, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { updateAccount, updateProfile } from "../services/UserService";
 
+// Account page for users
 const Account = () => {
   const isNonMobile = useMediaQuery("(min-width:600px");
   const [currentUser] = useContext(CurrentUserContext);
@@ -49,6 +50,7 @@ const Account = () => {
     confirm: "",
   };
 
+  // Form validation for users' basic profile
   const userSchema = yup.object().shape({
     firstName: yup.string().required("required"),
     lastName: yup.string().required("required"),
@@ -60,6 +62,7 @@ const Account = () => {
       .required("required"),
   });
 
+  // Form validation for account settings
   const accountSchema = yup.object().shape({
     userName: yup.string().required("required"),
     password: yup.string().required("required"),

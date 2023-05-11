@@ -2,12 +2,10 @@ import { useTheme } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { themeColors } from "../../theme";
 
+// Bar chart for new scholars every year
 const ScholarsBar = ({ scholarsData }) => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);
-  if (!scholarsData) {
-    return <div>...Loading</div>;
-  }
   let data = [];
 
   for (let i = 0; i < scholarsData.length; i++) {

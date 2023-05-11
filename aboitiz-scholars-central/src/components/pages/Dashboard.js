@@ -92,6 +92,7 @@ const Dashboard = () => {
     setScholarsCopy(filteredScholars);
   }, [trigger, scholars, filters]);
 
+  // Filter Category Functions
   const filterBu = useCallback((bu) => {
     setFilters((prevFilters) => ({
       ...prevFilters,

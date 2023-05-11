@@ -2,12 +2,11 @@ import { useTheme } from "@mui/material";
 import { themeColors } from "../../theme";
 import { ResponsivePie } from "@nivo/pie";
 
+// Pie chart for Age
 const AgePie = ({ scholarsData }) => {
   const theme = useTheme();
   const colors = themeColors(theme.palette.mode);
-  if (!scholarsData) {
-    return <div>...Loading</div>;
-  }
+
   let data = [];
 
   for (let i = 0; i < scholarsData.length; i++) {
@@ -17,10 +16,10 @@ const AgePie = ({ scholarsData }) => {
       age = "Not Set";
     }
 
-    // Check if there is already an object for the current remarks
+    // Check if there is already an object for the current aage
     let ageObj = data.find((obj) => obj.id === age);
 
-    // If there is no object for the current remarks, create a new one
+    // If there is no object for the current aage, create a new one
     if (!ageObj) {
       ageObj = {
         id: age,
@@ -29,7 +28,7 @@ const AgePie = ({ scholarsData }) => {
       };
       data.push(ageObj);
     }
-    // Increment the count for the corresponding status
+    // Increment the count for the corresponding age
     ageObj.value++;
   }
 
