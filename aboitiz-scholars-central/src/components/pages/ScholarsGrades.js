@@ -1,12 +1,11 @@
-import { Alert, Box, Snackbar, Typography, useTheme } from '@mui/material';
-import Header from '../Header';
-import { themeColors } from '../../theme';
-import { useCallback, useContext } from 'react';
-import { useState } from 'react';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { createGrades, updateGrades } from '../services/UserService';
-import { GradesContext } from '../providers/GradeProvider';
-import { TriggerContext } from '../providers/TriggerProvider';
+import { Alert, Box, Snackbar, Typography, useTheme } from "@mui/material";
+import { themeColors } from "../../theme";
+import { useCallback, useContext } from "react";
+import { useState } from "react";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { updateGrades } from "../services/UserService";
+import { GradesContext } from "../providers/GradeProvider";
+import { TriggerContext } from "../providers/TriggerProvider";
 
 const ScholarsGrades = () => {
   const theme = useTheme();
@@ -47,8 +46,8 @@ const ScholarsGrades = () => {
       const response = await updateGrades(newRow.user, updatedDetails);
 
       setSnackbar({
-        children: 'Scholar status successfully updated',
-        severity: 'success',
+        children: "Scholar status successfully updated",
+        severity: "success",
       });
       setTrigger(!trigger);
       return response;
@@ -65,183 +64,197 @@ const ScholarsGrades = () => {
 
   const columns = [
     {
-      field: '_id',
-      headerName: 'ID',
+      field: "_id",
+      headerName: "ID",
+      minWidth: 200,
       flex: 1,
-      headerAlign: 'center',
-      align: 'center',
-      cellClassName: 'id-column--cell',
+      headerAlign: "center",
+      align: "center",
+      cellClassName: "id-column--cell",
     },
     {
-      field: 'fullName',
-      headerName: 'Name',
+      field: "fullName",
+      headerName: "Name",
+      minWidth: 250,
       flex: 1.3,
       valueGetter: (params) =>
-        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+        `${params.row.firstName || ""} ${params.row.lastName || ""}`,
     },
     {
-      field: 'year1Term1',
-      headerName: 'Year1-Term1',
-      headerAlign: 'center',
-      align: 'center',
+      field: "year1Term1",
+      headerName: "Y1T1 Year1-Term1",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 70,
       editable: true,
       flex: 1,
-      valueGetter: (params) => `${params.row.firstYear.firstTerm || ''}`,
+      valueGetter: (params) => `${params.row.firstYear.firstTerm || ""}`,
     },
     {
-      field: 'year1Term2',
-      headerName: 'Year1-Term2',
-      headerAlign: 'center',
-      align: 'center',
+      field: "year1Term2",
+      headerName: "Y1T2 Year1-Term2",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 70,
       editable: true,
       flex: 1,
-      valueGetter: (params) => `${params.row.firstYear.secondTerm || ''}`,
+      valueGetter: (params) => `${params.row.firstYear.secondTerm || ""}`,
     },
 
     {
-      field: 'year1Term3',
-      headerName: 'Year1-Term3',
-      headerAlign: 'center',
-      align: 'center',
+      field: "year1Term3",
+      headerName: "Y1T3 Year1-Term3",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 70,
       editable: true,
       flex: 1,
-      valueGetter: (params) => `${params.row.firstYear.thirdTerm || ''}`,
+      valueGetter: (params) => `${params.row.firstYear.thirdTerm || ""}`,
     },
     {
-      field: 'year2Term1',
-      headerName: 'Year2-Term1',
-      headerAlign: 'center',
-      align: 'center',
+      field: "year2Term1",
+      headerName: "Y2T1 Year2-Term1",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 70,
       editable: true,
       flex: 1,
-      valueGetter: (params) => `${params.row.secondYear.firstTerm || ''}`,
+      valueGetter: (params) => `${params.row.secondYear.firstTerm || ""}`,
     },
     {
-      field: 'year2Term2',
-      headerName: 'Year2-Term2',
-      headerAlign: 'center',
-      align: 'center',
+      field: "year2Term2",
+      headerName: "Y2T2 Year2-Term2",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 70,
       editable: true,
       flex: 1,
-      valueGetter: (params) => `${params.row.secondYear.secondTerm || ''}`,
+      valueGetter: (params) => `${params.row.secondYear.secondTerm || ""}`,
     },
     {
-      field: 'year2Term3',
-      headerName: 'Year2-Term3',
-      headerAlign: 'center',
-      align: 'center',
+      field: "year2Term3",
+      headerName: "Y2T3 Year2-Term3",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 70,
       editable: true,
       flex: 1,
-      valueGetter: (params) => `${params.row.secondYear.thirdTerm || ''}`,
+      valueGetter: (params) => `${params.row.secondYear.thirdTerm || ""}`,
     },
     {
-      field: 'year3Term1',
-      headerName: 'Year3-Term1',
-      headerAlign: 'center',
-      align: 'center',
+      field: "year3Term1",
+      headerName: "Y3T1 Year3-Term1",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 70,
       editable: true,
       flex: 1,
-      valueGetter: (params) => `${params.row.thirdYear.firstTerm || ''}`,
+      valueGetter: (params) => `${params.row.thirdYear.firstTerm || ""}`,
     },
     {
-      field: 'year3Term2',
-      headerName: 'Year3-Term2',
-      headerAlign: 'center',
-      align: 'center',
+      field: "year3Term2",
+      headerName: "Y3T2 Year3-Term2",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 70,
       editable: true,
       flex: 1,
-      valueGetter: (params) => `${params.row.thirdYear.secondTerm || ''}`,
+      valueGetter: (params) => `${params.row.thirdYear.secondTerm || ""}`,
     },
     {
-      field: 'year3Term3',
-      headerName: 'Year3-Term3',
-      headerAlign: 'center',
-      align: 'center',
+      field: "year3Term3",
+      headerName: "Y3T3 Year3-Term3",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 70,
       editable: true,
       flex: 1,
-      valueGetter: (params) => `${params.row.thirdYear.thirdTerm || ''}`,
+      valueGetter: (params) => `${params.row.thirdYear.thirdTerm || ""}`,
     },
     {
-      field: 'year4Term1',
-      headerName: 'Year4-Term1',
-      headerAlign: 'center',
-      align: 'center',
+      field: "year4Term1",
+      headerName: "Y4T1 Year4-Term1",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 70,
       editable: true,
       flex: 1,
-      valueGetter: (params) => `${params.row.fourthYear.firstTerm || ''}`,
+      valueGetter: (params) => `${params.row.fourthYear.firstTerm || ""}`,
     },
     {
-      field: 'year4Term2',
-      headerName: 'Year4-Term2',
-      headerAlign: 'center',
-      align: 'center',
+      field: "year4Term2",
+      headerName: "Y4T2 Year4-Term2",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 70,
       editable: true,
       flex: 1,
-      valueGetter: (params) => `${params.row.fourthYear.secondTerm || ''}`,
+      valueGetter: (params) => `${params.row.fourthYear.secondTerm || ""}`,
     },
     {
-      field: 'year4Term3',
-      headerName: 'Year4-Term3',
-      headerAlign: 'center',
-      align: 'center',
+      field: "year4Term3",
+      headerName: "Y4T3 Year4-Term3",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 70,
       editable: true,
       flex: 1,
-      valueGetter: (params) => `${params.row.fourthYear.thirdTerm || ''}`,
+      valueGetter: (params) => `${params.row.fourthYear.thirdTerm || ""}`,
     },
   ];
   return (
-    <Box m='20px'>
+    <Box m="20px">
       <Typography
-        variant='h2'
+        variant="h2"
         color={colors.black[500]}
-        fontWeight='bold'
-        sx={{ mb: '5px' }}
+        fontWeight="bold"
+        sx={{ mb: "5px" }}
       >
         Scholars Grades
       </Typography>
-      <Typography variant='h5' color={colors.redAccent[400]}>
+      <Typography variant="h5" color={colors.redAccent[400]}>
         Double-click
-        <span style={{ color: colors.redAccent[300], fontWeight: 'bold' }}>
-          {' '}
-          cells{' '}
+        <span style={{ color: colors.redAccent[300], fontWeight: "bold" }}>
+          {" "}
+          cells{" "}
         </span>
         to edit
       </Typography>
       <Box
-        mt='40px'
-        height='100vh'
+        mt="40px"
+        height="75vh"
         sx={{
-          '& .MuiDataGrid-root': {
-            border: 'none',
+          "& .MuiDataGrid-root": {
+            border: "none",
           },
-          '& .MuiDataGrid-cell': {
-            border: 'none',
-            fontSize: '18px',
+          "& .MuiDataGrid-cell": {
+            border: "none",
+            fontSize: "18px",
           },
-          '& .status-column--cell': {
+          "& .status-column--cell": {
             color: colors.redAccent[300],
-            fontSize: '18px',
-            fontWeight: 'bold',
+            fontSize: "18px",
+            fontWeight: "bold",
           },
-          '& .remarks-column--cell': {
+          "& .remarks-column--cell": {
             color: colors.redAccent[300],
-            fontSize: '18px',
-            fontWeight: 'bold',
+            fontSize: "18px",
+            fontWeight: "bold",
           },
-          '& .MuiDataGrid-columnHeaders': {
-            borderBottom: 'none',
+          "& .MuiDataGrid-columnHeaders": {
+            borderBottom: "none",
             backgroundColor: colors.grey[400],
             color: colors.black[500],
-            fontSize: '18px',
+            fontSize: "16px",
           },
-          '& .MuiDataGrid-footerContainer': {
-            borderTop: 'none',
+          "& .MuiDataGrid-footerContainer": {
+            borderTop: "none",
             backgroundColor: colors.grey[400],
           },
-          '& .MuiDataGrid-virtualScroller': {
+          "& .MuiDataGrid-virtualScroller": {
             backgroundColor: colors.primary[900],
           },
-          width: '100%',
+          width: "100%",
         }}
       >
         <DataGrid
@@ -268,7 +281,7 @@ const ScholarsGrades = () => {
         {!!snackbar && (
           <Snackbar
             open
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
             onClose={handleCloseSnackbar}
             autoHideDuration={6000}
           >
