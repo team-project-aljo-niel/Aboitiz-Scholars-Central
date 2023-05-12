@@ -37,8 +37,6 @@ const ScholarsStatus = () => {
   }, []);
 
   const handleProcessRowUpdateError = (error) => {
-    // console.log(error);
-    // setSnackbar({ children: error.message, severity: "error" });
   };
 
   const columns = [

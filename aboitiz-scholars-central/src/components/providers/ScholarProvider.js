@@ -24,7 +24,6 @@ export const ScholarProvider = (props) => {
           setScholars(response.data);
         }
       } catch (error) {
-        console.log(error);
       }
     };
     fetchScholars();

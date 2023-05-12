@@ -40,14 +40,11 @@ const ScholarsInfo = () => {
       setTrigger(!trigger);
       return response;
     } catch (error) {
-      console.log(error);
     }
     // eslint-disable-next-line
   }, []);
 
   const handleProcessRowUpdateError = (error) => {
-    // console.log(error);
-    // setSnackbar({ children: error.message, severity: "error" });
   };
 
   const date = new Date();

@@ -24,7 +24,6 @@ export const UserProvider = (props) => {
           setUsers(response.data);
         }
       } catch (error) {
-        console.log(error);
       }
     };
     fetchUsers();

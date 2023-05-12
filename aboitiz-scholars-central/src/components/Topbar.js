@@ -1,12 +1,10 @@
 import { Box, IconButton, useTheme } from '@mui/material';
 import { useContext } from 'react';
 import { ColorModeContext, themeColors } from '../theme';
-import { InputBase } from '@mui/material';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import PersonModeOutlinedIcon from '@mui/icons-material/PersonOutlined';
-import SearchIcon from '@mui/icons-material/Search';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router';
 import { CurrentUserContext } from './providers/CurrentUserProvider';

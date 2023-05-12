@@ -134,7 +134,6 @@ const Profile = () => {
       }
       setTrigger(!trigger);
     } catch (error) {
-      console.log(error);
       setResponseMessage(error.response.data.message);
       setSnackbar({ children: error.response.data.message, severity: "error" });
     }

@@ -25,7 +25,6 @@ export const GradeProvider = (props) => {
 
         setGrades(response.data);
       } catch (error) {
-        console.log(error);
       }
     };
     fetchGrades();

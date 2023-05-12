@@ -112,10 +112,8 @@ function replaceAccessToken() {
         localStorage.setItem('token-auth', newAccessToken);
       })
       .catch((error) => {
-        console.log(error);
       });
   } catch (error) {
-    console.log(error);
   }
 }
 

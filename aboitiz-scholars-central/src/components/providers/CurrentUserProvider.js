@@ -25,7 +25,6 @@ export const CurrentUserProvider = (props) => {
           setCurrentUser(response.data);
         }
       } catch (error) {
-        console.log("userDetails", error);
         if (error.response.status === 401) {
           localStorage.removeItem("token-auth");
           setCurrentUser();
