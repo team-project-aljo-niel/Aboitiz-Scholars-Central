@@ -25,10 +25,6 @@ export const GradeProvider = (props) => {
 
         setGrades(response.data);
       } catch (error) {
-        if (error.response.status === 401) {
-          localStorage.removeItem("token-auth");
-          window.location.reload(true);
-        }
       }
     };
     fetchGrades();
