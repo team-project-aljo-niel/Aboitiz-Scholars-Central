@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { createContext, useState } from 'react';
-import { getGrades } from '../services/UserService';
-import { useContext } from 'react';
-import { TriggerContext } from './TriggerProvider';
-import axios from 'axios';
+import { useEffect } from "react";
+import { createContext, useState } from "react";
+import { getGrades } from "../services/UserService";
+import { useContext } from "react";
+import { TriggerContext } from "./TriggerProvider";
+import axios from "axios";
 
 export const GradesContext = createContext();
 
@@ -11,20 +11,24 @@ export const GradesContext = createContext();
 export const GradeProvider = (props) => {
   const [grades, setGrades] = useState([]);
   const [trigger] = useContext(TriggerContext);
-  const accessToken = localStorage.getItem('token-auth');
+  const accessToken = localStorage.getItem("token-auth");
 
   useEffect(() => {
     const fetchGrades = async () => {
       try {
         if (accessToken) {
           axios.defaults.headers.common[
-            'Authorization'
+            "Authorization"
           ] = `Bearer ${accessToken}`;
         }
         const response = await getGrades();
 
         setGrades(response.data);
       } catch (error) {
+        if (error.response.status === 401) {
+          localStorage.removeItem("token-auth");
+          window.location.reload(true);
+        }
       }
     };
     fetchGrades();
