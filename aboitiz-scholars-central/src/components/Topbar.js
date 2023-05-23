@@ -1,6 +1,6 @@
 import { Box, IconButton, useTheme } from '@mui/material';
 import { useContext } from 'react';
-import { ColorModeContext, themeColors } from '../theme';
+import { ColorModeContext } from '../theme';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -12,7 +12,6 @@ import { CurrentUserContext } from './providers/CurrentUserProvider';
 // Topbar Component
 const Topbar = () => {
   const theme = useTheme();
-  const colors = themeColors(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
   const navigate = useNavigate();
@@ -38,7 +37,7 @@ const Topbar = () => {
           )}
         </IconButton>
         {currentUser.access === 'Admin' ? (
-          <IconButton>
+          <IconButton onClick={() => navigate('/ASC/settings')}>
             <SettingsOutlinedIcon />
           </IconButton>
         ) : undefined}
