@@ -111,32 +111,24 @@ const scholarController = {
   },
   updateScholarDetails: async (req, res, next) => {
     try {
-      const currentScholar = await Scholar.findByIdAndUpdate(req.params.id, {
-        status: req.body.status,
-        terminationRemarks: req.body.terminationRemarks,
-        age: req.body.age,
-        island: req.body.island,
-        province: req.body.province,
-        city: req.body.city,
-        address: req.body.address,
-        schoolAttended: req.body.schoolAttended,
-        degreeOrProgram: req.body.degreeOrProgram,
-        yearAdmitted: req.body.yearAdmitted,
-        yearEndedOrGraduated: req.body.yearEndedOrGraduated,
-        latinHonors: req.body.latinHonors,
-        employed: req.body.employed,
-        aboitizCompany: req.body.aboitizCompany,
-        designation: req.body.designation,
-        company: req.body.company,
-        sponsoringBusinessUnit: req.body.sponsoringBusinessUnit,
-      });
+      const userId = req.params.id;
 
+      const currentScholar = await Scholar.findOne({ user: userId });
+
+      // loop through request body and update scholarData
+      for await (const [key, value] of Object.entries(req.body)) {
+        if (key !== '_id') {
+          currentScholar[key] = value;
+        }
+      }
       if (currentScholar.yearEndedOrGraduated === 'N/A') {
         currentScholar.latinHonors = 'N/A';
       }
 
-      res.status(200).send('Scholar details changed succesfully');
+      await currentScholar.save();
+      res.status(200).send('Scholar info changed succesfully');
     } catch (error) {
+      console.log(error);
       return next(new httpError('Error updating scholar details', 500));
     }
   },

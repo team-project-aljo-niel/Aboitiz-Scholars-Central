@@ -17,6 +17,8 @@ import { ScholarProvider } from './components/providers/ScholarProvider';
 import { CurrentUserProvider } from './components/providers/CurrentUserProvider';
 import { TriggerProvider } from './components/providers/TriggerProvider';
 import { GradeProvider } from './components/providers/GradeProvider';
+import ScholarsRequests from './components/pages/ScholarsRequests';
+import { UpdatesProvider } from './components/providers/UpdatesProvider';
 
 function App() {
   const router = createBrowserRouter([
@@ -69,6 +71,14 @@ function App() {
           ),
         },
         {
+          path: 'scholars/requests',
+          element: (
+            <RouteGuard>
+              <ScholarsRequests />{' '}
+            </RouteGuard>
+          ),
+        },
+        {
           path: 'create-user',
           element: (
             <RouteGuard>
@@ -94,7 +104,9 @@ function App() {
         <UserProvider>
           <ScholarProvider>
             <GradeProvider>
-              <RouterProvider router={router} />
+              <UpdatesProvider>
+                <RouterProvider router={router} />
+              </UpdatesProvider>
             </GradeProvider>
           </ScholarProvider>
         </UserProvider>
