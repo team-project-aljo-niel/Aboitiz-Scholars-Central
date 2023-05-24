@@ -19,6 +19,8 @@ import { TriggerProvider } from './components/providers/TriggerProvider';
 import { GradeProvider } from './components/providers/GradeProvider';
 import ScholarsRequests from './components/pages/ScholarsRequests';
 import { UpdatesProvider } from './components/providers/UpdatesProvider';
+import Settings from './components/pages/Settings';
+import { VisibilityProvider } from './components/providers/VisibilityProvider';
 
 function App() {
   const router = createBrowserRouter([
@@ -87,6 +89,7 @@ function App() {
           ),
         },
         { path: 'account', element: <Account /> },
+        { path: 'settings', element: <Settings /> },
         {
           path: 'profile',
           element: (
@@ -107,6 +110,9 @@ function App() {
               <UpdatesProvider>
                 <RouterProvider router={router} />
               </UpdatesProvider>
+              <VisibilityProvider>
+                <RouterProvider router={router} />
+              </VisibilityProvider>
             </GradeProvider>
           </ScholarProvider>
         </UserProvider>

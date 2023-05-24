@@ -36,6 +36,18 @@ export const getScholars = async () => {
   return response;
 };
 
+// Get widgets visibility service
+export const getWidgetsVisibility = async () => {
+  const response = await axios.get(`${BASE_URL}/widgets`);
+  return response;
+};
+
+// Put widgets visibility service
+export const updateWidgetsVisibility = async (visibility) => {
+  const response = await axios.put(`${BASE_URL}/widgets`, visibility);
+  return response;
+};
+
 // Put User Access Level
 export const updateAccess = async (_id, access) => {
   const response = await axios.put(`${BASE_URL}/user/${_id}`, access);

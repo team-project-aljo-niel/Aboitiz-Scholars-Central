@@ -9,7 +9,7 @@ import {
   Button,
 } from '@mui/material';
 import { useContext } from 'react';
-import { ColorModeContext, themeColors } from '../theme';
+import { ColorModeContext } from '../theme';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -23,7 +23,6 @@ import { UpdatesContext } from './providers/UpdatesProvider';
 // Topbar Component
 const Topbar = () => {
   const theme = useTheme();
-  const colors = themeColors(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const [updates] = useContext(UpdatesContext);
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
