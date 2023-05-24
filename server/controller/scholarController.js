@@ -111,22 +111,24 @@ const scholarController = {
   },
   updateScholarDetails: async (req, res, next) => {
     try {
+      console.log(req.params.id);
       const userId = req.params.id;
 
       const currentScholar = await Scholar.findOne({ user: userId });
 
-      // loop through request body and update scholarData
+      // Loop through request body and update scholarData
       for await (const [key, value] of Object.entries(req.body)) {
         if (key !== '_id') {
           currentScholar[key] = value;
         }
       }
+
       if (currentScholar.yearEndedOrGraduated === 'N/A') {
         currentScholar.latinHonors = 'N/A';
       }
 
       await currentScholar.save();
-      res.status(200).send('Scholar info changed succesfully');
+      res.status(200).send('Scholar info changed successfully');
     } catch (error) {
       console.log(error);
       return next(new httpError('Error updating scholar details', 500));

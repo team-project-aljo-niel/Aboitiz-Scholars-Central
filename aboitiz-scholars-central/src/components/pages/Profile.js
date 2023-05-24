@@ -118,7 +118,7 @@ const Profile = () => {
         const response = await addAccountUpdates(scholarDetails);
         setResponseMessage(response.data);
         setSnackbar({
-          children: 'Request for account update sent',
+          children: 'Request for Account Update Sent',
           severity: 'success',
         });
       } else {

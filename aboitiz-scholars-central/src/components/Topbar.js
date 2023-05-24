@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   Box,
   IconButton,
@@ -8,13 +7,13 @@ import {
   Typography,
   Button,
 } from '@mui/material';
-import { useContext } from 'react';
-import { ColorModeContext, themeColors } from '../theme';
+import { useContext, useState } from 'react';
+import { ColorModeContext } from '../theme';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import { NotificationAddOutlined } from '@mui/icons-material';
 import PersonModeOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import { NotificationAddOutlined } from '@mui/icons-material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router';
 import { CurrentUserContext } from './providers/CurrentUserProvider';
@@ -23,14 +22,13 @@ import { UpdatesContext } from './providers/UpdatesProvider';
 // Topbar Component
 const Topbar = () => {
   const theme = useTheme();
-  const colors = themeColors(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const [updates] = useContext(UpdatesContext);
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
   const navigate = useNavigate();
   const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
   const [notificationMessage, setNotificationMessage] = useState('');
-  const pendingRequestCount = updates?.length;
+  const pendingRequestCount = updates.length;
 
   const handleLogout = () => {
     localStorage.removeItem('token-auth');

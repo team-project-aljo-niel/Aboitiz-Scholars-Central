@@ -17,10 +17,10 @@ import { ScholarProvider } from './components/providers/ScholarProvider';
 import { CurrentUserProvider } from './components/providers/CurrentUserProvider';
 import { TriggerProvider } from './components/providers/TriggerProvider';
 import { GradeProvider } from './components/providers/GradeProvider';
-import ScholarsRequests from './components/pages/ScholarsRequests';
-import { UpdatesProvider } from './components/providers/UpdatesProvider';
 import Settings from './components/pages/Settings';
 import { VisibilityProvider } from './components/providers/VisibilityProvider';
+import { UpdatesProvider } from './components/providers/UpdatesProvider';
+import ScholarsRequests from './components/pages/ScholarsRequests';
 
 function App() {
   const router = createBrowserRouter([
@@ -89,6 +89,7 @@ function App() {
           ),
         },
         { path: 'account', element: <Account /> },
+        { path: 'settings', element: <Settings /> },
         {
           path: 'profile',
           element: (
@@ -106,9 +107,11 @@ function App() {
         <UserProvider>
           <ScholarProvider>
             <GradeProvider>
-              <UpdatesProvider>
-                <RouterProvider router={router} />
-              </UpdatesProvider>
+              <VisibilityProvider>
+                <UpdatesProvider>
+                  <RouterProvider router={router} />
+                </UpdatesProvider>
+              </VisibilityProvider>
             </GradeProvider>
           </ScholarProvider>
         </UserProvider>

@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const scholarSchema = new mongoose.Schema(
   {
     user: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    firstName: String,
-    lastName: String,
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
     gender: String,
-    email: String,
+    email: { type: String, required: true },
     phone: String,
     age: Number,
     island: String,

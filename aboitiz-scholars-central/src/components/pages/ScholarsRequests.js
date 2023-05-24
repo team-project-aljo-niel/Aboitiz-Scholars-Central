@@ -23,7 +23,7 @@ const ScholarsRequests = () => {
   const colors = themeColors(theme.palette.mode);
   const [updates, setUpdates] = useContext(UpdatesContext);
   const [scholar] = useContext(ScholarContext);
-  const [snackbar, setSnackbar] = useState();
+  const [snackbar, setSnackbar] = useState(null);
   const [selectedRow, setSelectedRow] = useState(null);
   const [account, setAccount] = useState(' ');
   const handleCloseSnackbar = () => setSnackbar(null);
@@ -48,14 +48,15 @@ const ScholarsRequests = () => {
         selectedRow?.user[0],
         selectedRow
       );
-      if (response.data === 'Scholar info changed succesfully') {
+      console.log(response.data);
+      if (response.data == 'Scholar info changed successfully') {
         await deleteAccountUpdates(selectedRow?.user[0]);
         setSnackbar({
           children: 'Account update saved succesfully',
           severity: 'success',
         });
-        handleCloseModal();
       }
+      handleCloseModal();
     } catch (error) {
       console.error(error);
     }
