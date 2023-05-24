@@ -89,7 +89,6 @@ function App() {
           ),
         },
         { path: 'account', element: <Account /> },
-        { path: 'settings', element: <Settings /> },
         {
           path: 'profile',
           element: (
@@ -110,9 +109,6 @@ function App() {
               <UpdatesProvider>
                 <RouterProvider router={router} />
               </UpdatesProvider>
-              <VisibilityProvider>
-                <RouterProvider router={router} />
-              </VisibilityProvider>
             </GradeProvider>
           </ScholarProvider>
         </UserProvider>
