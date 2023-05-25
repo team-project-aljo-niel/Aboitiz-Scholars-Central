@@ -3,8 +3,8 @@ import axios from 'axios';
 // For client to recognize cookies being sent by the backend
 axios.defaults.withCredentials = true;
 
-const BASE_URL = 'https://aboitizscholarscentral-api.onrender.com';
-// const BASE_URL = 'http://localhost:8080';
+// const BASE_URL = 'https://aboitizscholarscentral-api.onrender.com';
+const BASE_URL = 'http://localhost:8080';
 
 // Signup service
 export const createUser = async (user) => {
@@ -111,6 +111,24 @@ export const updateGrades = async (id, gradeDetails) => {
   return response;
 };
 
+// Get all account updates
+export const getAccountUpdates = async () => {
+  const response = await axios.get(`${BASE_URL}/updates`);
+  return response;
+};
+
+// Post account updates
+export const addAccountUpdates = async (accountUpdates) => {
+  const response = await axios.post(`${BASE_URL}/updates`, accountUpdates);
+  return response;
+};
+
+// Delete account updates
+export const deleteAccountUpdates = async (id) => {
+  const response = await axios.delete(`${BASE_URL}/updates/${id}`);
+  return response;
+};
+
 function replaceAccessToken() {
   try {
     // Send a request to the server to get a new access token
@@ -123,10 +141,8 @@ function replaceAccessToken() {
         // Set the new access token in local storage
         localStorage.setItem('token-auth', newAccessToken);
       })
-      .catch((error) => {
-      });
-  } catch (error) {
-  }
+      .catch((error) => {});
+  } catch (error) {}
 }
 
 // Call the replaceAccessToken function every 15 minutes

@@ -15,23 +15,20 @@ import {
   Select,
   Snackbar,
   TextField,
-} from "@mui/material";
-import { Formik } from "formik";
-import * as yup from "yup";
-import Header from "../Header";
-import { useState } from "react";
-import { CurrentUserContext } from "../providers/CurrentUserProvider";
-import { useContext } from "react";
-import {
-  addScholarDetails,
-  updateCurrentScholar,
-} from "../services/UserService";
-import { TriggerContext } from "../providers/TriggerProvider";
-import { phGeoFeatures } from "../data/phGeoFeatures";
+} from '@mui/material';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import Header from '../Header';
+import { useState } from 'react';
+import { CurrentUserContext } from '../providers/CurrentUserProvider';
+import { useContext } from 'react';
+import { addScholarDetails, addAccountUpdates } from '../services/UserService';
+import { TriggerContext } from '../providers/TriggerProvider';
+import { phGeoFeatures } from '../data/phGeoFeatures';
 
 // Profile Page for Scholars
 const Profile = () => {
-  const [, setResponseMessage] = useState("");
+  const [, setResponseMessage] = useState('');
   const [currentUser] = useContext(CurrentUserContext);
   const [trigger, setTrigger] = useContext(TriggerContext);
   const [snackbar, setSnackbar] = useState();
@@ -41,38 +38,38 @@ const Profile = () => {
   }
 
   const initialValues = {
-    address: scholarData?.address || "",
-    city: scholarData?.city || "",
-    province: scholarData?.province || "",
-    island: scholarData?.island || "",
-    schoolAttended: scholarData?.schoolAttended || "",
-    degreeOrProgram: scholarData?.degreeOrProgram || "",
-    yearAdmitted: scholarData?.yearAdmitted || "",
-    yearEndedOrGraduated: scholarData?.yearEndedOrGraduated || "",
-    latinHonors: scholarData?.latinHonors || "",
-    employed: scholarData?.employed || "No",
-    aboitizCompany: scholarData?.aboitizCompany || "No",
-    designation: scholarData?.designation || "",
-    company: scholarData?.company || "",
-    age: scholarData?.age || "",
+    address: scholarData?.address || '',
+    city: scholarData?.city || '',
+    province: scholarData?.province || '',
+    island: scholarData?.island || '',
+    schoolAttended: scholarData?.schoolAttended || '',
+    degreeOrProgram: scholarData?.degreeOrProgram || '',
+    yearAdmitted: scholarData?.yearAdmitted || '',
+    yearEndedOrGraduated: scholarData?.yearEndedOrGraduated || '',
+    latinHonors: scholarData?.latinHonors || '',
+    employed: scholarData?.employed || 'No',
+    aboitizCompany: scholarData?.aboitizCompany || 'No',
+    designation: scholarData?.designation || '',
+    company: scholarData?.company || '',
+    age: scholarData?.age || '',
   };
 
   // Form Validation for scholars' profile
   const userSchema = yup.object().shape({
-    address: yup.string().required("required"),
-    city: yup.string().required("required"),
-    province: yup.string().required("required"),
-    island: yup.string().required("required"),
-    schoolAttended: yup.string().required("required"),
-    degreeOrProgram: yup.string().required("required"),
-    yearAdmitted: yup.string().required("required"),
-    yearEndedOrGraduated: yup.string().required("required"),
-    latinHonors: yup.string().required("required"),
-    employed: yup.string().required("required"),
-    aboitizCompany: yup.string().required("required"),
+    address: yup.string().required('required'),
+    city: yup.string().required('required'),
+    province: yup.string().required('required'),
+    island: yup.string().required('required'),
+    schoolAttended: yup.string().required('required'),
+    degreeOrProgram: yup.string().required('required'),
+    yearAdmitted: yup.string().required('required'),
+    yearEndedOrGraduated: yup.string().required('required'),
+    latinHonors: yup.string().required('required'),
+    employed: yup.string().required('required'),
+    aboitizCompany: yup.string().required('required'),
     designation: yup.string(),
     company: yup.string(),
-    age: yup.number().required("required"),
+    age: yup.number().required('required'),
   });
 
   const handleCloseSnackbar = () => setSnackbar(null);
@@ -113,35 +110,35 @@ const Profile = () => {
         aboitizCompany: values.aboitizCompany,
         designation: values.designation,
         company: values.company,
-        status: "Active",
-        terminationRemarks: "N/A",
-        sponsoringBusinessUnit: "",
+        status: 'Active',
+        terminationRemarks: 'N/A',
+        sponsoringBusinessUnit: '',
       };
       if (scholarData) {
-        const response = await updateCurrentScholar(scholarDetails);
+        const response = await addAccountUpdates(scholarDetails);
         setResponseMessage(response.data);
         setSnackbar({
-          children: "Details successfully updated",
-          severity: "success",
+          children: 'Request for Account Update Sent',
+          severity: 'success',
         });
       } else {
         const response = await addScholarDetails(scholarDetails);
         setResponseMessage(response.data);
         setSnackbar({
-          children: "Details successfully added",
-          severity: "success",
+          children: 'Details successfully added',
+          severity: 'success',
         });
       }
       setTrigger(!trigger);
     } catch (error) {
       setResponseMessage(error.response.data.message);
-      setSnackbar({ children: error.response.data.message, severity: "error" });
+      setSnackbar({ children: error.response.data.message, severity: 'error' });
     }
   };
 
   return (
-    <Box m="20px">
-      <Header title="My Profile" subtitle="Scholar Information" />
+    <Box m='20px'>
+      <Header title='My Profile' subtitle='Scholar Information' />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -162,13 +159,13 @@ const Profile = () => {
               <Grid item xs={12} sm={6} md={1}>
                 <TextField
                   fullWidth
-                  variant="filled"
-                  type="text"
-                  label="Age"
+                  variant='filled'
+                  type='text'
+                  label='Age'
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.age}
-                  name="age"
+                  name='age'
                   error={!!touched.age && !!errors.age}
                   helperText={touched.age && errors.age}
                 />
@@ -176,13 +173,13 @@ const Profile = () => {
               <Grid item xs={12} sm={6} md={3}>
                 <TextField
                   fullWidth
-                  variant="filled"
-                  type="text"
-                  label="Address"
+                  variant='filled'
+                  type='text'
+                  label='Address'
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.address}
-                  name="address"
+                  name='address'
                   error={!!touched.address && !!errors.address}
                   helperText={touched.address && errors.address}
                 />
@@ -191,7 +188,7 @@ const Profile = () => {
                 <Autocomplete
                   autoHighlight
                   fullWidth
-                  name="city"
+                  name='city'
                   options={properties}
                   value={{ city: values.city }}
                   getOptionLabel={(option) => option.city}
@@ -207,21 +204,21 @@ const Profile = () => {
                   }}
                   onChange={(e, value) => {
                     setFieldValue(
-                      "city",
+                      'city',
                       value !== null ? value.city : initialValues.city
                     );
                     setFieldValue(
-                      "province",
+                      'province',
                       value !== null ? value.province : initialValues.province
                     );
                   }}
                   onBlur={handleBlur}
-                  sx={{ gridColumn: "span 2" }}
+                  sx={{ gridColumn: 'span 2' }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      variant="filled"
-                      label="Choose a City"
+                      variant='filled'
+                      label='Choose a City'
                       error={!!touched.city && !!errors.city}
                       helperText={touched.city && errors.city}
                     />
@@ -231,36 +228,36 @@ const Profile = () => {
               <Grid item xs={6} sm={6} md={3}>
                 <TextField
                   fullWidth
-                  variant="filled"
+                  variant='filled'
                   InputProps={{ readOnly: true }}
-                  type="text"
-                  label="Province"
+                  type='text'
+                  label='Province'
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.province}
-                  name="province"
+                  name='province'
                   error={!!touched.province && !!errors.province}
                   helperText={touched.province && errors.province}
                 />
               </Grid>
               <Grid item xs={6} sm={6} md={2}>
-                <FormControl fullWidth variant="filled">
-                  <InputLabel id="demo-simple-select-label">
+                <FormControl fullWidth variant='filled'>
+                  <InputLabel id='demo-simple-select-label'>
                     Island Group
                   </InputLabel>
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Island Group"
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    label='Island Group'
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.island}
-                    name="island"
+                    name='island'
                     error={!!touched.island && !!errors.island}
                   >
-                    <MenuItem value={"Luzon"}>Luzon</MenuItem>
-                    <MenuItem value={"Visayas"}>Visayas</MenuItem>
-                    <MenuItem value={"Mindanao"}>Mindanao</MenuItem>
+                    <MenuItem value={'Luzon'}>Luzon</MenuItem>
+                    <MenuItem value={'Visayas'}>Visayas</MenuItem>
+                    <MenuItem value={'Mindanao'}>Mindanao</MenuItem>
                   </Select>
                   <FormHelperText>
                     {touched.island && errors.island}
@@ -270,13 +267,13 @@ const Profile = () => {
               <Grid item xs={12} sm={6} md={6}>
                 <TextField
                   fullWidth
-                  variant="filled"
-                  type="text"
-                  label="School Attended"
+                  variant='filled'
+                  type='text'
+                  label='School Attended'
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.schoolAttended}
-                  name="schoolAttended"
+                  name='schoolAttended'
                   error={!!touched.schoolAttended && !!errors.schoolAttended}
                   helperText={touched.schoolAttended && errors.schoolAttended}
                 />
@@ -284,30 +281,30 @@ const Profile = () => {
               <Grid item xs={12} sm={6} md={6}>
                 <TextField
                   fullWidth
-                  variant="filled"
-                  type="text"
-                  label="Degree/Program"
+                  variant='filled'
+                  type='text'
+                  label='Degree/Program'
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.degreeOrProgram}
-                  name="degreeOrProgram"
+                  name='degreeOrProgram'
                   error={!!touched.degreeOrProgram && !!errors.degreeOrProgram}
                   helperText={touched.degreeOrProgram && errors.degreeOrProgram}
                 />
               </Grid>
               <Grid item xs={6} sm={6} md={3}>
-                <FormControl fullWidth variant="filled">
-                  <InputLabel id="demo-simple-select-label">
+                <FormControl fullWidth variant='filled'>
+                  <InputLabel id='demo-simple-select-label'>
                     Year Admitted
                   </InputLabel>
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Year Admitted"
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    label='Year Admitted'
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.yearAdmitted}
-                    name="yearAdmitted"
+                    name='yearAdmitted'
                     error={!!touched.yearAdmitted && !!errors.yearAdmitted}
                   >
                     {years.map((year) => (
@@ -322,24 +319,24 @@ const Profile = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={6} sm={6} md={3}>
-                <FormControl fullWidth variant="filled">
-                  <InputLabel id="demo-simple-select-label">
+                <FormControl fullWidth variant='filled'>
+                  <InputLabel id='demo-simple-select-label'>
                     Year Graduated
                   </InputLabel>
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Year Graduated"
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    label='Year Graduated'
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.yearEndedOrGraduated}
-                    name="yearEndedOrGraduated"
+                    name='yearEndedOrGraduated'
                     error={
                       !!touched.yearEndedOrGraduated &&
                       !!errors.yearEndedOrGraduated
                     }
                   >
-                    <MenuItem value={"N/A"}>N/A</MenuItem>
+                    <MenuItem value={'N/A'}>N/A</MenuItem>
                     {years.map((year) => (
                       <MenuItem key={year} value={year}>
                         {year}
@@ -355,36 +352,36 @@ const Profile = () => {
               <Grid item xs={12} sm={6} md={6}>
                 <FormControl
                   fullWidth
-                  variant="filled"
+                  variant='filled'
                   disabled={
-                    values.yearEndedOrGraduated !== "N/A" ? false : true
+                    values.yearEndedOrGraduated !== 'N/A' ? false : true
                   }
                 >
-                  <InputLabel id="demo-simple-select-label">
+                  <InputLabel id='demo-simple-select-label'>
                     Latin Honors
                   </InputLabel>
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Latin Honors"
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    label='Latin Honors'
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={
-                      values.yearEndedOrGraduated !== "N/A"
+                      values.yearEndedOrGraduated !== 'N/A'
                         ? values.latinHonors
-                        : (values.latinHonors = "N/A")
+                        : (values.latinHonors = 'N/A')
                     }
-                    name="latinHonors"
+                    name='latinHonors'
                     error={!!touched.latinHonors && !!errors.latinHonors}
                   >
-                    <MenuItem value={"N/A"}>N/A</MenuItem>
-                    <MenuItem value={"Summa Cum Laude"}>
+                    <MenuItem value={'N/A'}>N/A</MenuItem>
+                    <MenuItem value={'Summa Cum Laude'}>
                       Summa Cum Laude
                     </MenuItem>
-                    <MenuItem value={"Magna Cum Laude"}>
+                    <MenuItem value={'Magna Cum Laude'}>
                       Magna Cum Laude
                     </MenuItem>
-                    <MenuItem value={"Cum Laude"}>Cum Laude</MenuItem>
+                    <MenuItem value={'Cum Laude'}>Cum Laude</MenuItem>
                   </Select>
                   <FormHelperText>
                     {touched.latinHonors && errors.latinHonors}
@@ -393,103 +390,103 @@ const Profile = () => {
               </Grid>
               <Grid item xs={6} sm={6} md={2}>
                 <FormControl>
-                  <FormLabel id="employed-row-radio-buttons-group-label">
+                  <FormLabel id='employed-row-radio-buttons-group-label'>
                     Employed?
                   </FormLabel>
                   <RadioGroup
                     row
-                    aria-labelledby="employed-row-radio-buttons-group-label"
+                    aria-labelledby='employed-row-radio-buttons-group-label'
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.employed}
-                    name="employed"
+                    name='employed'
                   >
                     <FormControlLabel
-                      value="Yes"
+                      value='Yes'
                       control={<Radio />}
-                      label="Yes"
+                      label='Yes'
                     />
                     <FormControlLabel
-                      value="No"
+                      value='No'
                       control={<Radio />}
-                      label="No"
+                      label='No'
                     />
                   </RadioGroup>
                 </FormControl>
               </Grid>
               <Grid item xs={6} sm={6} md={2}>
                 <FormControl>
-                  <FormLabel id="aboitiz-row-radio-buttons-group-label">
+                  <FormLabel id='aboitiz-row-radio-buttons-group-label'>
                     Aboitiz Company?
                   </FormLabel>
                   <RadioGroup
                     row
-                    aria-labelledby="aboitiz-row-radio-buttons-group-label"
+                    aria-labelledby='aboitiz-row-radio-buttons-group-label'
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={
-                      values.employed === "Yes"
+                      values.employed === 'Yes'
                         ? values.aboitizCompany
-                        : (values.aboitizCompany = "No")
+                        : (values.aboitizCompany = 'No')
                     }
-                    name="aboitizCompany"
+                    name='aboitizCompany'
                   >
                     <FormControlLabel
-                      value="Yes"
+                      value='Yes'
                       control={<Radio />}
-                      label="Yes"
+                      label='Yes'
                     />
                     <FormControlLabel
-                      value="No"
+                      value='No'
                       control={<Radio />}
-                      label="No"
+                      label='No'
                     />
                   </RadioGroup>
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
-                {" "}
+                {' '}
                 <TextField
                   fullWidth
-                  variant="filled"
-                  disabled={values.employed === "Yes" ? false : true}
-                  type="text"
-                  label="Company"
+                  variant='filled'
+                  disabled={values.employed === 'Yes' ? false : true}
+                  type='text'
+                  label='Company'
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={
-                    values.employed === "Yes"
+                    values.employed === 'Yes'
                       ? values.company
-                      : (values.company = "")
+                      : (values.company = '')
                   }
-                  name="company"
+                  name='company'
                   error={!!touched.company && !!errors.company}
                   helperText={touched.company && errors.company}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
-                {" "}
+                {' '}
                 <TextField
                   fullWidth
-                  variant="filled"
-                  disabled={values.employed === "Yes" ? false : true}
-                  type="text"
-                  label="Designation"
+                  variant='filled'
+                  disabled={values.employed === 'Yes' ? false : true}
+                  type='text'
+                  label='Designation'
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={
-                    values.employed === "Yes"
+                    values.employed === 'Yes'
                       ? values.designation
-                      : (values.designation = "")
+                      : (values.designation = '')
                   }
-                  name="designation"
+                  name='designation'
                   error={!!touched.designation && !!errors.designation}
                   helperText={touched.designation && errors.designation}
                 />
               </Grid>
             </Grid>
-            <Box display="flex" justifyContent="center" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
+            <Box display='flex' justifyContent='center' mt='20px'>
+              <Button type='submit' color='secondary' variant='contained'>
                 Request Update Approval
               </Button>
             </Box>
@@ -499,7 +496,7 @@ const Profile = () => {
       {!!snackbar && (
         <Snackbar
           open
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           onClose={handleCloseSnackbar}
           autoHideDuration={6000}
         >

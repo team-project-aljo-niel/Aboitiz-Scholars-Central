@@ -15,6 +15,7 @@ const HttpError = require('./models/httpError');
 const getAccessTokenRouter = require('./routes/getAccessToken');
 const gradesRouter = require('./routes/grades');
 const widgetsRouter = require('./routes/widgets');
+const updatesRouter = require('./routes/updates');
 
 config();
 
@@ -43,6 +44,7 @@ app.use('/scholar', scholarRouter);
 app.use('/getAccessToken', getAccessTokenRouter);
 app.use('/grades', gradesRouter);
 app.use('/widgets', widgetsRouter);
+app.use('/updates', updatesRouter);
 
 // Handling unknown routes
 app.use((req, res, next) => {
