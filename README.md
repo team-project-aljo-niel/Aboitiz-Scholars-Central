@@ -110,12 +110,6 @@ Once the app is up and running, you can access it via your web browser. The app 
 
 ## Notes
 
-=======
-- add a built-in calendar for scheduling events
-- add a dark and light mode
-
-## Notes
-
 You can use these following credentials to try the app as an admin:
 
 username: dmendegorin
