@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 const authChecker = async (req, res, next) => {
   try {
-    const accessToken = req.headers.authorization.split(' ')[1];
+    const accessToken = req?.headers.authorization.split(' ')[1];
 
     if (accessToken) {
       const decodedToken = jwt.verify(

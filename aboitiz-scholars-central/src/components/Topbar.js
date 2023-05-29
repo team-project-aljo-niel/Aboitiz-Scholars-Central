@@ -70,7 +70,7 @@ const Topbar = () => {
             <DarkModeOutlinedIcon />
           )}
         </IconButton>
-        {currentUser.access === 'Admin' ? (
+        {currentUser.access === 'Admin' || currentUser.access === 'Officer' ? (
           <>
             <IconButton
               onClick={handleNotificationClick}
@@ -80,9 +80,7 @@ const Topbar = () => {
                 <NotificationAddOutlined />
               </Badge>
             </IconButton>
-            <IconButton onClick={() => navigate('/ASC/settings')}>
-              <SettingsOutlinedIcon />
-            </IconButton>
+
             <Popover
               id='notification-popover'
               open={Boolean(notificationAnchorEl)}
@@ -105,6 +103,12 @@ const Topbar = () => {
               </Box>
             </Popover>
           </>
+        ) : undefined}
+
+        {currentUser.access === 'Admin' ? (
+          <IconButton onClick={() => navigate('/ASC/settings')}>
+            <SettingsOutlinedIcon />
+          </IconButton>
         ) : undefined}
 
         <IconButton onClick={() => navigate('/ASC/account')}>
