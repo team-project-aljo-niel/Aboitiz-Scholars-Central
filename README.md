@@ -75,3 +75,9 @@ With its name, the app emphasizes that it will serve as the primary source of sc
 
 - add a built-in calendar for scheduling events
 - add a dark and light mode
+
+## Notes
+You can use these following credentials to try the app as an admin:
+
+username: dmendegorin
+password: Secret1!
