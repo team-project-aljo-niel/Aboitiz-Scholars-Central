@@ -76,6 +76,7 @@ With its name, the app emphasizes that it will serve as the primary source of sc
 
 ## Installation
 
+
 To run the Aboitiz Scholars Central app locally, follow these steps:
 
 1. Clone the repository: `git clone https://github.com/your/repository.git`
@@ -106,6 +107,12 @@ Once the app is up and running, you can access it via your web browser. The app 
 
 - As a scholar, you can register an account by providing your data.
 - Upon approval, you can edit your data as necessary.
+
+## Notes
+
+=======
+- add a built-in calendar for scheduling events
+- add a dark and light mode
 
 ## Notes
 
