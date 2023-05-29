@@ -6,6 +6,7 @@ import {
   useTheme,
   Modal,
   Button,
+  Grid,
 } from '@mui/material';
 import { themeColors } from '../../theme';
 import { useContext, useState, useEffect } from 'react';
@@ -56,6 +57,20 @@ const ScholarsRequests = () => {
           severity: 'success',
         });
       }
+      handleCloseModal();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteChange = async () => {
+    try {
+      await deleteAccountUpdates(selectedRow?.user[0]);
+      setSnackbar({
+        children: 'Pending change deleted',
+        severity: 'success',
+      });
+
       handleCloseModal();
     } catch (error) {
       console.error(error);
@@ -202,12 +217,19 @@ const ScholarsRequests = () => {
                 >
                   {selectedRow?.firstName + ' ' + selectedRow?.lastName}
                 </Typography>
-                <div style={{ display: 'flex' }}>
+                <div
+                  style={{
+                    width: '750px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    gap: '1rem',
+                  }}
+                >
                   <div
                     style={{
-                      width: '50%',
+                      width: '100%',
                       height: '100%',
-                      borderRight: '1px solid gray',
+                      marginBottom: '1rem',
                     }}
                   >
                     {/* Left partition */}
@@ -219,7 +241,6 @@ const ScholarsRequests = () => {
                     >
                       Current Details
                     </Typography>
-                    {/* Add your content for the current details here */}
                     <Typography variant='body1' component='p' gutterBottom>
                       Age: {account?.[0].age}
                     </Typography>
@@ -265,7 +286,12 @@ const ScholarsRequests = () => {
                     </Typography>
                   </div>
                   <div
-                    style={{ width: '50%', height: '100%', marginLeft: '1rem' }}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      paddingLeft: '0.5rem',
+                      borderLeft: '1px solid black',
+                    }}
                   >
                     <Typography
                       variant='h5'
@@ -275,7 +301,6 @@ const ScholarsRequests = () => {
                     >
                       Pending Updates
                     </Typography>
-                    {/* Add your content for the current details here */}
                     <Typography variant='body1' component='p' gutterBottom>
                       Age: {selectedRow?.age}
                     </Typography>
@@ -322,17 +347,30 @@ const ScholarsRequests = () => {
                   </div>
                 </div>
 
-                <Box display='flex' justifyContent='center' marginTop='20px'>
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={() =>
-                      handleApproveChange(selectedRow?.user[0], selectedRow)
-                    }
-                  >
-                    Approve Changes
-                  </Button>
-                </Box>
+                <Grid container justifyContent='center' spacing={2}>
+                  <Grid item>
+                    <Button
+                      variant='contained'
+                      sx={{
+                        color: theme.palette.getContrastText(
+                          colors.redAccent[500]
+                        ),
+                      }}
+                      onClick={handleDeleteChange}
+                    >
+                      Delete Changes
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={handleApproveChange}
+                    >
+                      Approve Changes
+                    </Button>
+                  </Grid>
+                </Grid>
               </div>
             </Box>
           </div>
