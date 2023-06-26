@@ -3,8 +3,8 @@ import axios from 'axios';
 // For client to recognize cookies being sent by the backend
 axios.defaults.withCredentials = true;
 
-const BASE_URL = 'https://aboitizscholarscentral-api.onrender.com';
-// const BASE_URL = 'http://localhost:8080';
+// const BASE_URL = 'https://aboitizscholarscentral-api.onrender.com';
+const BASE_URL = 'http://localhost:8080';
 
 // Signup service
 export const createUser = async (user) => {
@@ -79,6 +79,15 @@ export const addScholarDetails = async (scholarDetails) => {
 export const updateScholarDetails = async (id, scholarDetails) => {
   const response = await axios.put(
     `${BASE_URL}/scholar/details/${id}`,
+    scholarDetails
+  );
+  return response;
+};
+
+// Put Scholar Request
+export const updateScholarRequest = async (id, scholarDetails) => {
+  const response = await axios.put(
+    `${BASE_URL}/scholar/details/request/${id}`,
     scholarDetails
   );
   return response;

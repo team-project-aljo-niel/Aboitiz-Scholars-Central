@@ -12,8 +12,8 @@ import { themeColors } from '../../theme';
 import { useContext, useState, useEffect } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import {
-  updateScholarDetails,
   deleteAccountUpdates,
+  updateScholarRequest,
 } from '../services/UserService';
 import { ScholarContext } from '../providers/ScholarProvider';
 import { UpdatesContext } from '../providers/UpdatesProvider';
@@ -45,12 +45,12 @@ const ScholarsRequests = () => {
 
   const handleApproveChange = async () => {
     try {
-      const response = await updateScholarDetails(
+      const response = await updateScholarRequest(
         selectedRow?.user[0],
         selectedRow
       );
-      console.log(response.data);
-      if (response.data == 'Scholar info changed successfully') {
+
+      if (response.data === 'Scholar info changed successfully') {
         await deleteAccountUpdates(selectedRow?.user[0]);
         setSnackbar({
           children: 'Account update saved succesfully',
